@@ -49,6 +49,11 @@ function RegisterStudentComp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (data.tel.length) {
+      return alert("iltimos telefon raqamingizni kiriting!");
+    }
+
     setLoading(true);
     axios
       .post("/api/students", data)
