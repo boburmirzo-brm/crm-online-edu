@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+// @ts-nocheck
+import React from 'react';
 import './App.css';
+import { Routes, Route } from "react-router-dom"
+import Home from "./router/home/Home"
+import Login from "./router/login/Login"
+import CheckRoute from './router/check-route/CheckRoute';
+import RegisterStudent from './router/register-student/RegisterStudent';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/check/*' element={<CheckRoute/>}/>
+        <Route path='/register-student' element={<RegisterStudent/>}/>
+      </Routes>
     </div>
   );
 }
