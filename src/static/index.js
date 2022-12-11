@@ -23,3 +23,16 @@ export const levels = {
 
 export const TEACHER_MAJOR = ["it", "russia", "english", "matematika"];
 
+export const regions = [
+  "shahar",
+  "viloyat",
+  "tuman",
+  "pop",
+  "chortoq",
+  "to'raqo'rg'on",
+  "yangiqo'rg'on",
+  "uchqo'rg'on",
+  "nanay",
+  "koson",
+  "boshqa"
+];
