@@ -51,6 +51,18 @@
   outline: 3px solid var(--bg-sy);
 }
 
+.regStu__deleteNumber {
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+.regStu__deleteNumber:hover {
+  color: #fff;
+  border-radius: 8px;
+  margin: 2px;
+  padding: 2px;
+  background: var(--bg-dark-blue1);
+}
+
 .regStu__btn {
   margin-top: 15px;
   padding: 10px;

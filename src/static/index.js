@@ -34,5 +34,7 @@ export const regions = [
   "uchqo'rg'on",
   "nanay",
   "koson",
-  "boshqa"
+  "boshqa",
 ];
+
+export const genders = ["male", "female"];

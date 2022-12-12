@@ -1,8 +1,10 @@
 // @ts-nocheck
+/* eslint-disable no-undef */
 import React, { useState } from "react";
 import "./RegisterStudentComp.css";
 import axios from "../../api";
-import { regions, times, days } from "../../static";
+import { regions, times, days, genders } from "../../static";
+import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
 
 function RegisterStudentComp() {
   const [loading, setLoading] = useState(false);
@@ -29,16 +31,12 @@ function RegisterStudentComp() {
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let newFormData = { ...data };
-    if (key === "birthYear") {
-      newFormData[key] = +t.value;
-    } else {
-      newFormData[key] = t.value;
-    }
+    newFormData[key] = t.value;
 
     setData(newFormData);
   };
 
-  const handleAddTelNumToArrOfData = (e) => {
+  const handleAddTelNumToArrOfData = () => {
     if (!tempPhoneNumber)
       return alert("iltimos telefon raqamingizni kiriting!");
     let newFormData = { ...data };
@@ -50,7 +48,7 @@ function RegisterStudentComp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (data.tel.length) {
+    if (!data.tel.length) {
       return alert("iltimos telefon raqamingizni kiriting!");
     }
 
@@ -77,14 +75,21 @@ function RegisterStudentComp() {
           isEnd: false,
           enrolledCourses: [],
         });
+
+        // select option larni tozalash
+        // eslint-disable-next-line no-unused-expressions
+        [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
+        alert(data?.msg);
       })
-      .catch(({ response: { data } }) => console.log(data))
+      .catch(({ response: { data } }) => {
+        console.log(data);
+        alert(data?.msg);
+      })
       .finally(() => {
         setLoading(false);
       });
   };
 
-  // console.log(data);
   return (
     <div className="regStu__Container">
       <h3>Register Student</h3>
@@ -95,6 +100,7 @@ function RegisterStudentComp() {
             <input
               onChange={handleChange}
               value={data.firstName}
+              title="Ismingizni kiriting"
               type="text"
               placeholder="ism..."
               name="firstName"
@@ -110,6 +116,7 @@ function RegisterStudentComp() {
             <input
               onChange={handleChange}
               value={data.lastName}
+              title="Familyangizni kiriting"
               type="text"
               placeholder="familya..."
               name="lastName"
@@ -125,6 +132,7 @@ function RegisterStudentComp() {
             <input
               onChange={handleChange}
               value={data.middleName}
+              title="Kimning o'g'li ekanligingizni kiriting"
               type="text"
               placeholder="misol: Abdulloh o'g'li"
               name="middleName"
@@ -140,7 +148,8 @@ function RegisterStudentComp() {
             <input
               onChange={handleChange}
               value={data.birthYear}
-              type="text"
+              title="Tug'ilgan yilingizni kiriting"
+              type="number"
               placeholder="misol: 1998"
               name="birthYear"
               id="birthYear"
@@ -154,14 +163,16 @@ function RegisterStudentComp() {
           <div>
             <select
               onChange={handleChange}
+              title="Hududingizni tanlang"
               defaultValue={data.region}
               name="region"
+              id="region"
               required
             >
               <option value="">tanlang</option>
               {regions.map((el, idx) => (
-                <option key={idx} value={el}>
-                  {el.toUpperCase()}
+                <option key={idx} title={el} value={el}>
+                  {el.capitalLetter()}
                 </option>
               ))}
             </select>
@@ -169,16 +180,7 @@ function RegisterStudentComp() {
         </div>
         <div className="regStu__input_field">
           <label htmlFor="tel">Telefon raqam: </label>
-          {data.tel.length ? (
-            <div>
-              Sizning telefon ramalaringiz:{" "}
-              {data.tel.map((el, idx) => (
-                <span key={idx}>{el}, </span>
-              ))}
-            </div>
-          ) : (
-            ""
-          )}
+          {<ShowingEnteredNumbers data={data} setData={setData} />}
           <div>
             <input
               onChange={(e) => setTempPhoneNumber(e.target.value)}
@@ -205,11 +207,15 @@ function RegisterStudentComp() {
               onChange={handleChange}
               defaultValue={data.gender}
               name="gender"
+              id="gender"
               required
             >
               <option value="">tanlang</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              {genders.map((el, idx) => (
+                <option key={idx} title={el} value={el}>
+                  {el.capitalLetter()}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -238,11 +244,12 @@ function RegisterStudentComp() {
               onChange={handleChange}
               defaultValue={data.wantedDay}
               name="wantedDay"
+              id="wantedDay"
               required
             >
               <option value="">tanlang</option>
               {days.map((el, idx) => (
-                <option key={idx} value={el}>
+                <option key={idx} title={el} value={el}>
                   {el.toUpperCase()}
                 </option>
               ))}
@@ -256,11 +263,12 @@ function RegisterStudentComp() {
               onChange={handleChange}
               defaultValue={data.wantedTime}
               name="wantedTime"
+              id="wantedTime"
               required
             >
               <option value="">tanlang</option>
               {times.map((el, idx) => (
-                <option key={idx} value={el}>
+                <option key={idx} title={el} value={el}>
                   {el.toUpperCase()}
                 </option>
               ))}
