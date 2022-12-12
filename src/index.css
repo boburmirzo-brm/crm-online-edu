@@ -9,6 +9,8 @@
   --bg-sy: #dcebff;
   --bg-td: #004488;
   --bg-dark: linear-gradient(45deg, #004488, #015cb8);
+  --bg-dark-blue1:  #015cb8;
+  --bg-dark-blue2:  #004488;
   --bg-light: #fff;
 }
 a{

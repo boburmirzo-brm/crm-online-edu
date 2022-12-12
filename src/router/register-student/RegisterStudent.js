@@ -1,12 +1,13 @@
-import React from 'react'
-import RegisterStudentComp from '../../components/register-student-comp/RegisterStudentComp'
+import React from "react";
+import "./RegisterStudent.css";
+import RegisterStudentComp from "../../components/register-student-comp/RegisterStudentComp";
 
 function RegisterStudent() {
   return (
-    <div>
-        <RegisterStudentComp/>
+    <div className="regStuRoute_Container">
+      <RegisterStudentComp />
     </div>
-  )
+  );
 }
 
-export default RegisterStudent
+export default RegisterStudent;
