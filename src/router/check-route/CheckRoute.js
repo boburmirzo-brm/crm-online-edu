@@ -11,13 +11,17 @@ import "./CheckRoute.css"
 let user = {
   token : "asdklasjdlkasjdklasjdlksad",
   info: {
-    
+    username: "bobur0668",
+    firstName: "Boburmirzo",
+    lastName: "RasulovRasulov",
+    middleName: "Ma'ruf ugli",
+    major: "it",
   },
   degree: {
     owner: false,
     admin: false,
-    teacher: false,
-    receptionist: true,
+    teacher: true,
+    receptionist: false,
     accounter: false,
   }
 }
@@ -30,7 +34,7 @@ function CheckRoute() {
 
   return (
     <div className="check__route">
-      <Sidebar/>
+      <Sidebar info={user.info} degree={user.degree}/>
       <Routes>
         {params["*"] !== currantPath && (
           <Route
