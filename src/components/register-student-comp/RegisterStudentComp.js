@@ -31,7 +31,7 @@ function RegisterStudentComp() {
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let newFormData = { ...data };
-    newFormData[key] = t.value;
+    newFormData[key] = key === "birthYear" ? +t.value : t.value;
 
     setData(newFormData);
   };
