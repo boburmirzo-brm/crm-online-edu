@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   days,
   times,
@@ -7,6 +7,7 @@ import {
   tempTeachers,
   TEACHER_MAJOR,
 } from "../../../static";
+import axios from "../../../api";
 
 function CreateGroup() {
   const [data, setData] = useState({
@@ -21,11 +22,10 @@ function CreateGroup() {
       note: "",
     },
     firstLesson: "",
-    expectedLastLesson: "",
     expectedExamDay: "",
     enrolledStudents: [],
     isActive: false,
-    coursePrice: "", // type must be number before submit
+    coursePrice: 0, // type must be number before submit
   });
 
   console.log(data);
@@ -33,26 +33,25 @@ function CreateGroup() {
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let copyData = structuredClone(data);
-    if (["number", "note"].includes(key)) {
+    if (key === "number") {
       copyData.room[key] = t.value;
-    } else if (key === "coursePrice") {
-      copyData[key] = +t.value;
     } else {
       copyData[key] = t.value;
     }
-    setData(copyData);
-  };
 
-  useEffect(() => {
-    if (data.isActive) {
-      setData((e) => ({ ...e, firstLesson: new Date().getOwnDate() }));
-    } else {
-      setData((e) => ({ ...e, firstLesson: "" }));
-    }
-  }, [data.isActive]);
+    setData(copyData);
+
+    // copyData[key] = +t.value.replace(/\D/g, "");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    axios
+      .post("/api/groups", data)
+      .then(console.log)
+      .catch(console.log)
+      .finally();
   };
   return (
     <div className="regStu__Container">
@@ -76,22 +75,6 @@ function CreateGroup() {
                 </option>
               ))}
             </select>
-          </div>
-        </div>
-        <div className="regStu__input_field">
-          <label htmlFor="name">Guruh nomi: </label>
-          <div>
-            <input
-              onChange={handleChange}
-              value={data.name}
-              title="Guruh nomini kiriting"
-              type="text"
-              placeholder="guruh nomi..."
-              name="name"
-              id="name"
-              required
-              autoComplete="off"
-            />
           </div>
         </div>
         <div className="regStu__input_field">
@@ -208,26 +191,9 @@ function CreateGroup() {
               autoComplete="off"
             />
           </div>
-          <div>
-            <label>
-              {data.room.number ? data.room.number : "Shu"} - xona uchun xabar
-            </label>
-            <input
-              onChange={handleChange}
-              value={data.room.note}
-              title="biror xabar qoldiring"
-              type="text"
-              placeholder="misol: yana 2ta o'quvchi sig'adi"
-              name="note"
-              id="note"
-              required
-              autoComplete="off"
-            />
-          </div>
         </div>
-        {data.isActive ? <div>boshlangan vaqti: {data.firstLesson}</div> : ""}
 
-        <div className="regStu__input_field">
+        {/* <div className="regStu__input_field">
           <label>Guruh holati: </label>
           <div>
             <select
@@ -246,14 +212,14 @@ function CreateGroup() {
               </option>
             </select>
           </div>
-        </div>
+        </div> */}
 
-        <div className="regStu__input_field">
+        {/* <div className="regStu__input_field">
           <label htmlFor="coursePrice">Oylik to'lov: </label>
           <div>
             <input
               onChange={handleChange}
-              value={data.coursePrice}
+              value={Number(data.coursePrice).brm()}
               title="Oylik to'lovini kiriting"
               type="text"
               placeholder="misol: 400 000"
@@ -263,7 +229,10 @@ function CreateGroup() {
               autoComplete="off"
             />
           </div>
-        </div>
+        </div> */}
+        <button type="submit" className="regStu__btn">
+          Tizimga kiritish
+        </button>
       </form>
     </div>
   );

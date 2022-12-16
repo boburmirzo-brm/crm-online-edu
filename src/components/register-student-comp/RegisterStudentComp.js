@@ -31,7 +31,8 @@ function RegisterStudentComp() {
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let newFormData = { ...data };
-    newFormData[key] = key === "birthYear" ? +t.value : t.value;
+    newFormData[key] =
+      key === "birthYear" ? +t.value.replace(/\D/g, "") : t.value;
 
     setData(newFormData);
   };
@@ -157,7 +158,7 @@ function RegisterStudentComp() {
               onChange={handleChange}
               value={data.birthYear}
               title="Tug'ilgan yilingizni kiriting"
-              type="number"
+              type="string"
               placeholder="misol: 1998"
               name="birthYear"
               id="birthYear"
