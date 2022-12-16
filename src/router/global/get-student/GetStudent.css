@@ -1,0 +1,57 @@
+.get__student-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.get__student-card{
+    width: 300px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.get__student-card img{
+    width: 100px;
+    min-height: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    filter: hue-rotate(200deg) invert(40%) sepia(20%);
+}
+.get__student-card h3{
+    color: var(--bg-td);
+    font-weight: 500;
+    font-size: 16px;
+    flex-grow: 1;
+}
+.get__student-card p{
+    font-size: 14px;
+    line-height: 1.8;
+    color: #888;
+}
+.get__student-card p b{
+    font-weight: 500;
+    color: #000;
+}
+.get__student-card p i{
+    color: #333;
+}
+.get__student-notGroup{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 11px;
+    background: var(--bg-danger);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.get__student-extra{
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+}

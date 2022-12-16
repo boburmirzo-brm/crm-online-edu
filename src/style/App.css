@@ -1,0 +1,8 @@
+.global__router{
+    padding-bottom: 100px;
+}
+.global__title{
+    margin: 20px 0;
+    color: var(--bg-dark-blue1);
+    font-weight: 500;
+}

@@ -1,7 +1,6 @@
-import React from "react";
+import React, {memo} from "react";
 import "./Sidebar.css";
 import { NavLink, useLocation } from "react-router-dom";
-import { AiOutlineUsergroupAdd, AiOutlineUserAdd } from "react-icons/ai";
 import {GLOBAL_ROUTERS} from "../../static/router"
 
 function Sidebar({ info, degree }) {
@@ -43,4 +42,4 @@ function Sidebar({ info, degree }) {
   );
 }
 
-export default Sidebar;
+export default memo(Sidebar);

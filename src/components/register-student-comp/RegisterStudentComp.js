@@ -1,10 +1,10 @@
 // @ts-nocheck
 /* eslint-disable no-undef */
-import React, { useState } from "react";
-import "./RegisterStudentComp.css";
+import React, { useState, memo } from "react";
 import axios from "../../api";
 import { regions, times, days, genders } from "../../static";
 import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
+import Loader from "../../components/loader/Loader"
 
 function RegisterStudentComp() {
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ function RegisterStudentComp() {
 
   const handleAddTelNumToArrOfData = () => {
     if (!tempPhoneNumber)
-      return alert("iltimos telefon raqamingizni kiriting!");
+      return null
     let newFormData = { ...data };
     newFormData.tel.push(tempPhoneNumber);
     setTempPhoneNumber("");
@@ -48,18 +48,6 @@ function RegisterStudentComp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!data.tel.length) {
-      return alert("iltimos telefon raqamingizni kiriting!");
-    }
-
-    if (
-      !window.confirm(
-        "Barcha ma'lumotlaringiz to'g'ri bo'lsa tizimga kiritaymi?"
-      )
-    ) {
-      return false;
-    }
 
     setLoading(true);
     axios
@@ -87,7 +75,6 @@ function RegisterStudentComp() {
 
         // select option larni tozalash
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
-        alert("muvaffaqiyatli tizimga kiritildi!");
       })
       .catch(({ response: { data } }) => {
         console.log(data);
@@ -100,10 +87,10 @@ function RegisterStudentComp() {
   };
 
   return (
-    <div className="regStu__Container">
-      <h3>O'quvchini ro'yxatga olish</h3>
-      <form onSubmit={handleSubmit} className="regStu__form">
-        <div className="regStu__input_field">
+    <>
+      <h3 className="global__title">O'quvchini ro'yxatga olish</h3>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="form__field">
           <label htmlFor="firstName">Ism: </label>
           <div>
             <input
@@ -119,7 +106,7 @@ function RegisterStudentComp() {
             />
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="lastName">Familya: </label>
           <div>
             <input
@@ -135,7 +122,7 @@ function RegisterStudentComp() {
             />
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="middleName">Kimning o'g'li: </label>
           <div>
             <input
@@ -151,7 +138,7 @@ function RegisterStudentComp() {
             />
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="birthYear">Tug'ilgan yil: </label>
           <div>
             <input
@@ -167,7 +154,7 @@ function RegisterStudentComp() {
             />
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Hudud: </label>
           <div>
             <select
@@ -189,7 +176,7 @@ function RegisterStudentComp() {
             </select>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="tel">Telefon raqam: </label>
           {<ShowingEnteredNumbers data={data} setData={setData} />}
           <div>
@@ -203,7 +190,7 @@ function RegisterStudentComp() {
               autoComplete="off"
             />
             <button
-              className="regStu__btn"
+              className="form__btn"
               onClick={handleAddTelNumToArrOfData}
               type="button"
             >
@@ -211,7 +198,7 @@ function RegisterStudentComp() {
             </button>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Jinsingiz tanlang: </label>
           <div>
             <select
@@ -232,7 +219,7 @@ function RegisterStudentComp() {
             </select>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="wantedCourse">
             Qaysi kurslarni o'qishni xohlaysiz:{" "}
           </label>
@@ -250,7 +237,7 @@ function RegisterStudentComp() {
             ></textarea>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Qaysi kunlari o'qishni hohlaysiz: </label>
           <div>
             <select
@@ -271,7 +258,7 @@ function RegisterStudentComp() {
             </select>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Qaysi vaqtda o'qishni hohlaysiz: </label>
           <div>
             <select
@@ -292,7 +279,7 @@ function RegisterStudentComp() {
             </select>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="aboutUs">Biz haqimizda qayerdan eshitdingiz?: </label>
           <div>
             <textarea
@@ -308,12 +295,13 @@ function RegisterStudentComp() {
             ></textarea>
           </div>
         </div>
-        <button disabled={loading} className="regStu__btn" type="submit">
+        <button disabled={loading} className="form__btn" type="submit">
           {loading ? "Kuting..." : "Tizimga kiritish"}
         </button>
       </form>
-    </div>
+      { loading && <Loader/>} 
+    </>
   );
 }
 
-export default RegisterStudentComp;
+export default memo(RegisterStudentComp);

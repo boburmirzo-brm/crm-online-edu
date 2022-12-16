@@ -8,13 +8,12 @@ const useFetch = (api) => {
         setLoading(true)
         axios.get(api)
             .then(res=>{
-                console.log(res.data.data)
                 setData(res.data.data)
                 setLoading(false)
             })
             .catch(res=> {
                 setLoading(false)
-                console.log(res)}
+                }
             )
     }, [api])
     return {loading, data}

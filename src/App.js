@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React from 'react';
-import './App.css';
+import './style/App.css';
+import './style/form.css';
 import { Routes, Route } from "react-router-dom"
 import Home from "./router/home/Home"
 import Login from "./router/login/Login"

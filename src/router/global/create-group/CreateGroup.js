@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import {
   days,
   times,
@@ -28,7 +28,6 @@ function CreateGroup() {
     coursePrice: 0, // type must be number before submit
   });
 
-  console.log(data);
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -54,10 +53,10 @@ function CreateGroup() {
       .finally();
   };
   return (
-    <div className="regStu__Container">
-      <h3>Guruh qo'shish</h3>
-      <form onSubmit={handleSubmit} className="regStu__form">
-        <div className="regStu__input_field">
+    <div className="global__router">
+      <h3 className="global__title">Guruh qo'shish</h3>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="form__field">
           <label>O'qituvchi: </label>
           <div>
             <select
@@ -77,7 +76,7 @@ function CreateGroup() {
             </select>
           </div>
         </div>
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Guruh yo'nalishi: </label>
           <div>
             <select
@@ -98,7 +97,7 @@ function CreateGroup() {
           </div>
         </div>
 
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Guruh bosqichi: </label>
           <div>
             <select
@@ -128,7 +127,7 @@ function CreateGroup() {
           </div>
         </div>
 
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Guruh o'qish kunlari: </label>
           <div>
             <select
@@ -152,7 +151,7 @@ function CreateGroup() {
           </div>
         </div>
 
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label>Guruh o'qish vaqtlari: </label>
           <div>
             <select
@@ -176,7 +175,7 @@ function CreateGroup() {
           </div>
         </div>
 
-        <div className="regStu__input_field">
+        <div className="form__field">
           <label htmlFor="number">Guruh xonasi: </label>
           <div>
             <input
@@ -230,7 +229,7 @@ function CreateGroup() {
             />
           </div>
         </div> */}
-        <button type="submit" className="regStu__btn">
+        <button type="submit" className="form__btn">
           Tizimga kiritish
         </button>
       </form>
@@ -238,4 +237,4 @@ function CreateGroup() {
   );
 }
 
-export default CreateGroup;
+export default memo(CreateGroup);

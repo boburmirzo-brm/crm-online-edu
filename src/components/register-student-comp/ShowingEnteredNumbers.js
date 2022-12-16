@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 
 const ShowingEnteredNumbers = ({ data, setData }) => {
   return data.tel.length ? (
@@ -29,4 +29,4 @@ const ShowingEnteredNumbers = ({ data, setData }) => {
   );
 };
 
-export default ShowingEnteredNumbers;
+export default memo(ShowingEnteredNumbers);

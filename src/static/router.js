@@ -1,26 +1,40 @@
 import GetStudent from "../router/global/get-student/GetStudent"
 import CreateStudent from "../router/global/create-student/CreateStudent"
 import CreateGroup from "../router/global/create-group/CreateGroup"
+import CreateMember from "../router/global/create-member/CreateMember"
+import GetGroup from "../router/global/get-group/GetGroup"
 import { AiOutlineUsergroupAdd, AiOutlineUserAdd } from "react-icons/ai";
 
 
 export const GLOBAL_ROUTERS = [
     {
-        title: "All Students",
+        title: "O'quvchilar",
         path: "/get-student",
         element: <GetStudent/>,
         icon: <AiOutlineUsergroupAdd />,
     },
     {
-        title: "Create Student",
+        title: "O'quvchini ro'yhatga olish",
         path: "/create-student",
         element: <CreateStudent/>,
         icon: <AiOutlineUserAdd />,
     },
     {
-        title: "Create Group",
+        title: "Guruhlar",
+        path: "/get-group",
+        element: <GetGroup/>,
+        icon: <AiOutlineUsergroupAdd />,
+    },
+    {
+        title: "Yangi guruh ochish",
         path: "/create-group",
         element: <CreateGroup/>,
         icon: <AiOutlineUsergroupAdd />,
-    }
+    },
+    {
+        title: "Hodimni ro'yhatga olish",
+        path: "/create-member",
+        element: <CreateMember/>,
+        icon: <AiOutlineUserAdd />,
+    },
 ]

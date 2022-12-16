@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import Receptionist from "../receptionist/Receptionist";
 import Admin from "../admin/Admin";
 import Teacher from "../teacher/Teacher";
 import Accounter from "../accounter/Accounter";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./CheckRoute.css"
-import {GLOBAL_ROUTERS} from "../../static/router"
-import {useFetch} from "../../hooks/useFetch"
-import Loader from "../../components/loader/Loader"
+import "./CheckRoute.css";
+import { GLOBAL_ROUTERS } from "../../static/router";
+import { useFetch } from "../../hooks/useFetch";
+import Loader from "../../components/loader/Loader";
+import { useDispatch } from "react-redux";
+import { getStudentsAction } from "../../context/action/action";
 
 let user = {
-  token : "asdklasjdlkasjdklasjdlksad",
+  token: "asdklasjdlkasjdklasjdlksad",
   info: {
     username: "bobur0668",
     firstName: "Boburmirzo",
@@ -25,38 +27,44 @@ let user = {
     teacher: false,
     receptionist: true,
     accounter: false,
-  }
-}
-
+  },
+};
 
 function CheckRoute() {
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
   let params = useParams();
-  let changePath = params["*"].split("/").slice(1).join("") && "/" + params["*"].split("/").slice(1).join("/")
-  let currantPath = path === "owner" ? "admin"+changePath : path+changePath
+  let changePath =
+    params["*"].split("/").slice(1).join("") &&
+    "/" + params["*"].split("/").slice(1).join("/");
+  let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
 
-  const {loading, data} = useFetch("/api/students")
+  const { loading, data } = useFetch("/api/students");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getStudentsAction(data));
+  }, [data,dispatch]);
+  
   return (
     <div className="check__route">
-      {loading && <Loader/>}
-      <Sidebar info={user.info} degree={user.degree}/>
+      {loading && <Loader />}
+      <Sidebar info={user.info} degree={user.degree} />
       <div className="check__content">
-      <Routes>
-        {params["*"] !== currantPath && (
-          <Route
-            path={`/${params["*"]}`}
-            element={<Navigate replace to={`/check/${currantPath}`} />}
-          />
-        )}
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/receptionist" element={<Receptionist />} />
-        <Route path="/teacher" element={<Teacher />} />
-        <Route path="/accounter" element={<Accounter />} />
+        <Routes>
+          {params["*"] !== currantPath && (
+            <Route
+              path={`/${params["*"]}`}
+              element={<Navigate replace to={`/check/${currantPath}`} />}
+            />
+          )}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/receptionist" element={<Receptionist />} />
+          <Route path="/teacher" element={<Teacher />} />
+          <Route path="/accounter" element={<Accounter />} />
 
-        {
-          GLOBAL_ROUTERS?.map((item,inx)=> <Route key={inx} path={path+item.path} element={item.element}/>)
-        }
-      </Routes>
+          {GLOBAL_ROUTERS?.map((item, inx) => (
+            <Route key={inx} path={path + item.path} element={item.element} />
+          ))}
+        </Routes>
       </div>
     </div>
   );
