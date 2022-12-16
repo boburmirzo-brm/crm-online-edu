@@ -14,10 +14,10 @@
     height: 60px;
 }
 .sidebar__circle{
-    min-width: 50px;
-    max-width: 50px;
-    min-height: 50px;
-    max-height: 50px;
+    min-width: 45px;
+    max-width: 45px;
+    min-height: 45px;
+    max-height: 45px;
     border-radius: 50%;
     background: var(--bg-light);
     display: grid;
@@ -25,7 +25,7 @@
     margin-right: 8px;
     font-weight: 700;
     color: var(--bg-td);
-    font-size: 22px;
+    font-size: 18px;
 }
 .sidebar__name{
     color:  var(--bg-light);
@@ -37,7 +37,29 @@
     text-transform: uppercase;
 }
 
+.sidebar__collection{
+    margin-top: 50px;
+}
 
+.sidebar__item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-td);
+    padding: 14px 10px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    color: var(--bg-light);
+    border: 1px solid #fff2;
+    transition: .3s;
+}
+.sidebar__item svg{
+    font-size: 20px;
+}
+.sidebar__active{
+    background: var(--bg-light);
+    color: var(--bg-td);
+}
 
 
 @media screen and (max-width:1600px) {

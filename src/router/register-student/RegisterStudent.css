@@ -1,5 +1,5 @@
 .regStuRoute_Container {
   min-height: 100vh;
-  background: #f2f3f6;
+  background: var(--bg-light);
   padding: 20px 5%;
 }

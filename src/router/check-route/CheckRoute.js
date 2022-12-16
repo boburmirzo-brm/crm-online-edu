@@ -4,9 +4,11 @@ import Receptionist from "../receptionist/Receptionist";
 import Admin from "../admin/Admin";
 import Teacher from "../teacher/Teacher";
 import Accounter from "../accounter/Accounter";
-import { useSelector } from "react-redux";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./CheckRoute.css"
+import {GLOBAL_ROUTERS} from "../../static/router"
+import {useFetch} from "../../hooks/useFetch"
+import Loader from "../../components/loader/Loader"
 
 let user = {
   token : "asdklasjdlkasjdklasjdlksad",
@@ -20,8 +22,8 @@ let user = {
   degree: {
     owner: false,
     admin: false,
-    teacher: true,
-    receptionist: false,
+    teacher: false,
+    receptionist: true,
     accounter: false,
   }
 }
@@ -30,11 +32,15 @@ let user = {
 function CheckRoute() {
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
   let params = useParams();
-  let currantPath = path === "owner" ? "admin": path
+  let changePath = params["*"].split("/").slice(1).join("") && "/" + params["*"].split("/").slice(1).join("/")
+  let currantPath = path === "owner" ? "admin"+changePath : path+changePath
 
+  const {loading, data} = useFetch("/api/students")
   return (
     <div className="check__route">
+      {loading && <Loader/>}
       <Sidebar info={user.info} degree={user.degree}/>
+      <div className="check__content">
       <Routes>
         {params["*"] !== currantPath && (
           <Route
@@ -46,7 +52,12 @@ function CheckRoute() {
         <Route path="/receptionist" element={<Receptionist />} />
         <Route path="/teacher" element={<Teacher />} />
         <Route path="/accounter" element={<Accounter />} />
+
+        {
+          GLOBAL_ROUTERS?.map((item,inx)=> <Route key={inx} path={path+item.path} element={item.element}/>)
+        }
       </Routes>
+      </div>
     </div>
   );
 }

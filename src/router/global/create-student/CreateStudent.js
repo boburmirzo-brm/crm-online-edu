@@ -1,9 +1,10 @@
 import React from 'react'
+import RegisterStudentComp from '../../../components/register-student-comp/RegisterStudentComp'
 
 function CreateStudent() {
   return (
     <div>
-        <h2>CreateStudent</h2>
+        <RegisterStudentComp/>
     </div>
   )
 }

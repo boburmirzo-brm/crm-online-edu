@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 600px;
+  width: 50%;
 }
 .regStu__input_field {
   display: flex;
