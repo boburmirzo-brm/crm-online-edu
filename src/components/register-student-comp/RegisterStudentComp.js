@@ -52,6 +52,14 @@ function RegisterStudentComp() {
       return alert("iltimos telefon raqamingizni kiriting!");
     }
 
+    if (
+      !window.confirm(
+        "Barcha ma'lumotlaringiz to'g'ri bo'lsa tizimga kiritaymi?"
+      )
+    ) {
+      return false;
+    }
+
     setLoading(true);
     axios
       .post("/api/students", data)
@@ -77,12 +85,12 @@ function RegisterStudentComp() {
         });
 
         // select option larni tozalash
-        // eslint-disable-next-line no-unused-expressions
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
-        alert(data?.msg);
+        alert("muvaffaqiyatli tizimga kiritildi!");
       })
       .catch(({ response: { data } }) => {
         console.log(data);
+        // quyida alert dagi xabar backend dan kelyapti
         alert(data?.msg);
       })
       .finally(() => {
@@ -92,7 +100,7 @@ function RegisterStudentComp() {
 
   return (
     <div className="regStu__Container">
-      <h3>Register Student</h3>
+      <h3>O'quvchini ro'yxatga olish</h3>
       <form onSubmit={handleSubmit} className="regStu__form">
         <div className="regStu__input_field">
           <label htmlFor="firstName">Ism: </label>
@@ -169,7 +177,9 @@ function RegisterStudentComp() {
               id="region"
               required
             >
-              <option value="">tanlang</option>
+              <option disabled={true} value="">
+                tanlang
+              </option>
               {regions.map((el, idx) => (
                 <option key={idx} title={el} value={el}>
                   {el.capitalLetter()}
@@ -196,7 +206,7 @@ function RegisterStudentComp() {
               onClick={handleAddTelNumToArrOfData}
               type="button"
             >
-              add
+              Telefon raqam qo'shish
             </button>
           </div>
         </div>
@@ -210,7 +220,9 @@ function RegisterStudentComp() {
               id="gender"
               required
             >
-              <option value="">tanlang</option>
+              <option disabled={true} value="">
+                tanlang
+              </option>
               {genders.map((el, idx) => (
                 <option key={idx} title={el} value={el}>
                   {el.capitalLetter()}
@@ -247,7 +259,9 @@ function RegisterStudentComp() {
               id="wantedDay"
               required
             >
-              <option value="">tanlang</option>
+              <option disabled={true} value="">
+                tanlang
+              </option>
               {days.map((el, idx) => (
                 <option key={idx} title={el} value={el}>
                   {el.toUpperCase()}
@@ -266,7 +280,9 @@ function RegisterStudentComp() {
               id="wantedTime"
               required
             >
-              <option value="">tanlang</option>
+              <option disabled={true} value="">
+                tanlang
+              </option>
               {times.map((el, idx) => (
                 <option key={idx} title={el} value={el}>
                   {el.toUpperCase()}

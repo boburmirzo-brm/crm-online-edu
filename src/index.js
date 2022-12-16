@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./static/methods";
+import "number-brm";
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from "./App";

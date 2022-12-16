@@ -50,6 +50,9 @@
 .regStu__input_field textarea:focus {
   outline: 3px solid var(--bg-sy);
 }
+textarea {
+  resize: none;
+}
 
 .regStu__deleteNumber {
   transition: all 0.15s ease-in-out;
@@ -71,7 +74,6 @@
   border-radius: 5px;
   background: var(--bg-py);
   color: #fff;
-  text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
 }

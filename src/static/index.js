@@ -38,3 +38,22 @@ export const regions = [
 ];
 
 export const genders = ["male", "female"];
+
+export const tempTeachers = [
+  {
+    _id: "qwertyuiuytrew",
+    firstName: "Abdulloh",
+    major: "it",
+  },
+  {
+    _id: "poiuytrewq",
+    firstName: "Zokirkhon",
+    major: "english",
+  },
+  {
+    _id: "p098uhgfr4",
+    firstName: "Laylo",
+    major: "russia",
+  },
+];
+
