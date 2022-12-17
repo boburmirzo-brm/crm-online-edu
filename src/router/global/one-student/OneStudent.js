@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { useSelector } from "react-redux";
 
 function OneStudent() {
@@ -12,4 +12,4 @@ function OneStudent() {
   )
 }
 
-export default OneStudent
+export default memo(OneStudent)

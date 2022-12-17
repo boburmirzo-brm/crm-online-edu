@@ -6,6 +6,7 @@ import {
   GET_STUDENTS,
   GET_ONE_STUDENT,
   GET_GROUPS,
+  GET_TEACHERS,
 } from "./actionType";
 
 export const authAction = (payload) => {
@@ -34,4 +35,8 @@ export const getOneStudentAction = (payload) => {
 
 export const getGroupsAction = (payload) => {
   return { type: GET_GROUPS, payload };
+};
+
+export const getTeachersAction = (payload) => {
+  return { type: GET_TEACHERS, payload };
 };

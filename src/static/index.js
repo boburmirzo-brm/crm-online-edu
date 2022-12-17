@@ -50,7 +50,7 @@ export const regions = [
   "boshqa",
 ];
 
-export const genders = ["male", "female"];
+export const genders = [{en:"male", uz: "erkak"}, {en:"female", uz:"ayol"}];
 
 export const majorForCreateMember = [
   "teacher",

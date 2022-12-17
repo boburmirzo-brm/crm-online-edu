@@ -263,8 +263,8 @@ function CreateMember() {
               >
                 <option value="">tanlang</option>
                 {genders.map((el, idx) => (
-                  <option key={idx} title={el} value={el}>
-                    {el.capitalLetter()}
+                  <option key={idx} title={el.en} value={el.en}>
+                    {el.uz.capitalLetter()}
                   </option>
                 ))}
               </select>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { useSelector } from 'react-redux';
 
 function GetGroup() {
@@ -17,4 +17,4 @@ function GetGroup() {
   )
 }
 
-export default GetGroup
+export default memo(GetGroup)

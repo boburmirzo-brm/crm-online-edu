@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import Receptionist from "../receptionist/Receptionist";
 import Admin from "../admin/Admin";
@@ -9,8 +9,8 @@ import "./CheckRoute.css";
 import { GLOBAL_ROUTERS } from "../../static/router";
 import { useFetch } from "../../hooks/useFetch";
 import Loader from "../../components/loader/Loader";
-import { useDispatch } from "react-redux";
-import { getStudentsAction,getGroupsAction } from "../../context/action/action";
+import { useDispatch, useSelector } from "react-redux";
+import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../context/action/action";
 import OneStudent from "../global/one-student/OneStudent";
 
 let user = {
@@ -39,20 +39,32 @@ function CheckRoute() {
     "/" + params["*"].split("/").slice(1).join("/");
   let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
 
+  const content = useRef()
+  useEffect(()=> {
+    content.current.scrollTo({
+      top: 0,
+      // behavior: 'smooth',
+  });
+  }, [currantPath])
+  
+
+  const reload = useSelector(s=>s?.reload)
   const dispatch = useDispatch();
 
-  const students = useFetch("/api/students");
-  const groups = useFetch("/api/groups");
+  const students = useFetch("/api/students", reload);
+  const groups = useFetch("/api/groups",reload);
+  const teachers = useFetch("/api/teachers",reload);
 
   useEffect(() => {
-    dispatch(getStudentsAction(students.data));
-    dispatch(getGroupsAction(groups.data));
-  }, [groups,students,dispatch]);
+    dispatch(getStudentsAction(students?.data));
+    dispatch(getGroupsAction(groups?.data));
+    dispatch(getTeachersAction(teachers?.data));
+  }, [groups,students,dispatch, reload]);
   return (
     <div className="check__route">
       {students.loading && <Loader />}
       <Sidebar info={user.info} degree={user.degree} />
-      <div className="check__content">
+      <div ref={content} className="check__content">
         <Routes>
           {params["*"] !== currantPath && (
             <Route

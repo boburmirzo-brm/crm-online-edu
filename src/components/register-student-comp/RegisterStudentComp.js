@@ -6,6 +6,9 @@ import axios from "../../api";
 import { regions, times, days, genders, TEACHER_MAJOR } from "../../static";
 import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
 import Loader from "../../components/loader/Loader";
+import { useNavigate, useLocation } from "react-router-dom"
+import {useDispatch} from "react-redux"
+import {reloadAction} from "../../context/action/action"
 
 let initializeValue = {
   firstName: "",
@@ -30,6 +33,10 @@ function RegisterStudentComp({ isReceptionist }) {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [data, setData] = useState(initializeValue);
 
+  const {pathname} = useLocation()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let newFormData = structuredClone(data);
@@ -51,7 +58,6 @@ function RegisterStudentComp({ isReceptionist }) {
 
     setData(newFormData);
   };
-
   const handleAddTelNumToArrOfData = () => {
     if (!tempPhoneNumber) return null;
     let newFormData = structuredClone(data);
@@ -70,16 +76,19 @@ function RegisterStudentComp({ isReceptionist }) {
     axios
       .post("/api/students", data)
       .then(({ data }) => {
-        console.log(data);
+       
         setData(initializeValue);
-
+        if(isReceptionist) {
+          navigate(`${pathname.split("/").slice(0,3).join("/")}/get-student`)
+          dispatch(reloadAction())
+        }
         // select option larni tozalash
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
       })
-      .catch(({ response: { data } }) => {
-        console.log(data);
+      .catch((err) => {
+        console.log(err?.data);
         // quyida alert dagi xabar backend dan kelyapti
-        alert(data?.msg);
+        // alert(err?.data?.msg);
       })
       .finally(() => {
         setLoading(false);
@@ -124,7 +133,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="middleName">Kimning o'g'li: </label>
+          <label htmlFor="middleName">Otasining ismi: </label>
           <div>
             <input
               onChange={handleChange}
@@ -211,8 +220,8 @@ function RegisterStudentComp({ isReceptionist }) {
                 tanlang
               </option>
               {genders.map((el, idx) => (
-                <option key={idx} title={el} value={el}>
-                  {el.capitalLetter()}
+                <option key={idx} title={el.en} value={el.en}>
+                  {el.uz.capitalLetter()}
                 </option>
               ))}
             </select>

@@ -4,12 +4,22 @@ import "./GetStudent.css";
 import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
-import { getOneStudentAction } from "../../../context/action/action";
+import { getOneStudentAction, reloadAction } from "../../../context/action/action";
+import axios from "../../../api";
 
 function GetStudent() {
   const data = useSelector((s) => s?.getStudents)
   const dispatch = useDispatch()
 
+  const deleteStudent = (_id, f,l)=>{
+    if(window.confirm(`${f} ${l} shu o'quvchini o'chirmoqchimisiz?`)){
+      axios.delete(`/api/students/${_id}`)
+        .then(res=> {
+          dispatch(reloadAction())
+        })
+        .catch(res=> console.log(res))
+    }
+  }
   return (
     <div className="global__router">
       <h3 className="global__title">O'quvchilar</h3>
@@ -55,7 +65,7 @@ function GetStudent() {
               >
                 <button>Batafsil</button>
               </Link>
-              <button style={{ background: "crimson" }}>O'chirish</button>
+              <button onClick={()=> deleteStudent(item._id, item.firstName, item.lastName)} style={{ background: "crimson" }}>O'chirish</button>
             </div>
           </div>
         ))}
