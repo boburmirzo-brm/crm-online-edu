@@ -10,7 +10,7 @@ import { GLOBAL_ROUTERS } from "../../static/router";
 import { useFetch } from "../../hooks/useFetch";
 import Loader from "../../components/loader/Loader";
 import { useDispatch } from "react-redux";
-import { getStudentsAction } from "../../context/action/action";
+import { getStudentsAction,getGroupsAction } from "../../context/action/action";
 import OneStudent from "../global/one-student/OneStudent";
 
 let user = {
@@ -39,14 +39,18 @@ function CheckRoute() {
     "/" + params["*"].split("/").slice(1).join("/");
   let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
 
-  const { loading, data } = useFetch("/api/students");
   const dispatch = useDispatch();
+
+  const students = useFetch("/api/students");
+  const groups = useFetch("/api/groups");
+
   useEffect(() => {
-    dispatch(getStudentsAction(data));
-  }, [data,dispatch]);
+    dispatch(getStudentsAction(students.data));
+    dispatch(getGroupsAction(groups.data));
+  }, [groups,students,dispatch]);
   return (
     <div className="check__route">
-      {loading && <Loader />}
+      {students.loading && <Loader />}
       <Sidebar info={user.info} degree={user.degree} />
       <div className="check__content">
         <Routes>

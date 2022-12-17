@@ -1,12 +1,15 @@
 import React, { memo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./GetStudent.css";
 import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
+import { Link } from "react-router-dom";
+import { getOneStudentAction } from "../../../context/action/action";
 
 function GetStudent() {
-  const data = useSelector((s) => s?.getStudents);
-  data?.length && console.log(data[0]);
+  const data = useSelector((s) => s?.getStudents)
+  const dispatch = useDispatch()
+
   return (
     <div className="global__router">
       <h3 className="global__title">O'quvchilar</h3>
@@ -44,6 +47,16 @@ function GetStudent() {
                 </p>
               </div>
             )}
+            <div className="get__student-btn">
+              <button>Guruh</button>
+              <Link
+                onClick={() => dispatch(getOneStudentAction(item))}
+                to={item._id}
+              >
+                <button>Batafsil</button>
+              </Link>
+              <button style={{ background: "crimson" }}>O'chirish</button>
+            </div>
           </div>
         ))}
       </div>
