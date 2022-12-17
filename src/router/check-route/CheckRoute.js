@@ -11,6 +11,7 @@ import { useFetch } from "../../hooks/useFetch";
 import Loader from "../../components/loader/Loader";
 import { useDispatch } from "react-redux";
 import { getStudentsAction } from "../../context/action/action";
+import OneStudent from "../global/one-student/OneStudent";
 
 let user = {
   token: "asdklasjdlkasjdklasjdlksad",
@@ -43,7 +44,6 @@ function CheckRoute() {
   useEffect(() => {
     dispatch(getStudentsAction(data));
   }, [data,dispatch]);
-  
   return (
     <div className="check__route">
       {loading && <Loader />}
@@ -60,6 +60,7 @@ function CheckRoute() {
           <Route path="/receptionist" element={<Receptionist />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/accounter" element={<Accounter />} />
+          <Route path={`${path}/get-student/:id`} element={<OneStudent/>}/>
 
           {GLOBAL_ROUTERS?.map((item, inx) => (
             <Route key={inx} path={path + item.path} element={item.element} />

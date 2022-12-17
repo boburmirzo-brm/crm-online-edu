@@ -3,17 +3,17 @@ import { useSelector } from "react-redux"
 import "./GetStudent.css"
 import female from "../../../assets/female-icon.webp"
 import male from "../../../assets/male-icon.png"
+import { Link } from "react-router-dom"
 
 function GetStudent() {
   const data = useSelector(s=> s?.getStudents)
-  console.log(data[0]);
   return (
     <div className='global__router'>
         <h3 className='global__title'>O'quvchilar</h3>
         <div className='get__student-container'>
        
           {
-            data?.map((item,inx)=> <div key={inx} className="get__student-card">
+            data?.map((item,inx)=> <Link to={item._id} key={inx} className="get__student-card">
               <img src={item.gender === "male"?male:female} alt="" />
               <h3>{item.firstName} {item.lastName} {item.middleName}</h3>
               <p>Manzil: <b>{item.region}</b></p>
@@ -28,7 +28,7 @@ function GetStudent() {
                   <p>Kun: <i>{item.wantedDay} {item.wantedTime}</i></p>
                 </div>
               }
-            </div>)
+            </Link>)
           }
         </div>
     </div>

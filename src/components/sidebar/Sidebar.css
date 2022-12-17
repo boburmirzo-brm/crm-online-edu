@@ -3,6 +3,8 @@
     height: 100vh;
     background: var(--bg-dark);
     padding: 20px;
+    overflow: auto;
+
 }
 .sidebar__logo{
     color: var(--bg-light);
