@@ -5,7 +5,7 @@ import RegisterStudentComp from "../../components/register-student-comp/Register
 function RegisterStudent() {
   return (
     <div className="regStuRoute_Container">
-      <RegisterStudentComp />
+      <RegisterStudentComp isReceptionist={false} />
     </div>
   );
 }
