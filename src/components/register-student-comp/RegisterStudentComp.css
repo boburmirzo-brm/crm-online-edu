@@ -1,0 +1,9 @@
+.custom__field {
+  margin-top: 1.5rem;
+}
+.custom__field div {
+  margin-left: 3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

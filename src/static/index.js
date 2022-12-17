@@ -19,9 +19,18 @@ export const levels = {
   ],
   english: ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6"],
   matematika: ["Sinf 5", "Sinf 6", "Sinf 7"],
+  "DTM ga tayyorgarlik": ["Biologiya", "Ona-tili", "Kimyo"],
+  "Bug'alteriya": ["1c", "1c da dasturlash", "office dasturlari (word,excel,...)"]
 };
 
-export const TEACHER_MAJOR = ["it", "russia", "english", "matematika"];
+export const TEACHER_MAJOR = [
+  "it",
+  "russia",
+  "english",
+  "matematika",
+  "DTM ga tayyorgarlik",
+  "Bug'alteriya"
+];
 
 export const regions = [
   "shahar",
@@ -56,4 +65,3 @@ export const tempTeachers = [
     major: "russia",
   },
 ];
-
