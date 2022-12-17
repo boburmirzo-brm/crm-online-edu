@@ -6,32 +6,29 @@ import axios from "../../api";
 import { regions, times, days, genders, TEACHER_MAJOR } from "../../static";
 import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
 import Loader from "../../components/loader/Loader";
-// import IsOnline from "../deviceInfo/IsOnline";
-// import BatteryStatus from "../deviceInfo/BatteryStatus";
 
+let initializeValue = {
+  firstName: "",
+  lastName: "",
+  middleName: "",
+  birthYear: "",
+  region: "",
+  startedDate: new Date(),
+  tel: [],
+  gender: "",
+  aboutUs: "",
+  wantedCourse: "",
+  wantedDay: "",
+  wantedTime: "",
+  monthlyPayment: [],
+  isActive: false,
+  isEnd: false,
+  enrolledCourses: [],
+};
 function RegisterStudentComp({ isReceptionist }) {
-  // const batteryInfo = BatteryStatus();
-  // const [isOnline] = IsOnline();
   const [loading, setLoading] = useState(false);
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
-  const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    birthYear: "",
-    region: "",
-    startedDate: new Date(),
-    tel: [],
-    gender: "",
-    aboutUs: "",
-    wantedCourse: "",
-    wantedDay: "",
-    wantedTime: "",
-    monthlyPayment: [],
-    isActive: false,
-    isEnd: false,
-    enrolledCourses: [],
-  });
+  const [data, setData] = useState(initializeValue);
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -74,24 +71,7 @@ function RegisterStudentComp({ isReceptionist }) {
       .post("/api/students", data)
       .then(({ data }) => {
         console.log(data);
-        setData({
-          firstName: "",
-          lastName: "",
-          middleName: "",
-          birthYear: "",
-          region: "",
-          startedDate: new Date(),
-          tel: [],
-          gender: "",
-          aboutUs: "",
-          wantedCourse: "",
-          wantedDay: "",
-          wantedTime: "",
-          monthlyPayment: [],
-          isActive: false,
-          isEnd: false,
-          enrolledCourses: [],
-        });
+        setData(initializeValue);
 
         // select option larni tozalash
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
@@ -109,16 +89,6 @@ function RegisterStudentComp({ isReceptionist }) {
     <>
       <div className="above__form">
         <h3 className="global__title">O'quvchini ro'yxatga olish</h3>
-        {/* <span>{isOnline ? "🟢online" : "🔴offline"}</span>
-        <span>
-          {batteryInfo.state ? (
-            <>
-              batteryLevel: {Math.round(batteryInfo.batteryInfo?.level * 100)}%
-            </>
-          ) : (
-            ""
-          )}
-        </span> */}
       </div>
       <form onSubmit={handleSubmit} className="form">
         <div className="form__field">

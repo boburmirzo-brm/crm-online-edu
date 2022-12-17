@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {memo} from "react";
 
 const ShowingEnteredNumbers = ({ data, setData }) => {
@@ -6,7 +7,7 @@ const ShowingEnteredNumbers = ({ data, setData }) => {
       Sizning telefon ramalaringiz:{" "}
       {data.tel.map((el, idx) => (
         <span
-          title={`shu raqam( ${idx} ) ni o'chirishni xohlaysizmi?`}
+          title={`shu raqam( ${el} ) ni o'chirishni xohlaysizmi?`}
           className="regStu__deleteNumber"
           onClick={() => {
             let confirm = window.confirm(

@@ -48,8 +48,12 @@ function CreateGroup() {
 
     axios
       .post("/api/groups", data)
-      .then(console.log)
-      .catch(console.log)
+      .then(({data})=> {
+        console.log(console.log)
+      })
+      .catch(({response: {data}})=> {
+        console.log(data)
+      })
       .finally();
   };
   return (
