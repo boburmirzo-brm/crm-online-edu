@@ -4,6 +4,7 @@ import CreateGroup from "../router/global/create-group/CreateGroup"
 import CreateMember from "../router/global/create-member/CreateMember"
 import GetGroup from "../router/global/get-group/GetGroup"
 import GetTeacher from "../router/global/get-teacher/GetTeacher"
+import Statistics from "../router/global/statistics/Statistics"
 import { AiOutlineUsergroupAdd, AiOutlineUserAdd } from "react-icons/ai";
 
 
@@ -42,6 +43,12 @@ export const GLOBAL_ROUTERS = [
         title: "Hodimni ro'yhatga olish",
         path: "/create-member",
         element: <CreateMember/>,
+        icon: <AiOutlineUserAdd />,
+    },
+    {
+        title: "Statistika",
+        path: "/statistics",
+        element: <Statistics/>,
         icon: <AiOutlineUserAdd />,
     },
 ]
