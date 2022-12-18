@@ -1,120 +1,120 @@
-.global__router{
-    padding-bottom: 100px;
+.global__router {
+  padding-bottom: 100px;
 }
-.global__title{
-    margin: 20px 0;
-    color: var(--bg-dark-blue1);
-    font-weight: 500;
-    padding-left: 30px;
-}
-
-
-.get__navbar{
-    width: 100%;
-    height: 50px;
-    background: var(--bg-dark-blue1);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-    color: #fff;
-}
-.get__navbar > h3{
-    font-weight: 400;
-}
-.get__collection{
-    display: flex;
-    gap: 40px;
-    list-style: none;
-    margin-left: 60px;
-}
-.get__item{
-    font-size: 13px;
-    position: relative;
-    cursor: pointer;
-}
-.get__item span{
-    font-size: 11px;
-    min-width: 20px;
-    display: grid;
-    place-items: center;
-    position: absolute;
-    top: -8px;
-    right: -16px;
-    background: crimson;
-    padding: 2px 3.5px;
-    border-radius: 20px;
-}
-.get__item-active::after{
-    content:"";
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #fff;
-    border-radius: 5px 5px 0 0;
+.global__title {
+  margin: 20px 0;
+  color: var(--bg-dark-blue1);
+  font-weight: 500;
+  padding-left: 30px;
 }
 
-.get__controller{
-    position: sticky;
-    top: 50px;
-    z-index: 10;
-    width: 100%;
-    padding-left: 30px;
-    height: 50px;
-    background: var(--bg-light);
-    box-shadow: 0 3px 3px #5551;
-    display: flex;
-    align-items: center;
+.get__navbar {
+  width: 100%;
+  height: 50px;
+  background: var(--bg-dark-blue1);
+  background: var(--bg-dark2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.get__navbar > h3 {
+  font-weight: 400;
+}
+.get__collection {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin-left: 60px;
+}
+.get__item {
+  font-size: 13px;
+  position: relative;
+  cursor: pointer;
+}
+.get__item span {
+  font-size: 11px;
+  min-width: 20px;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  background: crimson;
+  padding: 2px 3.5px;
+  border-radius: 20px;
+}
+.get__item-active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 5px 5px 0 0;
+}
+
+.get__controller {
+  position: sticky;
+  top: 50px;
+  z-index: 10;
+  width: 100%;
+  padding-left: 30px;
+  height: 50px;
+  background: var(--bg-light);
+  box-shadow: 0 3px 3px #5551;
+  display: flex;
+  align-items: center;
 }
 .get__controller input,
-.get__controller select{
-    width: 250px;
-    height: 34px;
-    border: 1px solid #ddd;
-    outline: none;
-    text-indent: 10px;
-    font-size: 13px;
-    border-radius: 5px;
-    margin-right: 20px;
+.get__controller select {
+  width: 250px;
+  height: 34px;
+  border: 1px solid #ddd;
+  outline: none;
+  text-indent: 10px;
+  font-size: 13px;
+  border-radius: 5px;
+  margin-right: 20px;
 }
-.get__controller select{
-    width: 150px;
-    text-indent: 0;
+.get__controller select {
+  width: 150px;
+  text-indent: 0;
 }
-.get__controller-collection{
-    display: flex;
-    gap: 30px;
-    list-style: none;
+.get__controller-collection {
+  display: flex;
+  gap: 30px;
+  list-style: none;
 }
-.get__controller-item{
-    font-size: 14px;
-    padding: 4px 8px;
-    border: 1px solid var( --bg-py);
-    color: var( --bg-py);
-    border-radius: 6px;
-    display: flex;
-    cursor: pointer;
+.get__controller-item {
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 1px solid var(--bg-py);
+  color: var(--bg-py);
+  border-radius: 6px;
+  display: flex;
+  cursor: pointer;
 }
-.get__controller-item span{
-    display: grid;
-    place-items: center;
-    background: var(--bg-py);
-    color: #fff;
-    min-width: 20px;
-    border-radius: 20px;
-    margin-left: 10px;
-    font-size: 12px;
-    padding: 0 4px;
+.get__controller-item span {
+  display: grid;
+  place-items: center;
+  background: var(--bg-py);
+  color: #fff;
+  min-width: 20px;
+  border-radius: 20px;
+  margin-left: 10px;
+  font-size: 12px;
+  padding: 0 4px;
 }
-.get__controller-active{
-    color: #fff;
-    background: var( --bg-py);
+.get__controller-active {
+  color: #fff;
+  background: var(--bg-py);
 }
-.get__controller-active span{
-    background: #fff;
-    color: var(--bg-py);
+.get__controller-active span {
+  background: #fff;
+  color: var(--bg-py);
 }
