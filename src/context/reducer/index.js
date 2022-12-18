@@ -6,6 +6,7 @@ import getStudents from "./getStudents";
 import getOneStudent from "./getOneStudent";
 import getGroups from "./getGroups";
 import getTeachers from "./getTeachers";
+import getOneGroup from "./getOneGroup";
 
 const rootReducer = combineReducers({
   auth,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   getOneStudent,
   getGroups,
   getTeachers,
+  getOneGroup,
 });
 
 export default rootReducer;

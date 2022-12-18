@@ -60,20 +60,3 @@ export const majorForCreateMember = [
 ];
 export const ozbekcha = ["o'qituvchi", "admin", "qabuldagi xodim", "xisobchi"];
 
-export const tempTeachers = [
-  {
-    _id: "qwertyuiuytrew",
-    firstName: "Abdulloh",
-    major: "it",
-  },
-  {
-    _id: "poiuytrewq",
-    firstName: "Zokirkhon",
-    major: "english",
-  },
-  {
-    _id: "p098uhgfr4",
-    firstName: "Laylo",
-    major: "russia",
-  },
-];

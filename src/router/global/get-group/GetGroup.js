@@ -1,10 +1,33 @@
-import React, { memo } from "react";
-import { useSelector } from "react-redux";
-import { TEACHER_MAJOR } from "../../../static";
-import "./GetGroup.css"
+// @ts-nocheck
+import React, { useState, memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  getOneGroupAction,
+  reloadAction,
+} from "../../../context/action/action";
+import "./GetGroup.css";
+import bugalteriya from "../../../assets/Bug'alteriya.jpg";
+import dtmTest from "../../../assets/DTM ga tayyorgarlik.jpg";
+import english from "../../../assets/english.jpg";
+import it from "../../../assets/it.jpg";
+import matematika from "../../../assets/matematika.jpg";
+import russia from "../../../assets/russia.jpg";
 
 function GetGroup() {
   const groups = useSelector((s) => s?.getGroups);
+  const dispatch = useDispatch();
+
+  // console.log(groups);
+  const [images] = useState({
+    it: it,
+    russia: russia,
+    english: english,
+    matematika: matematika,
+    "DTM ga tayyorgarlik": dtmTest,
+    "Bug'alteriya": bugalteriya,
+  });
+
   return (
     <div className="global__router">
       <div className="get__navbar">
@@ -20,23 +43,79 @@ function GetGroup() {
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
-          <li className="get__controller-item get__controller-active">Barchasi <span>12</span></li>
-          <li className="get__controller-item">IT <span>3</span></li>
-          <li className="get__controller-item">English <span>5</span></li>
-          <li className="get__controller-item">Russian <span>2</span></li>
-          <li className="get__controller-item">DTM <span>2</span></li>
-          <li className="get__controller-item">Bug'alteriya <span>0</span></li>
+          <li className="get__controller-item get__controller-active">
+            Barchasi <span>12</span>
+          </li>
+          <li className="get__controller-item">
+            IT <span>3</span>
+          </li>
+          <li className="get__controller-item">
+            English <span>5</span>
+          </li>
+          <li className="get__controller-item">
+            Russian <span>2</span>
+          </li>
+          <li className="get__controller-item">
+            DTM <span>2</span>
+          </li>
+          <li className="get__controller-item">
+            Bug'alteriya <span>0</span>
+          </li>
         </ul>
       </div>
       <div className="get__group-container">
-        {groups?.map((item) => (
-          <div className="get__group-card" key={item._id}>
-            <h3>
-              {item.major} {item.level}
-            </h3>
-            <hr />
-          </div>
-        ))}
+        {groups?.length ? (
+          groups?.map((item) => {
+            const {
+              _id: groupId,
+              major,
+              level,
+              teacherInfo: { firstName, lastName },
+              room: { number },
+              enrolledStudents,
+              day,
+              time,
+            } = item;
+            return (
+              <div className="get__group-card" key={groupId}>
+                <img src={images[major]} alt={major + " " + level} />
+                <h3>
+                  {major.capitalLetter()} {level}
+                </h3>
+                <p>
+                  O'qituvchi:{" "}
+                  <b>
+                    {firstName} {lastName}
+                  </b>
+                </p>
+                <p>
+                  Guruh xona: <b>{number}-xona</b>
+                </p>
+                <p>
+                  O'quvchilar soni: <b>{enrolledStudents.length}</b>
+                </p>
+                <p>
+                  Kun: <i>{day}</i>
+                </p>
+                <p>
+                  Vaqt: <i>{time}</i>
+                </p>
+                <hr />
+                <div className="get__group-btn">
+                  <Link
+                    onClick={() => dispatch(getOneGroupAction(item))}
+                    to={groupId}
+                  >
+                    <button>Batafsil</button>
+                  </Link>
+                  <button style={{ background: "crimson" }}>O'chirish</button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>Guruhlar mavjud emas!</p>
+        )}
       </div>
     </div>
   );

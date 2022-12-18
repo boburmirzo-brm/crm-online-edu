@@ -8,7 +8,11 @@ import { useDispatch } from "react-redux";
 import { reloadAction } from "../../../context/action/action";
 
 let initializeData = {
-  teacherId: "",
+  teacherInfo: {
+    _id: "",
+    firstName: "",
+    lastName: "",
+  },
   name: "",
   major: "",
   level: "",
@@ -35,6 +39,10 @@ function CreateGroup() {
     let copyData = structuredClone(data);
     if (key === "number") {
       copyData.room[key] = t.value;
+    } else if (key === "teacherInfo") {
+      let [_id, firstName, lastName] = t.value.split(", ");
+      let obj = { _id, firstName, lastName };
+      copyData[key] = obj;
     } else {
       copyData[key] = t.value;
     }
@@ -44,7 +52,7 @@ function CreateGroup() {
     // copyData[key] = +t.value.replace(/\D/g, "");
   };
 
-  // console.log(data);
+  console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +64,7 @@ function CreateGroup() {
         dispatch(reloadAction());
         setData(initializeData);
         // select option larni tozolash;
-        [teacherId, major, level, day, time].forEach((e) => (e.value = ""));
+        [teacherInfo, major, level, day, time].forEach((e) => (e.value = ""));
       })
       .catch(({ response: { data } }) => {
         console.log(data);
@@ -74,16 +82,16 @@ function CreateGroup() {
               <select
                 onChange={handleChange}
                 title="O'qituvchini tanlang"
-                value={data.teacherId}
-                name="teacherId"
-                id="teacherId"
+                defaultValue={`${data.teacherInfo.firstName} ${data.teacherInfo.lastName}`}
+                name="teacherInfo"
+                id="teacherInfo"
                 required
               >
                 <option value="">tanlang</option>
                 {teachersSomeData?.map(({ _id, firstName, lastName }, idx) => (
                   <option
                     key={idx}
-                    value={_id}
+                    value={`${_id}, ${firstName}, ${lastName}`}
                     title={[firstName, lastName].join(" ")}
                   >
                     {firstName.capitalLetter()} {lastName.capitalLetter()}

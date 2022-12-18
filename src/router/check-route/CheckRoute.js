@@ -12,6 +12,8 @@ import Loader from "../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../context/action/action";
 import OneStudent from "../global/one-student/OneStudent";
+import OneGroup from "../global/one-group/OneGroup";
+
 
 // let user = {
 //   token: "asdklasjdlkasjdklasjdlksad",
@@ -79,6 +81,7 @@ function CheckRoute() {
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/accounter" element={<Accounter />} />
           <Route path={`${path}/get-student/:id`} element={<OneStudent/>}/>
+          <Route path={`${path}/get-group/:id`} element={<OneGroup/>}/>
 
           {GLOBAL_ROUTERS?.map((item, inx) => (
             <Route key={inx} path={path + item.path} element={item.element} />
