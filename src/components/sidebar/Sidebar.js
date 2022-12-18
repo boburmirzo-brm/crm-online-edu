@@ -2,9 +2,16 @@ import React, {memo} from "react";
 import "./Sidebar.css";
 import { NavLink, useLocation } from "react-router-dom";
 import {GLOBAL_ROUTERS} from "../../static/router"
+import { useDispatch } from "react-redux"
+import { logOutAction } from "../../context/action/action"
 
 function Sidebar({ info, degree }) {
   const { pathname } = useLocation();
+  const dispatch = useDispatch()
+  const logOut = ()=>{
+    if(window.confirm("Tizimdan chindan ham chiqmoqchimisi"))
+      dispatch(logOutAction())
+  }
   return (
     <div className="sidebar">
       <h2 className="sidebar__logo">Algoritm EDU</h2>
@@ -38,6 +45,7 @@ function Sidebar({ info, degree }) {
         </NavLink> )
         }
       </div>
+      <button onClick={logOut}>Tizimdan chiqish</button>
     </div>
   );
 }

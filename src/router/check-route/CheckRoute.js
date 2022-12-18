@@ -13,25 +13,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../context/action/action";
 import OneStudent from "../global/one-student/OneStudent";
 
-let user = {
-  token: "asdklasjdlkasjdklasjdlksad",
-  info: {
-    username: "bobur0668",
-    firstName: "Boburmirzo",
-    lastName: "RasulovRasulov",
-    middleName: "Ma'ruf ugli",
-    major: "it",
-  },
-  degree: {
-    owner: false,
-    admin: false,
-    teacher: false,
-    receptionist: true,
-    accounter: false,
-  },
-};
+// let user = {
+//   token: "asdklasjdlkasjdklasjdlksad",
+//   info: {
+//     username: "bobur0668",
+//     firstName: "Boburmirzo",
+//     lastName: "RasulovRasulov",
+//     middleName: "Ma'ruf ugli",
+//     major: "it",
+//   },
+//   degree: {
+//     owner: false,
+//     admin: false,
+//     teacher: false,
+//     receptionist: true,
+//     accounter: false,
+//   },
+// };
 
 function CheckRoute() {
+  const user = useSelector(s=>s?.auth)
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
   let params = useParams();
   let changePath =
@@ -49,6 +50,7 @@ function CheckRoute() {
   
 
   const reload = useSelector(s=>s?.reload)
+
   const dispatch = useDispatch();
 
   const students = useFetch("/api/students", reload);

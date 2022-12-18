@@ -96,7 +96,6 @@ function CreateMember() {
         setData(initializeValue);
         [region, gender, major].forEach((e) => (e.value = ""));
         setShowTeacherMajors(false);
-        alert("muvaffaqiyatli tizimga kiritildi")
       })
       .catch(({ response: { data } }) => {
         console.log(data?.msg);
@@ -110,38 +109,7 @@ function CreateMember() {
       <div className="global__router">
         <h3 className="global__title">Hodimlarni ro'yxatga olish</h3>
         <form onSubmit={handleSubmit} className="form">
-          <div className="form__field">
-            <label htmlFor="username">Username: </label>
-            <div>
-              <input
-                onChange={handleChange}
-                value={data.username}
-                title="Username kiriting."
-                type="text"
-                placeholder="username..."
-                name="username"
-                id="username"
-                required
-                autoComplete="off"
-              />
-            </div>
-          </div>
-          <div className="form__field">
-            <label htmlFor="password">Parol: </label>
-            <div>
-              <input
-                onChange={handleChange}
-                value={data.password}
-                title="Parol kiriting"
-                type="password"
-                placeholder="parol kiriting"
-                name="password"
-                id="password"
-                required
-                autoComplete="off"
-              />
-            </div>
-          </div>
+         
 
           <div className="form__field">
             <label htmlFor="firstName">Ism: </label>
@@ -188,6 +156,38 @@ function CreateMember() {
                 placeholder="otasining ismini kiriting"
                 name="middleName"
                 id="middleName"
+                required
+                autoComplete="off"
+              />
+            </div>
+          </div>
+          <div className="form__field">
+            <label htmlFor="username">Username: </label>
+            <div>
+              <input
+                onChange={handleChange}
+                value={data.username}
+                title="Username kiriting."
+                type="text"
+                placeholder="username..."
+                name="username"
+                id="username"
+                required
+                autoComplete="off"
+              />
+            </div>
+          </div>
+          <div className="form__field">
+            <label htmlFor="password">Parol: </label>
+            <div>
+              <input
+                onChange={handleChange}
+                value={data.password}
+                title="Parol kiriting"
+                type="password"
+                placeholder="parol kiriting"
+                name="password"
+                id="password"
                 required
                 autoComplete="off"
               />
