@@ -18,7 +18,7 @@ function GetGroup() {
   const groups = useSelector((s) => s?.getGroups);
   const dispatch = useDispatch();
 
-  console.log(groups);
+  // console.log(groups);
   const [images] = useState({
     it: it,
     russia: russia,
@@ -34,32 +34,35 @@ function GetGroup() {
         <h3>Guruhlar</h3>
         <ul className="get__collection">
           <li className="get__item get__item-active">
-            Yangi Guruhlar <span>12</span>
+            Yangi Guruhlar <span>{groups?.yangiGuruhlar().uzunlik}</span>
           </li>
           <li className="get__item">
-            Barcha Guruhlar <span>126</span>
+            Aktiv Guruhlar <span>16</span>
           </li>
         </ul>
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
           <li className="get__controller-item get__controller-active">
-            Barchasi <span>12</span>
+            Barchasi <span>{groups?.yangiGuruhlar().uzunlik}</span>
           </li>
           <li className="get__controller-item">
-            IT <span>3</span>
+            IT <span>{groups?.yangiGuruhlar().majorIt.length}</span>
           </li>
           <li className="get__controller-item">
-            English <span>5</span>
+            English <span>{groups?.yangiGuruhlar().majorEnglish.length}</span>
           </li>
           <li className="get__controller-item">
-            Russian <span>2</span>
+            Russian <span>{groups?.yangiGuruhlar().majorRussia.length}</span>
           </li>
           <li className="get__controller-item">
-            DTM <span>2</span>
+            DTM <span>{groups?.yangiGuruhlar().majorDTM.length}</span>
           </li>
           <li className="get__controller-item">
-            Bug'alteriya <span>0</span>
+            Bug'alteriya <span>{groups?.yangiGuruhlar().majorEconomics.length}</span>
+          </li>
+          <li className="get__controller-item">
+            Matematika <span>{groups?.yangiGuruhlar().majorMath.length}</span>
           </li>
         </ul>
       </div>
@@ -100,6 +103,13 @@ function GetGroup() {
                 <p>
                   Vaqt: <i>{time}</i>
                 </p>
+                {!enrolledStudents.length ? (
+                  <span className="get__student-notGroup">
+                    O'quvchi guruhga qo'shilmagan
+                  </span>
+                ) : (
+                  ""
+                )}
                 <hr />
                 <div className="get__group-btn">
                   <Link

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { TEACHER_MAJOR } from "../../../static";
@@ -8,16 +9,17 @@ import { Link } from "react-router-dom";
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
+  // console.log(teachers)
   return (
     <div>
       <div className="get__navbar">
         <h3>O'qituvchilar</h3>
         <ul className="get__collection">
           <li className="get__item get__item-active">
-            O'qituvchilar <span>31</span>
+            O'qituvchilar <span>{teachers?.allTeachersIsActiveTrue()}</span>
           </li>
           <li className="get__item">
-            Ishdan Ketgan O'qituvchilar <span>6</span>
+            Ishdan Ketgan O'qituvchilar <span>{teachers?.allTeachersIsActiveFalse()}</span>
           </li>
         </ul>
       </div>
