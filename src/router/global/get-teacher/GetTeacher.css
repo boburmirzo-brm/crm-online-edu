@@ -24,7 +24,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    filter: hue-rotate(200deg) invert(40%) sepia(20%);
+    filter: contrast(40%) saturate(9);
 }
 .get__teacher-cardHead div{
     width: calc(100% - 80px);

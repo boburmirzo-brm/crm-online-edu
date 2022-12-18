@@ -15,65 +15,69 @@
     position: relative;
     box-shadow: 0 0 10px #5551;
 }
-.get__student-card img{
-    width: 100px;
-    min-height: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-    margin: auto;
-    margin-bottom: 10px;
-    filter: hue-rotate(200deg) invert(40%) sepia(20%);
+.get__student-card img {
+  width: 100px;
+  min-height: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+  filter: contrast(40%) saturate(9);
 }
-.get__student-card h3{
-    color: var(--bg-td);
-    font-weight: 500;
-    font-size: 16px;
-    flex-grow: 1;
+.get__student-card h3 {
+  color: var(--bg-td);
+  font-weight: 500;
+  font-size: 16px;
+  flex-grow: 1;
 }
-.get__student-card p{
-    font-size: 14px;
-    line-height: 1.8;
-    color: #888;
+.get__student-card p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #888;
 }
-.get__student-card p b{
-    font-weight: 500;
-    color: #000;
+.get__student-card p b {
+  font-weight: 500;
+  color: #000;
 }
-.get__student-card p i{
-    color: #333;
+.get__student-card p i {
+  color: #333;
 }
-.get__student-notGroup{
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    font-size: 11px;
-    background: var(--bg-danger);
-    color: #fff;
-    padding: 2px 6px;
-    border-radius: 4px;
+.get__student-notGroup {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 11px;
+  background: var(--bg-danger);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
-.get__student-extra{
-    margin-top: 10px;
-    border-top: 1px solid #ddd;
+.get__student-extra {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
 }
 
-.get__student-btn{
-    margin-top: 12px;
-    display: flex;
-    gap: 4px;
+.get__student-btn {
+  margin-top: 12px;
+  display: flex;
+  gap: 4px;
 }
-.get__student-btn button{
-    padding: 4px 12px;
-    background: var(--bg-py);
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 2px 2px 3px #0003;
-    opacity: .8;
-    transition: .3s;
+.get__student-btn button {
+  padding: 4px 12px;
+  background: var(--bg-py);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #0003;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.get__student-btn button:hover {
+  opacity: 1;
+  box-shadow: 2px 2px 6px #0004;
 }
 .get__student-btn button:hover{
     opacity: 1;

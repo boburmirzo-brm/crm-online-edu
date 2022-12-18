@@ -5,7 +5,6 @@ import "./GetGroup.css"
 
 function GetGroup() {
   const groups = useSelector((s) => s?.getGroups);
-  console.log(groups[0]);
   return (
     <div className="global__router">
       <div className="get__navbar">
