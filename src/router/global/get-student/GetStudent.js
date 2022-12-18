@@ -6,6 +6,7 @@ import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
 import { getOneStudentAction, reloadAction } from "../../../context/action/action";
 import axios from "../../../api";
+import {TEACHER_MAJOR} from "../../../static/index"
 
 function GetStudent() {
   const data = useSelector((s) => s?.getStudents)
@@ -22,7 +23,24 @@ function GetStudent() {
   }
   return (
     <div className="global__router">
-      <h3 className="global__title">O'quvchilar</h3>
+      <div className="get__navbar">
+        <h3>O'quvchilar</h3>
+        <ul className="get__collection">
+          <li className="get__item get__item-active">Yangi O'quvchilar <span>2</span></li>
+          <li className="get__item">Yangi Guruh O'quvchilari <span>85</span></li>
+          <li className="get__item">Barcha O'quvchilar <span>1589</span></li>
+        </ul>
+      </div>
+      <div className="get__controller">
+        <input type="text" placeholder="O'quvchi FISH..." />
+        <select name="" id="">
+          <option value="all">Barcha yo'nalishlar</option>
+          {
+            TEACHER_MAJOR?.map((i,inx)=> <option key={inx} value={i}>{i.toUpperCase()}</option>)
+          }
+        </select>
+      </div>
+      {/* <h3 className="global__title">O'quvchilar</h3> */}
       <div className="get__student-container">
         {data?.map((item, inx) => (
           <div key={inx} className="get__student-card">

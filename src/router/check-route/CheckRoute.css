@@ -1,6 +1,5 @@
 .check__route{
     display: flex;
-    gap: 30px;
     background: var(--bg-light);
 }
 .check__content{
