@@ -18,7 +18,7 @@ function GetGroup() {
   const groups = useSelector((s) => s?.getGroups);
   const dispatch = useDispatch();
 
-  // console.log(groups);
+  console.log(groups);
   const [images] = useState({
     it: it,
     russia: russia,
@@ -92,7 +92,7 @@ function GetGroup() {
                   Guruh xona: <b>{number}-xona</b>
                 </p>
                 <p>
-                  O'quvchilar soni: <b>{enrolledStudents.length}</b>
+                  O'quvchilar soni: <b>{enrolledStudents.length} ta</b>
                 </p>
                 <p>
                   Kun: <i>{day}</i>
