@@ -1,0 +1,96 @@
+.get__OneGroup-main {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.get__OneGroup-main > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  min-height: 80vh;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--bg-py);
+  box-shadow: 0px 0px 4px #7e7d7d;
+}
+.get__OneGroup-main > div:first-of-type {
+    height: 100vh;
+}
+.get__OneGroup-main > div:last-of-type {
+  overflow-y: auto;
+}
+.get__OneGroup-main img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.get__OneGroup-main h3 {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.get__OneGroup-main h3,
+.get__OneGroup-main p {
+  color: var(--bg-td);
+}
+.get__OneGroup-main p {
+  font-size: 18px;
+}
+.get__oneGroup_btns > button {
+  cursor: pointer;
+  margin-left: 4px;
+  border-radius: 6px;
+  color: #fff;
+  border: none;
+  padding: 4px;
+  opacity: 0.8;
+  transition: all 0.19s ease-in-out;
+}
+
+.get__oneGroup_btns > button:hover {
+  opacity: 1;
+  box-shadow: 2px 2px 6px #0004;
+}
+
+.get__oneGroup_btn_add {
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  padding: 8px;
+  opacity: 0.8;
+  transition: all 0.19s ease-in-out;
+  border-radius: 6px;
+  color: #fff;
+  background-color: green;
+}
+.get__oneGroup_btn_add:hover {
+  opacity: 1;
+  box-shadow: 2px 2px 6px #0004;
+}
+
+.get__oneGroup_eachStudent {
+  cursor: pointer;
+  border-top: 1px solid var(--bg-py);
+  opacity: 0.8;
+  transition: all 0.19s ease-in-out;
+}
+
+.get__oneGroup_eachStudent:last-of-type {
+  border-bottom: 1px solid var(--bg-py);
+}
+.get__oneGroup_eachStudent p {
+  margin-left: 10px;
+}
+.get__oneGroup_eachStudent:hover {
+  opacity: 1;
+  box-shadow: 2px 2px 6px #0004;
+}
+.get__oneGroup_students_title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px !important;
+  margin: 5px;
+}
