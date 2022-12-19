@@ -1,6 +1,6 @@
 import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut , Pie, PolarArea} from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,7 +25,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 function ChartCom({data,title}) {
   return <div>
     <h3>{title}</h3>
-     <Doughnut data={data}/>
+     <Pie data={data}/>
   </div>;
 }
 

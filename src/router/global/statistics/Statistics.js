@@ -67,6 +67,9 @@ function Statistics() {
         <div className="statistics__item">
           <ChartCom data={region} title="Hudud"/>
         </div>
+        <div className="statistics__item">
+          <ChartCom data={region} title="Hudud"/>
+        </div>
       </div>
     </div>
   )
