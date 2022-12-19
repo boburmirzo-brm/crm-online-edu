@@ -34,35 +34,35 @@ function GetGroup() {
         <h3>Guruhlar</h3>
         <ul className="get__collection">
           <li className="get__item get__item-active">
-            Yangi Guruhlar <span>{groups?.yangiGuruhlar().uzunlik}</span>
+            Yangi Guruhlar <span>{groups?.yangiGuruhlar(false).uzunlik}</span>
           </li>
           <li className="get__item">
-            Aktiv Guruhlar <span>16</span>
+            Aktiv Guruhlar <span>{groups?.yangiGuruhlar(true).uzunlik}</span>
           </li>
         </ul>
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
           <li className="get__controller-item get__controller-active">
-            Barchasi <span>{groups?.yangiGuruhlar().uzunlik}</span>
+            Barchasi <span>{groups?.yangiGuruhlar(false).uzunlik}</span>
           </li>
           <li className="get__controller-item">
-            IT <span>{groups?.yangiGuruhlar().majorIt.length}</span>
+            IT <span>{groups?.yangiGuruhlar(false).majorIt.length}</span>
           </li>
           <li className="get__controller-item">
-            English <span>{groups?.yangiGuruhlar().majorEnglish.length}</span>
+            English <span>{groups?.yangiGuruhlar(false).majorEnglish.length}</span>
           </li>
           <li className="get__controller-item">
-            Russian <span>{groups?.yangiGuruhlar().majorRussia.length}</span>
+            Russian <span>{groups?.yangiGuruhlar(false).majorRussia.length}</span>
           </li>
           <li className="get__controller-item">
-            DTM <span>{groups?.yangiGuruhlar().majorDTM.length}</span>
+            DTM <span>{groups?.yangiGuruhlar(false).majorDTM.length}</span>
           </li>
           <li className="get__controller-item">
-            Bug'alteriya <span>{groups?.yangiGuruhlar().majorEconomics.length}</span>
+            Bug'alteriya <span>{groups?.yangiGuruhlar(false).majorEconomics.length}</span>
           </li>
           <li className="get__controller-item">
-            Matematika <span>{groups?.yangiGuruhlar().majorMath.length}</span>
+            Matematika <span>{groups?.yangiGuruhlar(false).majorMath.length}</span>
           </li>
         </ul>
       </div>

@@ -25,8 +25,8 @@ module.exports = Array.prototype.allStudents = function () {
   return this?.length;
 };
 
-module.exports = Array.prototype.yangiGuruhlar = function () {
-  const newGroups = this?.filter((el) => !el.enrolledStudents.length);
+module.exports = Array.prototype.yangiGuruhlar = function (bool) {
+  const newGroups = this?.filter((el) => el.isActive === bool);
   const uzunlik = newGroups.length;
   const majorIt = newGroups.filter((el) => el.major === "it");
   const majorEnglish = newGroups.filter((el) => el.major === "english");

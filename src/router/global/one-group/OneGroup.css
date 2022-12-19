@@ -1,96 +1,89 @@
-.get__OneGroup-main {
-  width: 100%;
-  display: flex;
-  gap: 10px;
+.one__group{
+    padding: 30px;
+}
+.one__group-title{
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--bg-td);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+.one__group-head{
+    margin-top: 12px;
+}
+.one__group-item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.one__group-item p{
+    width: 90px;
+    font-size: 14px;
+    color: var(--bg-td);
+}
+.one__group-item select,
+.one__group-item input{
+    padding: 4px 8px;
+    width: 250px;
+    color: var(--bg-td);
+    background: #def3ff;
+    border: 1px solid #b3e1fc;
+    outline: none;
+}
+.one__group-item:first-child select{
+    width: 125px;
+}
+.one__group-item select:disabled,
+.one__group-item input:disabled{
+    border: 1px solid transparent;
+    color: var(--bg-td);
+    background: #fff;
+}
+.one__group-btnInfo,
+.one__group-btnSuccess,
+.one__group-btnDanger{
+    padding: 4px 16px;
+    border: none;
+    background: #16c416;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px #0003;
+    opacity: .8;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.one__group-btnSuccess:hover,
+.one__group-btnInfo:hover,
+.one__group-btnDanger:hover{
+    opacity: 1;
+    box-shadow: 2px 2px 6px #0004;
+}
+.one__group-btnDanger{
+    margin-left: 5px;
+    background: crimson;
+}
+.one__group-btnInfo{
+    margin-left: 5px;
+    background:  var(--bg-py);
 }
 
-.get__OneGroup-main > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 50%;
-  min-height: 80vh;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid var(--bg-py);
-  box-shadow: 0px 0px 4px #7e7d7d;
+.one__group-body{
+    margin-top: 20px;
 }
-.get__OneGroup-main > div:first-of-type {
-    height: 100vh;
+.one__group-card{
+    display: flex;
+    align-items: center;
+    height: 36px;
+    color: var(--bg-td);
+    border-bottom: 1px solid #ddd;
 }
-.get__OneGroup-main > div:last-of-type {
-  overflow-y: auto;
+.one__group-card span{
+    width: 20px;
 }
-.get__OneGroup-main img {
-  width: 100%;
-  object-fit: cover;
-  border-radius: 6px;
+.one__group-card p{
+    flex: 1;
 }
-.get__OneGroup-main h3 {
-  display: flex;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-.get__OneGroup-main h3,
-.get__OneGroup-main p {
-  color: var(--bg-td);
-}
-.get__OneGroup-main p {
-  font-size: 18px;
-}
-.get__oneGroup_btns > button {
-  cursor: pointer;
-  margin-left: 4px;
-  border-radius: 6px;
-  color: #fff;
-  border: none;
-  padding: 4px;
-  opacity: 0.8;
-  transition: all 0.19s ease-in-out;
-}
-
-.get__oneGroup_btns > button:hover {
-  opacity: 1;
-  box-shadow: 2px 2px 6px #0004;
-}
-
-.get__oneGroup_btn_add {
-  margin-top: 10px;
-  width: 100%;
-  cursor: pointer;
-  border: none;
-  padding: 8px;
-  opacity: 0.8;
-  transition: all 0.19s ease-in-out;
-  border-radius: 6px;
-  color: #fff;
-  background-color: green;
-}
-.get__oneGroup_btn_add:hover {
-  opacity: 1;
-  box-shadow: 2px 2px 6px #0004;
-}
-
-.get__oneGroup_eachStudent {
-  cursor: pointer;
-  border-top: 1px solid var(--bg-py);
-  opacity: 0.8;
-  transition: all 0.19s ease-in-out;
-}
-
-.get__oneGroup_eachStudent:last-of-type {
-  border-bottom: 1px solid var(--bg-py);
-}
-.get__oneGroup_eachStudent p {
-  margin-left: 10px;
-}
-.get__oneGroup_eachStudent:hover {
-  opacity: 1;
-  box-shadow: 2px 2px 6px #0004;
-}
-.get__oneGroup_students_title {
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px !important;
-  margin: 5px;
+.one__group-warning{
+    text-align: center;
+    color: crimson;
 }
