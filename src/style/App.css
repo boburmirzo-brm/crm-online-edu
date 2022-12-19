@@ -87,7 +87,7 @@
 }
 .get__controller-collection {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   list-style: none;
 }
 .get__controller-item {
@@ -98,6 +98,7 @@
   border-radius: 6px;
   display: flex;
   cursor: pointer;
+  transition: .3s;
 }
 .get__controller-item span {
   display: grid;

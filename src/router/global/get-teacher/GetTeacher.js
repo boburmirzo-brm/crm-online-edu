@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { memo } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { TEACHER_MAJOR } from "../../../static";
 import "./GetTeacher.css";
@@ -9,23 +9,61 @@ import { Link } from "react-router-dom";
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
-  // console.log(teachers)
+  const [active, setActive] = useState(true);
+  const [major, setMajor] = useState("all");
+  const [name, setName] = useState("");
+  const [filterTeachers, setFilterTeachers] = useState([]);
+
+  useEffect(()=>{
+    setMajor("all")
+    setFilterTeachers(
+      teachers.filter((i) => (
+        i.firstName.toLowerCase().includes(name.toLowerCase())||
+        i.middleName.toLowerCase().includes(name.toLowerCase())||
+        i.lastName.toLowerCase().includes(name.toLowerCase())
+        ))
+        );
+  }, [name])
+  
+  useEffect(() => {
+    if (major === "all") {
+      return setFilterTeachers(teachers.filter((i) => i.isActive === active));
+    }
+    setFilterTeachers(
+      teachers.filter((i) => (
+        i.isActive === active && 
+        major === i.major && 
+        i.firstName.toLowerCase().includes(name.toLowerCase())&&
+        i.lastName.toLowerCase().includes(name.toLowerCase())
+        ))
+        );
+      }, [teachers, active, major]);
+      
+ 
   return (
     <div>
       <div className="get__navbar">
         <h3>O'qituvchilar</h3>
         <ul className="get__collection">
-          <li className="get__item get__item-active">
-            O'qituvchilar <span>{teachers?.allTeachersIsActiveTrue()}</span>
+          <li
+            onClick={() => setActive(true)}
+            className={`get__item ${active ? "get__item-active" : ""}`}
+          >
+            O'qituvchilar{" "}
+            <span>{teachers?.allTeachersIsActive(true).length}</span>
           </li>
-          <li className="get__item">
-            Ishdan Ketgan O'qituvchilar <span>{teachers?.allTeachersIsActiveFalse()}</span>
+          <li
+            onClick={() => setActive(false)}
+            className={`get__item ${active ? "" : "get__item-active"}`}
+          >
+            Ishdan Ketgan O'qituvchilar{" "}
+            <span>{teachers?.allTeachersIsActive(false).length}</span>
           </li>
         </ul>
       </div>
       <div className="get__controller">
-        <input type="text" placeholder="O'qituvchi FISH..." />
-        <select name="" id="">
+        <input value={name}  onChange={e=>setName(e.target.value)} type="text" placeholder="O'qituvchi FISH..." />
+        <select onChange={(e) => setMajor(e.target.value)} name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (
             <option key={inx} value={i}>
@@ -35,49 +73,65 @@ function GetTeacher() {
         </select>
       </div>
       <div className="get__teacher-container">
-        {teachers?.map((item) => {
-          let {birthYear,firstName,gender,lastName,major,middleName,password,region,tel,username,_id} = item
-          return <div key={item._id} className="get__teacher-card">
-            <div className="get__teacher-cardHead">
-              <img src={gender==="male"? male: female} alt="" />
-              <div>
-                <h4>{lastName} {firstName} {middleName}</h4>
+        {filterTeachers?.map((item) => {
+          let {
+            birthYear,
+            firstName,
+            gender,
+            lastName,
+            major,
+            middleName,
+            password,
+            region,
+            tel,
+            username,
+            _id,
+          } = item;
+          return (
+            <div key={item._id} className="get__teacher-card">
+              <div className="get__teacher-cardHead">
+                <img src={gender === "male" ? male : female} alt="" />
+                <div>
+                  <h4>
+                    {lastName} {firstName} {middleName}
+                  </h4>
+                  <p>
+                    Fan <b>{major}</b>
+                  </p>
+                  <p>
+                    Manzil <b>{region}</b>
+                  </p>
+                  <p>
+                    Tug'ilgan sana <b>{birthYear} yil</b>
+                  </p>
+                </div>
+              </div>
+              <div className="get__teacher-cardBody">
                 <p>
-                  Fan <b>{major}</b>
+                  Tel <b>{tel?.map((i) => i + " ")}</b>
                 </p>
                 <p>
-                  Manzil <b>{region}</b>
+                  Guruhlar <b>7</b>
                 </p>
                 <p>
-                  Tug'ilgan sana <b>{birthYear} yil</b>
+                  Username <b>{username}</b>
                 </p>
+                <p>
+                  Parol <b>{password}</b>
+                </p>
+                <div className="get__student-btn">
+                  <Link
+                    // onClick={() => dispatch(getOneStudentAction(item))}
+                    to={"item._id"}
+                  >
+                    <button>Batafsil</button>
+                  </Link>
+                  <button style={{ background: "crimson" }}>O'chirish</button>
+                </div>
               </div>
             </div>
-            <div className="get__teacher-cardBody">
-              <p>
-                Tel <b>{tel?.map(i=>i + " ")}</b>
-              </p>
-              <p>
-                Guruhlar <b>7</b>
-              </p>
-              <p>
-                Username <b>{username}</b>
-              </p>
-              <p>
-                Parol <b>{password}</b>
-              </p>
-              <div className="get__student-btn">
-                <Link
-                  // onClick={() => dispatch(getOneStudentAction(item))}
-                  to={"item._id"}
-                >
-                  <button>Batafsil</button>
-                </Link>
-                <button style={{ background: "crimson" }}>O'chirish</button>
-              </div>
-            </div>
-          </div>
-})}
+          );
+        })}
       </div>
     </div>
   );

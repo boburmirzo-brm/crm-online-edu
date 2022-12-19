@@ -1,0 +1,9 @@
+.statistics__container{
+    display: flex;
+    gap: 30px;
+    margin: 30px;
+}
+
+.statistics__item{
+    width: calc(50% - 30px);
+}

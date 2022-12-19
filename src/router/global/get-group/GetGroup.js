@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -17,8 +17,19 @@ import russia from "../../../assets/russia.jpg";
 function GetGroup() {
   const groups = useSelector((s) => s?.getGroups);
   const dispatch = useDispatch();
+  const [active, setActive] = useState(false)
+  const [type, setType] = useState("all")
+  const [filterData, setFilterData] = useState([])
 
-  // console.log(groups);
+  useEffect(()=>{
+    if (type === "all"){
+      return setFilterData(groups.filter(i=> i.isActive === active))
+    }
+    setFilterData(groups.filter(i=> i.major === type && i.isActive === active))
+  }, [type,groups,active])
+
+  console.log(filterData);
+
   const [images] = useState({
     it: it,
     russia: russia,
@@ -33,42 +44,42 @@ function GetGroup() {
       <div className="get__navbar">
         <h3>Guruhlar</h3>
         <ul className="get__collection">
-          <li className="get__item get__item-active">
+          <li onClick={()=>setActive(false)} className={`get__item ${active? "" :"get__item-active"}`}>
             Yangi Guruhlar <span>{groups?.yangiGuruhlar(false).uzunlik}</span>
           </li>
-          <li className="get__item">
+          <li onClick={()=>setActive(true)} className={`get__item ${active? "get__item-active":""}`}>
             Aktiv Guruhlar <span>{groups?.yangiGuruhlar(true).uzunlik}</span>
           </li>
         </ul>
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
-          <li className="get__controller-item get__controller-active">
-            Barchasi <span>{groups?.yangiGuruhlar(false).uzunlik}</span>
+          <li onClick={()=> setType("all")} className={`get__controller-item ${type==="all"?"get__controller-active":""}`}>
+            Barchasi <span>{groups?.yangiGuruhlar(active).uzunlik}</span>
           </li>
-          <li className="get__controller-item">
-            IT <span>{groups?.yangiGuruhlar(false).majorIt.length}</span>
+          <li onClick={()=> setType("it")} className={`get__controller-item ${type==="it"?"get__controller-active":""} `}>
+            IT <span>{groups?.yangiGuruhlar(active).majorIt.length}</span>
           </li>
-          <li className="get__controller-item">
-            English <span>{groups?.yangiGuruhlar(false).majorEnglish.length}</span>
+          <li onClick={()=> setType("english")} className={`get__controller-item ${type==="english"?"get__controller-active":""}`}>
+            English <span>{groups?.yangiGuruhlar(active).majorEnglish.length}</span>
           </li>
-          <li className="get__controller-item">
-            Russian <span>{groups?.yangiGuruhlar(false).majorRussia.length}</span>
+          <li onClick={()=> setType("russia")} className={`get__controller-item ${type==="russia"?"get__controller-active":""}`}>
+            Russian <span>{groups?.yangiGuruhlar(active).majorRussia.length}</span>
           </li>
-          <li className="get__controller-item">
-            DTM <span>{groups?.yangiGuruhlar(false).majorDTM.length}</span>
+          <li onClick={()=> setType("DTM ga tayyorgarlik")} className={`get__controller-item ${type==="DTM ga tayyorgarlik"?"get__controller-active":""}`}>
+            DTM <span>{groups?.yangiGuruhlar(active).majorDTM.length}</span>
           </li>
-          <li className="get__controller-item">
-            Bug'alteriya <span>{groups?.yangiGuruhlar(false).majorEconomics.length}</span>
+          <li onClick={()=> setType("Bug'alteriya")} className={`get__controller-item ${type==="Bug'alteriya"?"get__controller-active":""}`}>
+            Bug'alteriya <span>{groups?.yangiGuruhlar(active).majorEconomics.length}</span>
           </li>
-          <li className="get__controller-item">
-            Matematika <span>{groups?.yangiGuruhlar(false).majorMath.length}</span>
+          <li onClick={()=> setType("matematika")} className={`get__controller-item ${type==="matematika"?"get__controller-active":""}`}>
+            Matematika <span>{groups?.yangiGuruhlar(active).majorMath.length}</span>
           </li>
         </ul>
       </div>
       <div className="get__group-container">
-        {groups?.length ? (
-          groups?.map((item) => {
+        {filterData?.length ? (
+          filterData?.map((item) => {
             const {
               _id: groupId,
               major,

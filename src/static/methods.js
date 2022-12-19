@@ -47,8 +47,8 @@ module.exports = Array.prototype.yangiGuruhlar = function (bool) {
   };
 };
 
-module.exports = Array.prototype.allTeachersIsActiveTrue = function () {
-  return this?.reduce((a, c) => (a += c.isActive ? 1 : 0), 0);
+module.exports = Array.prototype.allTeachersIsActive = function (bool) {
+  return this?.filter( t => t.isActive === bool);
 };
 
 module.exports = Array.prototype.allTeachersIsActiveFalse = function () {
