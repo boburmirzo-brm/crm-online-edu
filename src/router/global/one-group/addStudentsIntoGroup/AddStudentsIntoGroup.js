@@ -1,14 +1,54 @@
 // @ts-nocheck
-import React, { memo } from "react";
+import React, { useState, memo } from "react";
 import "./AddStudentsIntoGroup.css";
 import { FiX } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import female from "../../../../assets/female-icon.webp";
 import male from "../../../../assets/male-icon.png";
+import { getOneGroupAction } from "../../../../context/action/action";
+import axios from "../../../../api";
 
-const AddStudentsIntoGroup = ({ groupId, setStudentsModal }) => {
-  const students = useSelector((s) => s?.getStudents);
-  console.log(students);
+const AddStudentsIntoGroup = ({
+  group,
+  groupID,
+  enrolledStudents,
+  setStudentsModal,
+}) => {
+  const [deleteUserId, setDeletedUserId] = useState("");
+  let students = useSelector((s) => s?.getStudents);
+  students = students?.filter(({ _id }) => {
+    if (enrolledStudents.includes(_id)) {
+      return false;
+    }
+    if (deleteUserId === _id) {
+      return false;
+    }
+    return true;
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  // console.log(students);
+
+  const handleSubmit = (studentID) => {
+    let data = { groupID, studentID };
+    if (studentID.length) {
+      setIsLoading(true);
+      axios
+        .patch("/api/groups/student-add", data)
+        .then(({ data }) => {
+          setDeletedUserId(studentID);
+          console.log(data);
+          dispatch(getOneGroupAction(group));
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
   return (
     <div className="add_student_into_group__main">
       <div className="add_student_into_group__container">
@@ -47,10 +87,12 @@ const AddStudentsIntoGroup = ({ groupId, setStudentsModal }) => {
                     {[firstName, lastName, middleName].join(" ")}
                   </p>
                   <div className="add_student_into_group__student_body">
-                    <p title={birthYear}>yil: {birthYear}</p>
-                    <p title={region}>hudud: {region}</p>
+                    <p title={birthYear}>Tug'ilgan yili: {birthYear}-yil</p>
+                    <p title={region.capitalLetter()}>
+                      Hudud: {region.capitalLetter()}
+                    </p>
                     <p>
-                      telefon raqamlar:{" "}
+                      Telefon raqamlar:{" "}
                       {tel.map((number, index) => (
                         <span key={index} title={number}>
                           {number}
@@ -60,6 +102,8 @@ const AddStudentsIntoGroup = ({ groupId, setStudentsModal }) => {
                   </div>
                   <div className="add_student_into_group__student_btns">
                     <button
+                      onClick={() => handleSubmit(studentId)}
+                      disabled={isLoading}
                       title={`Guruhga ${firstName} ${lastName} ni qo'shish`}
                     >
                       Guruhga Qo'shish

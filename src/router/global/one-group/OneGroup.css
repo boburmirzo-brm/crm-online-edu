@@ -62,6 +62,11 @@
   margin-left: 5px;
   background: crimson;
 }
+.one__group-btnDanger:disabled, 
+.one__group-btnInfo:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
 .one__group-btnInfo {
   margin-left: 5px;
   background: var(--bg-py);

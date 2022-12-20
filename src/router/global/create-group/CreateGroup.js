@@ -122,7 +122,7 @@ function CreateGroup() {
           </div>
 
           <div className="form__field">
-            <label>Guruh bosqichi: </label>
+            <label>Guruh batafsil: </label>
             <div>
               <select
                 onChange={handleChange}
@@ -156,7 +156,7 @@ function CreateGroup() {
             <div>
               <select
                 onChange={handleChange}
-                title="guruh yo'nalishini tanlang"
+                title="guruh kunlarini tanlang"
                 defaultValue={data.day}
                 name="day"
                 id="day"
@@ -180,7 +180,7 @@ function CreateGroup() {
             <div>
               <select
                 onChange={handleChange}
-                title="guruh yo'nalishini tanlang"
+                title="guruh vaqtlarini tanlang"
                 defaultValue={data.time}
                 name="time"
                 id="time"
