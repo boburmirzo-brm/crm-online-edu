@@ -6,6 +6,8 @@ import "./GetTeacher.css";
 import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
+import { AiOutlineEye } from "react-icons/ai";
+
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
@@ -13,6 +15,8 @@ function GetTeacher() {
   const [major, setMajor] = useState("all");
   const [name, setName] = useState("");
   const [filterTeachers, setFilterTeachers] = useState([]);
+  const [eye, setEye] = useState(null);
+
 
   useEffect(()=>{
     setMajor("all")
@@ -88,7 +92,7 @@ function GetTeacher() {
             _id,
           } = item;
           return (
-            <div key={item._id} className="get__teacher-card">
+            <div key={_id} className="get__teacher-card">
               <div className="get__teacher-cardHead">
                 <img src={gender === "male" ? male : female} alt="" />
                 <div>
@@ -117,7 +121,8 @@ function GetTeacher() {
                   Username <b>{username}</b>
                 </p>
                 <p>
-                  Parol <b>{password}</b>
+                  Parol <b>{eye === _id ? password : "*".repeat(password.length)}
+                <AiOutlineEye className="get__teacher-eye" onClick={() => setEye(!eye ? _id : null)}/> </b>
                 </p>
                 <div className="get__student-btn">
                   <Link

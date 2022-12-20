@@ -119,3 +119,29 @@
   background: #fff;
   color: var(--bg-py);
 }
+.hr{
+  background: #ddd;
+  height: 1px;
+  border: none;
+}
+
+.btn-danger,
+.btn-py{
+  padding: 4px 12px;
+  background: var(--bg-py);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #0003;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.btn-danger{
+  background: var(--bg-danger);
+}
+.btn-danger:hover,
+.btn-py:hover {
+  opacity: 1;
+  box-shadow: 2px 2px 6px #0004;
+}

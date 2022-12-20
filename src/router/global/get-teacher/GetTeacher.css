@@ -43,3 +43,9 @@
     font-size: 13px;
     color:#666;
 }
+.get__teacher-eye{
+    font-size: 18px;
+    margin-left: 12px;
+    transform: translateY(3px);
+    cursor: pointer;
+}

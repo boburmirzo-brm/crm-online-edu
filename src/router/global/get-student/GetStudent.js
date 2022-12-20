@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./GetStudent.css";
 import female from "../../../assets/female-icon.webp";
@@ -13,10 +13,12 @@ import axios from "../../../api";
 import {
   TEACHER_MAJOR
 } from "../../../static/index";
+import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
 function GetStudent() {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
+  const [id, setId] = useState(null)
 
   // console.log(data);
   const deleteStudent = (_id, f, l) => {
@@ -71,7 +73,7 @@ function GetStudent() {
             <p>
               Tug'ilgan sana: <b>{item.birthYear} yil</b>
             </p>
-            <p>
+            <p style={{flex:1}}>
               Tel <b>{item.tel?.map((i) => i + " ")}</b>
             </p>
             {!item.enrolledCourses.length && (
@@ -79,7 +81,7 @@ function GetStudent() {
                 Guruhga qo'shilmagan
               </span>
             )}
-            {!item.enrolledCourses.length && (
+            {item.wantedCourse.length ? (
               <div className="get__student-extra">
                 <p>
                   Fan: <i>{item.wantedCourse}</i>
@@ -91,27 +93,32 @@ function GetStudent() {
                   </i>
                 </p>
               </div>
-            )}
+            ):<></>}
             <div className="get__student-btn">
-              <button>Guruh</button>
+              <button onClick={()=> setId(item._id)}>Guruh</button>
               <Link
                 onClick={() => dispatch(getOneStudentAction(item))}
                 to={item._id}
               >
                 <button>Batafsil</button>
               </Link>
-              <button
+
+              {
+                !item.enrolledCourses.length?  <button
                 onClick={() =>
                   deleteStudent(item._id, item.firstName, item.lastName)
                 }
                 style={{ background: "crimson" }}
               >
                 O'chirish
-              </button>
+              </button> :<></>
+              }
+            
             </div>
           </div>
         ))}
       </div>
+      <AddStudentToGroup id={id} setId={setId}/>
     </div>
   );
 }

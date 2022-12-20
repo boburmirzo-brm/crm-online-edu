@@ -1,0 +1,55 @@
+.one__student{
+    padding: 30px;
+    padding-bottom: 200px;
+}
+.one__student-title{
+    font-weight: 500;
+    color: var(--bg-td);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+.one__student-head{
+    display: flex;
+    gap: 50px;
+    color: var(--bg-td);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+
+}
+.one__student-head img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.one__student-head p{
+    line-height: 1.8;
+}
+.one__student-card{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-transform: capitalize;
+    background: #fff;
+    width: 70%;
+    padding: 10px 20px; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px #9991;
+    color: var(--bg-td);
+    margin-bottom: 10px;
+}
+.one__student-item{
+    width: 150px;
+}
+/* .one__student-card:nth-child(even) b{
+    display: none;
+}
+.one__student-card:nth-child(odd) b{
+    display: none;
+}
+.one__student-card:nth-child(1) b{
+    display: inline-block;
+} */

@@ -30,7 +30,6 @@
   color: var(--bg-td);
   font-weight: 500;
   font-size: 16px;
-  flex-grow: 1;
 }
 .get__student-card p {
   font-size: 14px;

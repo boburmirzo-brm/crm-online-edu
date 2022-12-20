@@ -21,7 +21,6 @@ function Sidebar({ info, degree }) {
       >
         <div className="sidebar__circle">
           {info?.lastName[0]}
-          {info?.firstName[0]}
         </div>
         <div className="sidebar__name">
           <h4>{info?.lastName}</h4>

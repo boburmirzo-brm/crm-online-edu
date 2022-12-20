@@ -1,0 +1,26 @@
+.add_studentToGroup{
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+.add_studentToGroup-modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0009;
+}
+.add_studentToGroup-content{
+    position: relative;
+    width: 70%;
+    height: 70%;
+    background: var(--bg-light);
+    border-radius: 15px;
+    overflow: auto;
+}
