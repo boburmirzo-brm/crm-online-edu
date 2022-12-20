@@ -28,7 +28,7 @@ function GetGroup() {
     setFilterData(groups.filter(i=> i.major === type && i.isActive === active))
   }, [type,groups,active])
 
-  console.log(filterData);
+  // console.log(filterData);
 
   const [images] = useState({
     it: it,
