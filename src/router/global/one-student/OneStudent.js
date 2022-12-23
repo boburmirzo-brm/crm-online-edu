@@ -1,12 +1,13 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import "./OneStudent.css";
 import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
+import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
 function OneStudent() {
   const one = useSelector((s) => s?.getOneStudent);
-  console.log(one);
+  const [id, setId] = useState(null)
   return (
     <div className="one__student">
       <h2 className="one__student-title">O'quvchi haqida batafsil ma'lumot</h2>
@@ -27,7 +28,7 @@ function OneStudent() {
           {one?.wantedDay ? <p>Vaqti: <b>{one?.wantedDay} - {one?.wantedTime}</b></p>:""}
         </div>
         <div>
-          <button className="btn-py">Guruhga qo'shish</button>
+          <button onClick={()=> setId(one?._id)} className="btn-py">Guruhga qo'shish</button>
           <br />
           <button style={{marginTop:"8px"}} className="btn-danger">O'chirib yuborish</button>
         </div>
@@ -59,6 +60,7 @@ function OneStudent() {
         </div>)
         }
       </div>
+      <AddStudentToGroup id={id} setId={setId}/>
     </div>
   );
 }

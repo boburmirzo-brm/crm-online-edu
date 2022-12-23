@@ -7,7 +7,7 @@ function AddStudentToGroup({ id, setId }) {
     <div className="add_studentToGroup">
       <div onClick={()=> setId(null)} className="add_studentToGroup-modal"></div>
       <div className="add_studentToGroup-content">
-        <GetGroup/>
+        <GetGroup addStudent={true} studentID={id}/>
       </div>
     </div>
   ) : (

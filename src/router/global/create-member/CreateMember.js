@@ -24,7 +24,7 @@ let initializeValue = {
   birthYear: 0,
   gender: "",
   groups: [],
-  allStudents: [],
+  allStudents: 0,
   monthlySalaries: [],
   major: "",
   isActive: true,

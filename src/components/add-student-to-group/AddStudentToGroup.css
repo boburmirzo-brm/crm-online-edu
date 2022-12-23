@@ -18,9 +18,18 @@
 }
 .add_studentToGroup-content{
     position: relative;
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
     background: var(--bg-light);
     border-radius: 15px;
     overflow: auto;
+    transform: translateY(-50px);
+    opacity: 0;
+    animation: add_studentToGroup .25s linear forwards;
+}
+@keyframes add_studentToGroup {
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

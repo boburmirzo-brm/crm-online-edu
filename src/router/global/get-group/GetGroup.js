@@ -14,7 +14,7 @@ import it from "../../../assets/it.jpg";
 import matematika from "../../../assets/matematika.jpg";
 import russia from "../../../assets/russia.jpg";
 
-function GetGroup() {
+function GetGroup({addStudent,studentID}) {
   const groups = useSelector((s) => s?.getGroups);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false)
@@ -38,7 +38,10 @@ function GetGroup() {
     "DTM ga tayyorgarlik": dtmTest,
     "Bug'alteriya": bugalteriya,
   });
-
+  const addStudentThisGroup = (groupId)=>{
+    let data = { groupID: groupId, studentID }
+    console.log(data);
+  }
   return (
     <div className="global__router">
       <div className="get__navbar">
@@ -84,7 +87,7 @@ function GetGroup() {
               _id: groupId,
               major,
               level,
-              teacherInfo: { firstName, lastName },
+              // teacherInfo: { firstName, lastName },
               room: { number },
               enrolledStudents,
               day,
@@ -99,7 +102,7 @@ function GetGroup() {
                 <p>
                   O'qituvchi:{" "}
                   <b>
-                    {firstName} {lastName}
+                    {/* {firstName} {lastName} */}
                   </b>
                 </p>
                 <p>
@@ -121,8 +124,12 @@ function GetGroup() {
                 ) : (
                   ""
                 )}
-                <hr />
-                <div className="get__group-btn">
+                <hr className="hr"/>
+                {
+                  addStudent ? <>
+                    <br />
+                    <button onClick={()=> addStudentThisGroup(groupId)} className="btn-py">Guruhga qo'shish</button>
+                  </>:   <div className="get__group-btn">
                   <Link
                     onClick={() => dispatch(getOneGroupAction(item))}
                     to={groupId}
@@ -131,6 +138,8 @@ function GetGroup() {
                   </Link>
                   <button style={{ background: "crimson" }}>O'chirish</button>
                 </div>
+                }
+             
               </div>
             );
           })
