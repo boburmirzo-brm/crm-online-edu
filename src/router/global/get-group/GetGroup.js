@@ -13,6 +13,7 @@ import english from "../../../assets/english.jpg";
 import it from "../../../assets/it.jpg";
 import matematika from "../../../assets/matematika.jpg";
 import russia from "../../../assets/russia.jpg";
+import {TEACHER_MAJOR} from "../../../static/index"
 
 function GetGroup({addStudent,studentID}) {
   const groups = useSelector((s) => s?.getGroups);
@@ -35,8 +36,8 @@ function GetGroup({addStudent,studentID}) {
     russia: russia,
     english: english,
     matematika: matematika,
-    "DTM ga tayyorgarlik": dtmTest,
-    "Bug'alteriya": bugalteriya,
+    dtm: dtmTest,
+    bugalteriya: bugalteriya,
   });
   const addStudentThisGroup = (groupId)=>{
     let data = { groupID: groupId, studentID }
@@ -48,36 +49,25 @@ function GetGroup({addStudent,studentID}) {
         <h3>Guruhlar</h3>
         <ul className="get__collection">
           <li onClick={()=>setActive(false)} className={`get__item ${active? "" :"get__item-active"}`}>
-            Yangi Guruhlar <span>{groups?.yangiGuruhlar(false).uzunlik}</span>
+            Yangi Guruhlar <span>{groups?.filter((el) => el.isActive === false).length}</span>
           </li>
           <li onClick={()=>setActive(true)} className={`get__item ${active? "get__item-active":""}`}>
-            Aktiv Guruhlar <span>{groups?.yangiGuruhlar(true).uzunlik}</span>
+            Aktiv Guruhlar <span>{groups?.filter((el) => el.isActive === true).length}</span>
           </li>
         </ul>
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
           <li onClick={()=> setType("all")} className={`get__controller-item ${type==="all"?"get__controller-active":""}`}>
-            Barchasi <span>{groups?.yangiGuruhlar(active).uzunlik}</span>
+            Barchasi <span>{groups?.filter((el) => el.isActive === active).length}</span>
           </li>
-          <li onClick={()=> setType("it")} className={`get__controller-item ${type==="it"?"get__controller-active":""} `}>
-            IT <span>{groups?.yangiGuruhlar(active).majorIt.length}</span>
-          </li>
-          <li onClick={()=> setType("english")} className={`get__controller-item ${type==="english"?"get__controller-active":""}`}>
-            English <span>{groups?.yangiGuruhlar(active).majorEnglish.length}</span>
-          </li>
-          <li onClick={()=> setType("russia")} className={`get__controller-item ${type==="russia"?"get__controller-active":""}`}>
-            Russian <span>{groups?.yangiGuruhlar(active).majorRussia.length}</span>
-          </li>
-          <li onClick={()=> setType("DTM ga tayyorgarlik")} className={`get__controller-item ${type==="DTM ga tayyorgarlik"?"get__controller-active":""}`}>
-            DTM <span>{groups?.yangiGuruhlar(active).majorDTM.length}</span>
-          </li>
-          <li onClick={()=> setType("Bug'alteriya")} className={`get__controller-item ${type==="Bug'alteriya"?"get__controller-active":""}`}>
-            Bug'alteriya <span>{groups?.yangiGuruhlar(active).majorEconomics.length}</span>
-          </li>
-          <li onClick={()=> setType("matematika")} className={`get__controller-item ${type==="matematika"?"get__controller-active":""}`}>
-            Matematika <span>{groups?.yangiGuruhlar(active).majorMath.length}</span>
-          </li>
+          {
+            TEACHER_MAJOR?.map((i, inx)=> (
+              <li key={inx} onClick={()=> setType(i)} className={`get__controller-item ${type===i?"get__controller-active":""} `}>
+              {i} <span>{groups?.filter((el) => el.major === i && el.isActive === active).length}</span>
+              </li>
+            ))
+          }
         </ul>
       </div>
       <div className="get__group-container">

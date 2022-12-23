@@ -14,31 +14,11 @@ import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../conte
 import OneStudent from "../global/one-student/OneStudent";
 import OneGroup from "../global/one-group/OneGroup";
 
-
-// let user = {
-//   token: "asdklasjdlkasjdklasjdlksad",
-//   info: {
-//     username: "bobur0668",
-//     firstName: "Boburmirzo",
-//     lastName: "RasulovRasulov",
-//     middleName: "Ma'ruf ugli",
-//     major: "it",
-//   },
-//   degree: {
-//     owner: false,
-//     admin: false,
-//     teacher: false,
-//     receptionist: true,
-//     accounter: false,
-//   },
-// };
-
 function CheckRoute() {
   const user = useSelector(s=>s?.auth)
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
   let params = useParams();
-  let changePath =
-    params["*"].split("/").slice(1).join("") &&
+  let changePath = params["*"].split("/").slice(1).join("") &&
     "/" + params["*"].split("/").slice(1).join("/");
   let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
 
@@ -49,24 +29,32 @@ function CheckRoute() {
       // behavior: 'smooth',
   });
   }, [currantPath])
-  
 
-  const reload = useSelector(s=>s?.reload)
+  const reloadGroup = useSelector(s=>s?.reloadGroup)
+  const reloadStudent = useSelector(s=>s?.reloadStudent)
+  const reloadTeacher = useSelector(s=>s?.reloadTeacher)
 
   const dispatch = useDispatch();
 
-  const students = useFetch("/api/students", reload);
-  const groups = useFetch("/api/groups",reload);
-  const teachers = useFetch("/api/teachers",reload);
+  const students = useFetch("/api/students", reloadStudent);
+  const groups = useFetch("/api/groups",reloadGroup);
+  const teachers = useFetch("/api/teachers",reloadTeacher);
 
   useEffect(() => {
     dispatch(getStudentsAction(students?.data));
+  }, [students, dispatch, reloadStudent]);
+  
+  useEffect(() => {
     dispatch(getGroupsAction(groups?.data));
+  }, [groups, dispatch, reloadGroup]);
+
+  useEffect(() => {
     dispatch(getTeachersAction(teachers?.data));
-  }, [groups,students,dispatch, reload]);
+  }, [teachers ,dispatch, reloadTeacher]);
+
   return (
     <div className="check__route">
-      {students.loading && <Loader />}
+      {teachers.loading && <Loader />}
       <Sidebar info={user.info} degree={user.degree} />
       <div ref={content} className="check__content">
         <Routes>

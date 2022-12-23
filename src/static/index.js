@@ -9,45 +9,42 @@ export const times = [
 ];
 export const levels = {
   it: ["HTML", "CSS", "JavaScript", "ReactJS", "NodeJS"],
-  russia: [
-    "Уровень 1",
-    "Уровень 2",
-    "Уровень 3",
-    "Уровень 4",
-    "Уровень 5",
-    "Уровень 6",
-  ],
+  russia: ["Уровень 1", "Уровень 2", "Уровень 3", "Уровень 4","Уровень 5", "Уровень 6",],
+  russia_kids: ["Уровень 1", "Уровень 2", "Уровень 3", "Уровень 4","Уровень 5", "Уровень 6",],
   english: ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6"],
-  matematika: ["Sinf 5", "Sinf 6", "Sinf 7"],
-  "DTM ga tayyorgarlik": ["Biologiya", "Ona-tili", "Kimyo"],
-  "Bug'alteriya": [
-    "1c",
-    "1c da dasturlash",
-    "office dasturlari (word,excel,...)",
-  ],
+  english_kids: ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6"],
+  matematika: ["kids", "edults"],
+  dtm: ["Biologiya", "Ona-tili", "Kimyo", "Tarix", "Fizika", "Matematika", "Geografiya"],
+  bugalteriya: [ "1c dasturi", "office dasturlari (word,excel,...)"],
 };
 
 export const TEACHER_MAJOR = [
   "it",
   "russia",
+  "russia_kids",
   "english",
+  "english_kids",
   "matematika",
-  "DTM ga tayyorgarlik",
-  "Bug'alteriya",
+  "dtm",
+  "bugalteriya",
 ];
 
 export const regions = [
-  "shahar",
-  "viloyat",
-  "tuman",
-  "pop",
-  "chortoq",
-  "to'raqo'rg'on",
-  "yangiqo'rg'on",
-  "uchqo'rg'on",
-  "nanay",
-  "koson",
-  "boshqa",
+  "namangan shahar",
+  "namangan tumani",
+  "pop tumani",
+  "chortoq tumani",
+  "chust tumani",
+  "kosonsoy tumani",
+  "norin tumani",
+  "mingbuloq tumani",
+  "to'raqo'rg'on tumani",
+  "yangiqo'rg'on tumani",
+  "uchqo'rg'on tumani",
+  "uychi tumani",
+  "andijon viloyati",
+  "farg'ona viloyati",
+  "boshqa viloyat",
 ];
 
 export const genders = [

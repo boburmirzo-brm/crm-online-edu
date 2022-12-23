@@ -16,7 +16,7 @@ function Sidebar({ info, degree }) {
     <div className="sidebar">
       <h2 className="sidebar__logo">Algoritm EDU</h2>
       <NavLink
-        to={`${pathname.split("/").slice(0, 3).join("/")}`}
+        to={`${pathname.pathnameFormat(3)}`}
         className="sidebar__top"
       >
         <div className="sidebar__circle">
@@ -34,7 +34,7 @@ function Sidebar({ info, degree }) {
         {
           GLOBAL_ROUTERS?.map((item,inx)=><NavLink
           key={inx}
-          to={pathname.split("/").slice(0, 3).join("/")+item.path}
+          to={pathname.pathnameFormat()+item.path}
           className={({ isActive }) =>
             "sidebar__item " + (isActive && "sidebar__active")
           }
@@ -44,7 +44,7 @@ function Sidebar({ info, degree }) {
         </NavLink> )
         }
       </div>
-      <button onClick={logOut}>Tizimdan chiqish</button>
+      <button className="sidebar__logOut" onClick={logOut}>Tizimdan chiqish</button>
     </div>
   );
 }

@@ -35,3 +35,16 @@ a {
   color: inherit;
   text-decoration: inherit;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-dark-blue1);
+  border-radius: 10px;
+  transition: all 0.17s ease-in-out;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-dark-blue2);
+}

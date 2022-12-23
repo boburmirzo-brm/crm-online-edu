@@ -28,22 +28,26 @@ module.exports = Array.prototype.allStudents = function () {
 module.exports = Array.prototype.yangiGuruhlar = function (bool) {
   const newGroups = this?.filter((el) => el.isActive === bool);
   const uzunlik = newGroups.length;
-  const majorIt = newGroups.filter((el) => el.major === "it");
-  const majorEnglish = newGroups.filter((el) => el.major === "english");
-  const majorRussia = newGroups.filter((el) => el.major === "russia");
-  const majorMath = newGroups.filter((el) => el.major === "matematika");
-  const majorDTM = newGroups.filter((el) => el.major === "DTM ga tayyorgarlik");
-  const majorEconomics = newGroups.filter((el) => el.major === "Bug'alteriya");
+  const it = newGroups.filter((el) => el.major === "it");
+  const english = newGroups.filter((el) => el.major === "english");
+  const english_kids = newGroups.filter((el) => el.major === "english_kids");
+  const russia = newGroups.filter((el) => el.major === "russia");
+  const russia_kids = newGroups.filter((el) => el.major === "russia_kids");
+  const matematika = newGroups.filter((el) => el.major === "matematika");
+  const dtm = newGroups.filter((el) => el.major === "dtm");
+  const bugalteriya = newGroups.filter((el) => el.major === "bugalteriya");
 
   return {
     newGroups,
     uzunlik,
-    majorIt,
-    majorEnglish,
-    majorRussia,
-    majorMath,
-    majorDTM,
-    majorEconomics,
+    it,
+    english,
+    english_kids,
+    russia,
+    russia_kids,
+    matematika,
+    dtm,
+    bugalteriya,
   };
 };
 
@@ -53,4 +57,7 @@ module.exports = Array.prototype.allTeachersIsActive = function (bool) {
 
 module.exports = Array.prototype.allTeachersIsActiveFalse = function () {
   return this?.reduce((a, c) => (a += !c.isActive ? 1 : 0), 0);
+};
+module.exports = String.prototype.pathnameFormat = function (index=3) {
+  return this?.split("/").slice(0, index).join("/");
 };

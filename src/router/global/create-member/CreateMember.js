@@ -11,6 +11,10 @@ import {
   genders,
   TEACHER_MAJOR,
 } from "../../../static";
+import { useDispatch } from "react-redux"
+import {reloadTeacherAction} from "../../../context/action/action"
+import { useNavigate, useLocation } from "react-router-dom"
+
 
 let initializeValue = {
   username: "",
@@ -40,6 +44,9 @@ function CreateMember() {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [showTeacherMajors, setShowTeacherMajors] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
+  const {pathname} = useLocation()
+  const navigate = useNavigate()
 
   // console.log(data);
   const handleChange = ({ target: t }) => {
@@ -96,6 +103,8 @@ function CreateMember() {
         setData(initializeValue);
         [region, gender, major].forEach((e) => (e.value = ""));
         setShowTeacherMajors(false);
+        dispatch(reloadTeacherAction())
+        navigate(`${pathname.pathnameFormat()}/get-teacher`)
       })
       .catch(({ response: { data } }) => {
         console.log(data?.msg);

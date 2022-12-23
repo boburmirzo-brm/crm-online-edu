@@ -5,13 +5,13 @@ import { days, times, levels, TEACHER_MAJOR } from "../../../static";
 import axios from "../../../api";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { reloadAction } from "../../../context/action/action";
+import { reloadGroupAction } from "../../../context/action/action";
+import { useNavigate, useLocation } from "react-router-dom"
+import Loader from "../../../components/loader/Loader";
 
 let initializeData = {
   teacherInfo: {
     _id: "",
-    firstName: "",
-    lastName: "",
   },
   name: "",
   major: "",
@@ -31,8 +31,11 @@ let initializeData = {
 
 function CreateGroup() {
   const [data, setData] = useState(initializeData);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const teachersSomeData = useSelector((s) => s?.getTeachers);
+  const {pathname} = useLocation()
+  const navigate = useNavigate()
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -40,8 +43,8 @@ function CreateGroup() {
     if (key === "number") {
       copyData.room[key] = t.value;
     } else if (key === "teacherInfo") {
-      let [_id, firstName, lastName] = t.value.split(", ");
-      let obj = { _id, firstName, lastName };
+      let [_id] = t.value.split(", ");
+      let obj = { _id};
       copyData[key] = obj;
     } else {
       copyData[key] = t.value;
@@ -56,20 +59,21 @@ function CreateGroup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     axios
       .post("/api/groups", data)
       .then(({ data }) => {
         console.log(data);
-        dispatch(reloadAction());
+        dispatch(reloadGroupAction());
         setData(initializeData);
         // select option larni tozolash;
         [teacherInfo, major, level, day, time].forEach((e) => (e.value = ""));
+        navigate(`${pathname.pathnameFormat()}/get-group`)
       })
       .catch(({ response: { data } }) => {
         console.log(data);
       })
-      .finally();
+      .finally(()=>setLoading(false));
   };
   return (
     <>
@@ -114,7 +118,7 @@ function CreateGroup() {
                 <option value="">tanlang</option>
                 {TEACHER_MAJOR.map((el, idx) => (
                   <option key={idx} value={el} title={el}>
-                    {el.capitalLetter()}
+                    {el.toUpperCase()}
                   </option>
                 ))}
               </select>
@@ -139,7 +143,7 @@ function CreateGroup() {
                 {data.major ? (
                   levels[data.major]?.map((el, idx) => (
                     <option key={idx} value={el} title={el}>
-                      {el.capitalLetter()}
+                      {el.toUpperCase()}
                     </option>
                   ))
                 ) : (
@@ -258,6 +262,7 @@ function CreateGroup() {
           </button>
         </form>
       </div>
+      {loading && <Loader/>}
     </>
   );
 }

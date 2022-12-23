@@ -18,8 +18,8 @@
 }
 .add_studentToGroup-content{
     position: relative;
-    width: 80%;
-    height: 80%;
+    width: 88%;
+    height: 88%;
     background: var(--bg-light);
     border-radius: 15px;
     overflow: auto;

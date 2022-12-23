@@ -8,7 +8,7 @@ import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
 import Loader from "../../components/loader/Loader";
 import { useNavigate, useLocation } from "react-router-dom"
 import {useDispatch} from "react-redux"
-import {reloadAction} from "../../context/action/action"
+import {reloadStudentAction} from "../../context/action/action"
 
 let initializeValue = {
   firstName: "",
@@ -79,8 +79,8 @@ function RegisterStudentComp({ isReceptionist }) {
        
         setData(initializeValue);
         if(isReceptionist) {
-          navigate(`${pathname.split("/").slice(0,3).join("/")}/get-student`)
-          dispatch(reloadAction())
+          navigate(`${pathname.pathnameFormat()}/get-student`)
+          dispatch(reloadStudentAction())
         }
         // select option larni tozalash
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));

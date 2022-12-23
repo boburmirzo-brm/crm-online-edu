@@ -95,13 +95,13 @@ function GetStudent() {
               </div>
             ):<></>}
             <div className="get__student-btn">
-              <button onClick={()=> setId(item._id)}>Guruh</button>
               <Link
                 onClick={() => dispatch(getOneStudentAction(item))}
                 to={item._id}
               >
                 <button>Batafsil</button>
               </Link>
+              <button onClick={()=> setId(item._id)}>Guruh</button>
 
               {
                 !item.enrolledCourses.length?  <button

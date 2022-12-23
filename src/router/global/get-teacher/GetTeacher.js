@@ -127,7 +127,7 @@ function GetTeacher() {
                 <div className="get__student-btn">
                   <Link
                     // onClick={() => dispatch(getOneStudentAction(item))}
-                    to={"item._id"}
+                    to={item._id}
                   >
                     <button>Batafsil</button>
                   </Link>

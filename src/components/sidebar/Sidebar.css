@@ -42,7 +42,7 @@
 .sidebar__collection{
     margin-top: 50px;
 }
-
+.sidebar__logOut,
 .sidebar__item{
     display: flex;
     align-items: center;
@@ -62,7 +62,16 @@
     background: var(--bg-light);
     color: var(--bg-td);
 }
-
+.sidebar__logOut{
+    width: 100%;
+    background: var(--bg-danger);
+    font-size: 16px;
+    margin-top: 50px;
+}
+.sidebar__logOut:hover{
+    opacity: .8;
+    cursor: pointer;
+}
 
 @media screen and (max-width:1600px) {
     .sidebar{
