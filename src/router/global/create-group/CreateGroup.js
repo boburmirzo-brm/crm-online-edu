@@ -5,8 +5,8 @@ import { days, times, levels, TEACHER_MAJOR } from "../../../static";
 import axios from "../../../api";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { reloadGroupAction } from "../../../context/action/action";
-import { useNavigate, useLocation } from "react-router-dom"
+import { reloadGroupAction, reloadTeacherAction } from "../../../context/action/action";
+import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
 
 let initializeData = {
@@ -34,8 +34,8 @@ function CreateGroup() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const teachersSomeData = useSelector((s) => s?.getTeachers);
-  const {pathname} = useLocation()
-  const navigate = useNavigate()
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -43,9 +43,7 @@ function CreateGroup() {
     if (key === "number") {
       copyData.room[key] = t.value;
     } else if (key === "teacherInfo") {
-      let [_id] = t.value.split(", ");
-      let obj = { _id};
-      copyData[key] = obj;
+      copyData[key] = { _id: t.value };
     } else {
       copyData[key] = t.value;
     }
@@ -65,15 +63,16 @@ function CreateGroup() {
       .then(({ data }) => {
         console.log(data);
         dispatch(reloadGroupAction());
+        dispatch(reloadTeacherAction());
         setData(initializeData);
         // select option larni tozolash;
         [teacherInfo, major, level, day, time].forEach((e) => (e.value = ""));
-        navigate(`${pathname.pathnameFormat()}/get-group`)
+        navigate(`${pathname.pathnameFormat()}/get-group`);
       })
       .catch(({ response: { data } }) => {
         console.log(data);
       })
-      .finally(()=>setLoading(false));
+      .finally(() => setLoading(false));
   };
   return (
     <>
@@ -95,7 +94,7 @@ function CreateGroup() {
                 {teachersSomeData?.map(({ _id, firstName, lastName }, idx) => (
                   <option
                     key={idx}
-                    value={`${_id}, ${firstName}, ${lastName}`}
+                    value={_id}
                     title={[firstName, lastName].join(" ")}
                   >
                     {firstName.capitalLetter()} {lastName.capitalLetter()}
@@ -262,7 +261,7 @@ function CreateGroup() {
           </button>
         </form>
       </div>
-      {loading && <Loader/>}
+      {loading && <Loader />}
     </>
   );
 }

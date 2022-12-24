@@ -65,7 +65,7 @@
 .one__group-btnDanger:disabled, 
 .one__group-btnInfo:disabled {
   cursor: not-allowed;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .one__group-btnInfo {
   margin-left: 5px;

@@ -118,7 +118,7 @@
 }
 .add_student_into_group__student_btns button:disabled {
   cursor: not-allowed;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .add_student_into_group__student_head > p {
   flex-grow: 1;

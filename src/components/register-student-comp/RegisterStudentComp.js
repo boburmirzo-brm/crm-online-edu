@@ -6,9 +6,9 @@ import axios from "../../api";
 import { regions, times, days, genders, TEACHER_MAJOR } from "../../static";
 import ShowingEnteredNumbers from "./ShowingEnteredNumbers";
 import Loader from "../../components/loader/Loader";
-import { useNavigate, useLocation } from "react-router-dom"
-import {useDispatch} from "react-redux"
-import {reloadStudentAction} from "../../context/action/action"
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { reloadStudentAction } from "../../context/action/action";
 
 let initializeValue = {
   firstName: "",
@@ -33,9 +33,9 @@ function RegisterStudentComp({ isReceptionist }) {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [data, setData] = useState(initializeValue);
 
-  const {pathname} = useLocation()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -76,11 +76,12 @@ function RegisterStudentComp({ isReceptionist }) {
     axios
       .post("/api/students", data)
       .then(({ data }) => {
-       
+        console.log(data);
+
         setData(initializeValue);
-        if(isReceptionist) {
-          navigate(`${pathname.pathnameFormat()}/get-student`)
-          dispatch(reloadStudentAction())
+        if (isReceptionist) {
+          navigate(`${pathname.pathnameFormat()}/get-student`);
+          dispatch(reloadStudentAction());
         }
         // select option larni tozalash
         [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));

@@ -8,7 +8,6 @@ import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 
-
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
   const [active, setActive] = useState(true);
@@ -17,33 +16,35 @@ function GetTeacher() {
   const [filterTeachers, setFilterTeachers] = useState([]);
   const [eye, setEye] = useState(null);
 
+  // console.log(teachers)
 
-  useEffect(()=>{
-    setMajor("all")
+  useEffect(() => {
+    setMajor("all");
     setFilterTeachers(
-      teachers.filter((i) => (
-        i.firstName.toLowerCase().includes(name.toLowerCase())||
-        i.middleName.toLowerCase().includes(name.toLowerCase())||
-        i.lastName.toLowerCase().includes(name.toLowerCase())
-        ))
-        );
-  }, [name])
-  
+      teachers.filter(
+        (i) =>
+          i.firstName.toLowerCase().includes(name.toLowerCase()) ||
+          i.middleName.toLowerCase().includes(name.toLowerCase()) ||
+          i.lastName.toLowerCase().includes(name.toLowerCase())
+      )
+    );
+  }, [name]);
+
   useEffect(() => {
     if (major === "all") {
       return setFilterTeachers(teachers.filter((i) => i.isActive === active));
     }
     setFilterTeachers(
-      teachers.filter((i) => (
-        i.isActive === active && 
-        major === i.major && 
-        i.firstName.toLowerCase().includes(name.toLowerCase())&&
-        i.lastName.toLowerCase().includes(name.toLowerCase())
-        ))
-        );
-      }, [teachers, active, major]);
-      
- 
+      teachers.filter(
+        (i) =>
+          i.isActive === active &&
+          major === i.major &&
+          i.firstName.toLowerCase().includes(name.toLowerCase()) &&
+          i.lastName.toLowerCase().includes(name.toLowerCase())
+      )
+    );
+  }, [teachers, active, major]);
+
   return (
     <div>
       <div className="get__navbar">
@@ -66,7 +67,12 @@ function GetTeacher() {
         </ul>
       </div>
       <div className="get__controller">
-        <input value={name}  onChange={e=>setName(e.target.value)} type="text" placeholder="O'qituvchi FISH..." />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          type="text"
+          placeholder="O'qituvchi FISH..."
+        />
         <select onChange={(e) => setMajor(e.target.value)} name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (
@@ -90,6 +96,7 @@ function GetTeacher() {
             tel,
             username,
             _id,
+            groups,
           } = item;
           return (
             <div key={_id} className="get__teacher-card">
@@ -100,29 +107,35 @@ function GetTeacher() {
                     {lastName} {firstName} {middleName}
                   </h4>
                   <p>
-                    Fan <b>{major}</b>
+                    Fan: <b>{major}</b>
                   </p>
                   <p>
-                    Manzil <b>{region}</b>
+                    Manzil: <b>{region}</b>
                   </p>
                   <p>
-                    Tug'ilgan sana <b>{birthYear} yil</b>
+                    Tug'ilgan sana: <b>{birthYear} yil</b>
                   </p>
                 </div>
               </div>
               <div className="get__teacher-cardBody">
                 <p>
-                  Tel <b>{tel?.map((i) => i + " ")}</b>
+                  Tel: <b>{tel?.map((i) => i + " ")}</b>
                 </p>
                 <p>
-                  Guruhlar <b>7</b>
+                  Guruhlar: <b>{groups.length} ta</b>
                 </p>
                 <p>
-                  Username <b>{username}</b>
+                  Username: <b>{username}</b>
                 </p>
                 <p>
-                  Parol <b>{eye === _id ? password : "*".repeat(password.length)}
-                <AiOutlineEye className="get__teacher-eye" onClick={() => setEye(!eye ? _id : null)}/> </b>
+                  Parol:{" "}
+                  <b>
+                    {eye === _id ? password : "*".repeat(password.length)}
+                    <AiOutlineEye
+                      className="get__teacher-eye"
+                      onClick={() => setEye(!eye ? _id : null)}
+                    />{" "}
+                  </b>
                 </p>
                 <div className="get__student-btn">
                   <Link

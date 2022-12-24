@@ -10,25 +10,24 @@ import {
   reloadAction,
 } from "../../../context/action/action";
 import axios from "../../../api";
-import {
-  TEACHER_MAJOR
-} from "../../../static/index";
+import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
 function GetStudent() {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
-  const [id, setId] = useState(null)
+  const [id, setId] = useState(null);
 
   // console.log(data);
   const deleteStudent = (_id, f, l) => {
     if (window.confirm(`${f} ${l} shu o'quvchini o'chirmoqchimisiz?`)) {
       axios
         .delete(`/api/students/${_id}`)
-        .then((res) => {
+        .then(({ data }) => {
+          console.log(data);
           dispatch(reloadAction());
         })
-        .catch((res) => console.log(res));
+        .catch(({ response }) => console.log(response));
     }
   };
 
@@ -73,7 +72,7 @@ function GetStudent() {
             <p>
               Tug'ilgan sana: <b>{item.birthYear} yil</b>
             </p>
-            <p style={{flex:1}}>
+            <p style={{ flex: 1 }}>
               Tel <b>{item.tel?.map((i) => i + " ")}</b>
             </p>
             {!item.enrolledCourses.length && (
@@ -93,7 +92,9 @@ function GetStudent() {
                   </i>
                 </p>
               </div>
-            ):<></>}
+            ) : (
+              <></>
+            )}
             <div className="get__student-btn">
               <Link
                 onClick={() => dispatch(getOneStudentAction(item))}
@@ -101,24 +102,25 @@ function GetStudent() {
               >
                 <button>Batafsil</button>
               </Link>
-              <button onClick={()=> setId(item._id)}>Guruh</button>
+              <button onClick={() => setId(item._id)}>Guruh</button>
 
-              {
-                !item.enrolledCourses.length?  <button
-                onClick={() =>
-                  deleteStudent(item._id, item.firstName, item.lastName)
-                }
-                style={{ background: "crimson" }}
-              >
-                O'chirish
-              </button> :<></>
-              }
-            
+              {!item.enrolledCourses.length ? (
+                <button
+                  onClick={() =>
+                    deleteStudent(item._id, item.firstName, item.lastName)
+                  }
+                  style={{ background: "crimson" }}
+                >
+                  O'chirish
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         ))}
       </div>
-      <AddStudentToGroup id={id} setId={setId}/>
+      <AddStudentToGroup id={id} setId={setId} />
     </div>
   );
 }
