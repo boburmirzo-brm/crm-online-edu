@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { memo, useEffect, useState } from "react";
 import "./OneTeacher.css";
 import axios from "../../../api";

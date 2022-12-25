@@ -1,8 +1,8 @@
 // @ts-nocheck
 import React, { memo, useState, useEffect } from "react";
+import "./GetTeacher.css";
 import { useSelector } from "react-redux";
 import { TEACHER_MAJOR } from "../../../static";
-import "./GetTeacher.css";
 import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ function GetTeacher() {
   useEffect(() => {
     setMajor("all");
     setFilterTeachers(
-      teachers.filter(
+      teachers?.filter(
         (i) =>
           i.firstName.toLowerCase().includes(name.toLowerCase()) ||
           i.middleName.toLowerCase().includes(name.toLowerCase()) ||
@@ -32,10 +32,10 @@ function GetTeacher() {
 
   useEffect(() => {
     if (major === "all") {
-      return setFilterTeachers(teachers.filter((i) => i.isActive === active));
+      return setFilterTeachers(teachers?.filter((i) => i.isActive === active));
     }
     setFilterTeachers(
-      teachers.filter(
+      teachers?.filter(
         (i) =>
           i.isActive === active &&
           major === i.major &&
@@ -55,14 +55,14 @@ function GetTeacher() {
             className={`get__item ${active ? "get__item-active" : ""}`}
           >
             O'qituvchilar{" "}
-            <span>{teachers?.allTeachersIsActive(true).length}</span>
+            <span>{teachers?.allTeachersIsActive(true)?.length}</span>
           </li>
           <li
             onClick={() => setActive(false)}
             className={`get__item ${active ? "" : "get__item-active"}`}
           >
             Ishdan Ketgan O'qituvchilar{" "}
-            <span>{teachers?.allTeachersIsActive(false).length}</span>
+            <span>{teachers?.allTeachersIsActive(false)?.length}</span>
           </li>
         </ul>
       </div>
@@ -122,7 +122,7 @@ function GetTeacher() {
                   Tel: <b>{tel?.map((i) => i + " ")}</b>
                 </p>
                 <p>
-                  Guruhlar: <b>{groups.length} ta</b>
+                  Guruhlar: <b>{groups?.length} ta</b>
                 </p>
                 <p>
                   Username: <b>{username}</b>
@@ -130,7 +130,7 @@ function GetTeacher() {
                 <p>
                   Parol:{" "}
                   <b>
-                    {eye === _id ? password : "*".repeat(password.length)}
+                    {eye === _id ? password : "*".repeat(password?.length)}
                     <AiOutlineEye
                       className="get__teacher-eye"
                       onClick={() => setEye(!eye ? _id : null)}
@@ -140,7 +140,7 @@ function GetTeacher() {
                 <div className="get__student-btn">
                   <Link
                     // onClick={() => dispatch(getOneStudentAction(item))}
-                    to={item._id}
+                    to={item?._id}
                   >
                     <button>Batafsil</button>
                   </Link>

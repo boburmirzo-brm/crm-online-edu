@@ -3,13 +3,14 @@ import React, { useState, memo } from "react";
 import "./AddStudentsIntoGroup.css";
 import { FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import female from "../../../../assets/female-icon.webp";
 import male from "../../../../assets/male-icon.png";
 import {
-  getOneGroupAction,
   reloadGroupAction,
   reloadTeacherAction,
   reloadStudentAction,
+  getOneStudentAction,
 } from "../../../../context/action/action";
 import axios from "../../../../api";
 
@@ -21,15 +22,20 @@ const AddStudentsIntoGroup = ({
 }) => {
   const [deleteUserId, setDeletedUserId] = useState([]);
   let students = useSelector((s) => s?.getStudents);
-  // students = students?.filter((el) => {
-  //   if (enrolledStudents.includes(el)) {
-  //     return false;
-  //   }
-  //   if (deleteUserId.includes(el._id)) {
-  //     return false;
-  //   }
-  //   return true;
-  // });
+  const { pathname } = useLocation();
+  students = students?.filter(({ _id }) => {
+    if (
+      enrolledStudents.some((innerEl) =>
+        typeof innerEl === "string" ? innerEl === _id : innerEl._id === _id
+      )
+    ) {
+      return false;
+    }
+    if (deleteUserId.includes(_id)) {
+      return false;
+    }
+    return true;
+  });
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -72,20 +78,18 @@ const AddStudentsIntoGroup = ({
 
         <div className="add_student_into_group__students">
           {students?.length ? (
-            students.map(
-              (
-                {
-                  _id: studentId,
-                  firstName,
-                  lastName,
-                  middleName,
-                  gender,
-                  birthYear,
-                  region,
-                  tel,
-                },
-                idx
-              ) => (
+            students.map((item, idx) => {
+              const {
+                _id: studentId,
+                firstName,
+                lastName,
+                middleName,
+                gender,
+                birthYear,
+                region,
+                tel,
+              } = item;
+              return (
                 <div
                   key={studentId}
                   className="add_student_into_group__student"
@@ -98,9 +102,14 @@ const AddStudentsIntoGroup = ({
                     />
                   </div>
                   <div className="add_student_into_group__student_head">
-                    <p title={[firstName, lastName, middleName].join(" ")}>
-                      {[firstName, lastName, middleName].join(" ")}
-                    </p>
+                    <Link
+                      onClick={() => dispatch(getOneStudentAction(item))}
+                      to={`${pathname.pathnameFormat()}/get-student/${studentId}`}
+                    >
+                      <span title={[firstName, lastName, middleName].join(" ")}>
+                        {[firstName, lastName, middleName].join(" ")}
+                      </span>
+                    </Link>
                     <div className="add_student_into_group__student_body">
                       <p title={birthYear}>Tug'ilgan yili: {birthYear}-yil</p>
                       <p title={region.capitalLetter()}>
@@ -126,8 +135,8 @@ const AddStudentsIntoGroup = ({
                     </div>
                   </div>
                 </div>
-              )
-            )
+              );
+            })
           ) : (
             <h4>O'quvchilar mavjud emas!</h4>
           )}
