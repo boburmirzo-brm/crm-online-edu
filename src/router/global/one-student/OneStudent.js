@@ -1,13 +1,33 @@
-import React, { memo, useState } from "react";
-import { useSelector } from "react-redux";
-import "./OneStudent.css";
+import React, { memo, useState,useEffect } from "react";
+import "./OneStudent.css"
+import axios from "../../../api";
+import { useFetch } from "../../../hooks/useFetch";
+import { useParams, Link, useLocation } from "react-router-dom";
+import {
+  reloadTeacherAction,
+  reloadGroupAction,
+} from "../../../context/action/action";
 import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
+import Skeleton from "../../../components/skeleton/Skeleton";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
 function OneStudent() {
-  const one = useSelector((s) => s?.getOneStudent);
-  const [id, setId] = useState(null)
+  const [oneId, setOneId] = useState(null)
+  
+  let { id } = useParams();
+  const [innerReload, setInnerReload] = useState(false);
+  const { data: student, loading } = useFetch(
+    `/api/students/${id}`,
+    innerReload
+  );
+  const [one, setOne] = useState(null);
+  const {pathname} = useLocation() 
+
+  useEffect(() => setOne(student), [student]);
+  if(!one){
+    return <Skeleton title={"O'quvchi haqida batafsil ma'lumot"}/>
+  }
   return (
     <div className="one__student">
       <h2 className="one__student-title">O'quvchi haqida batafsil ma'lumot</h2>
@@ -15,52 +35,51 @@ function OneStudent() {
         <img src={one?.gender === "male" ? male : female} alt="" />
         <div>
           <p>
-            FISH:{" "}
+            <span>FISH: </span>
             <b>
               {one?.lastName} {one?.firstName} {one?.middleName}
             </b>
           </p>
-          <p>Manzil: <b>{one?.region}</b></p>
-          <p>Tug'ilgan yil: <b>{one?.birthYear} yil</b></p>
-          <p>Tel: <b>{one?.tel.join(" / ")}</b></p>
+          <p><span>Manzil:</span><b>{one?.region}</b></p>
+          <p><span>Tug'ilgan yil:</span><b>{one?.birthYear}</b></p>
+          <p><span>Tel:</span><b>{one?.tel.join(" / ")}</b></p>
           <hr className="hr"/>
-          {one?.wantedCourse ? <p>Qiziqqan kurslari: <b>{one?.wantedCourse.toUpperCase()}</b></p>:""}
-          {one?.wantedDay ? <p>Vaqti: <b>{one?.wantedDay} - {one?.wantedTime}</b></p>:""}
-        </div>
-        <div>
-          <button onClick={()=> setId(one?._id)} className="btn-py">Guruhga qo'shish</button>
+          {one?.wantedCourse ? <p><span>Qiziqqan kurslari:</span> <b>{one?.wantedCourse.toUpperCase()}</b></p>:""}
+          {one?.wantedDay ? <p><span>Vaqti:</span> <b>{one?.wantedDay} - {one?.wantedTime}</b></p>:""}
           <br />
-          <button style={{marginTop:"8px"}} className="btn-danger">O'chirib yuborish</button>
+          <button className="btn-py">O'zgartirish</button>
+          <button style={{marginLeft:"8px"}} onClick={()=> setOneId(one?._id)} className="btn-py">Guruhga qo'shish</button>
+          <button style={{marginLeft:"8px"}} className="btn-danger">O'chirib yuborish</button>
         </div>
       </div>
       <h2 className="one__student-title">O'quvchi tahsil olayotgan guruhlar</h2>
       <div className="one__student-group">
         {!one?.enrolledCourses.length? <p style={{color:"crimson"}}>Hali guruhlarga qo'shilmagan</p>:<></>}
         {
-          one?.enrolledCourses?.map(({groupInfo,teacherInfo},inx)=> <div key={inx} className="one__student-card">
+          one?.enrolledCourses?.map((item,inx)=> <div key={inx} className="one__student-card">
           <span>{inx+1}.</span>
           <div className="one__student-item">
             <b>Fan</b>
-            <p>{groupInfo?.name}</p>
-            <p>{groupInfo?.level}</p>
+            <p>{item?.major}</p>
+            <p>{item?.level}</p>
           </div>
           <div className="one__student-item">
             <b>Kun vaqti</b>
-            <p>{groupInfo?.day}</p>
-            <p>{groupInfo?.time}</p>
+            <p>{item?.day}</p>
+            <p>{item?.time}</p>
           </div>
           <div className="one__student-item" style={{flex:1}}>
             <b>O'qituvchi</b>
-            <p>{teacherInfo?.lastName}</p>
-            <p>{teacherInfo?.firstName}</p>
+            <p>{item?.teacherInfo?.lastName}</p>
+            <p>{item?.teacherInfo?.firstName}</p>
           </div>
-          <div>
+          <Link to={`${pathname.pathnameFormat(3)}/get-group/${item._id}`}>
             <button className="btn-py">Batafsil</button>
-          </div>
+          </Link>
         </div>)
         }
       </div>
-      <AddStudentToGroup id={id} setId={setId}/>
+      <AddStudentToGroup id={oneId} setId={setOneId}/>
     </div>
   );
 }

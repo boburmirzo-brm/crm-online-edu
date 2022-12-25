@@ -28,13 +28,16 @@
 .one__student-head p{
     line-height: 1.8;
 }
+.one__student-head p span{
+    display: inline-block;
+    width: 140px;
+}
 .one__student-card{
     display: flex;
-    align-items: center;
     gap: 20px;
     text-transform: capitalize;
     background: #fff;
-    width: 70%;
+    width: 80%;
     padding: 10px 20px; 
     border-radius: 10px;
     box-shadow: 0 0 10px #9991;
@@ -44,7 +47,11 @@
 .one__student-item{
     width: 150px;
 }
-/* .one__student-card:nth-child(even) b{
+.one__student-btn{
+    display: flex;
+    align-items: center;
+}
+.one__student-card:nth-child(even) b{
     display: none;
 }
 .one__student-card:nth-child(odd) b{
@@ -52,4 +59,4 @@
 }
 .one__student-card:nth-child(1) b{
     display: inline-block;
-} */
+}

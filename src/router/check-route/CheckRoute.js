@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../context/action/action";
 import OneStudent from "../global/one-student/OneStudent";
 import OneGroup from "../global/one-group/OneGroup";
+import OneTeacher from "../global/one-teacher/OneTeacher";
 
 function CheckRoute() {
   const user = useSelector(s=>s?.auth)
@@ -70,6 +71,7 @@ function CheckRoute() {
           <Route path="/accounter" element={<Accounter />} />
           <Route path={`${path}/get-student/:id`} element={<OneStudent/>}/>
           <Route path={`${path}/get-group/:id`} element={<OneGroup/>}/>
+          <Route path={`${path}/get-teacher/:id`} element={<OneTeacher/>}/>
 
           {GLOBAL_ROUTERS?.map((item, inx) => (
             <Route key={inx} path={path + item.path} element={item.element} />

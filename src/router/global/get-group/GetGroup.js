@@ -137,16 +137,13 @@ function GetGroup({ addStudent, studentID }) {
                   </b>
                 </p>
                 <p>
-                  Guruh xona: <b>{number}-xona</b>
+                  Guruh xonasi: <b>{number}</b>
                 </p>
                 <p>
                   O'quvchilar soni: <b>{enrolledStudents.length} ta</b>
                 </p>
                 <p>
-                  Kun: <i>{day}</i>
-                </p>
-                <p>
-                  Vaqt: <i>{time}</i>
+                  Kun: <i>{day}</i> - <i>{time}</i>
                 </p>
                 {!enrolledStudents.length ? (
                   <span className="get__student-notGroup">

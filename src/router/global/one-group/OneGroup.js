@@ -6,69 +6,25 @@ import AddStudentsIntoGroup from "./addStudentsIntoGroup/AddStudentsIntoGroup";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { TEACHER_MAJOR, levels, days, times } from "../../../static";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
+import Skeleton from "../../../components/skeleton/Skeleton"
 import {
   reloadTeacherAction,
   reloadGroupAction,
   reloadStudentAction,
 } from "../../../context/action/action";
 
-const initializeData = {
-  room: {
-    number: "",
-    note: "",
-  },
-  _id: "",
-  teacherInfo: {
-    _id: "",
-    username: "_",
-    password: "_",
-    createdAt: "",
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    tel: [],
-    region: "",
-    birthYear: "",
-    gender: "",
-    groups: [],
-    allStudents: 0,
-    monthlySalaries: [],
-    major: "",
-    isActive: true,
-    isTeacher: true,
-    isAdmin: false,
-    isReceptionist: false,
-    isAccounter: false,
-    isOwner: false,
-    __v: 0,
-  },
-  name: "",
-  major: "",
-  level: "",
-  day: "",
-  time: "",
-  firstLesson: "",
-  expectedExamDay: "",
-  enrolledStudents: [],
-  isActive: false,
-  coursePrice: 0,
-  __v: 0,
-};
-
 function OneGroup() {
-  const { pathname } = useLocation();
-  let linkArr = pathname.split("/");
-  let link = linkArr[linkArr.length - 1];
+  let {id} = useParams()
 
   const [innerReload, setInnerReload] = useState(false);
-  const { data: group, loading } = useFetch(`/api/groups/${link}`, innerReload);
+  const { data: group, loading } = useFetch(`/api/groups/${id}`, innerReload);
 
   const dispatch = useDispatch();
   const teachers = useSelector((s) => s?.getTeachers);
 
-  const [data, setData] = useState(initializeData);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     setData(group);
@@ -164,7 +120,9 @@ function OneGroup() {
         });
     }
   };
-
+  if(!data || isLoading){
+    return <Skeleton title={"Guruh haqida batafsil malumot"}/>
+  }
   return (
     <>
       <div className="one__group">
@@ -348,7 +306,6 @@ function OneGroup() {
           ""
         )}
       </div>
-      {(isLoading || loading) && <Loader />}
     </>
   );
 }

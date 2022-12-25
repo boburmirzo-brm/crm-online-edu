@@ -3,7 +3,7 @@ import axios from "../api";
 
 const useFetch = (/** @type {string} */ api, /** @type {boolean} */ reload) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   useEffect(() => {
     setLoading(true);
     axios
