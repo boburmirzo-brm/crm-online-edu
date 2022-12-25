@@ -1,5 +1,69 @@
 .regStuRoute_Container {
   min-height: 100vh;
   background: var(--bg-light);
-  padding: 20px 5%;
+  padding: 20px 5% 150px;
+}
+.greeting__modal{
+  position: fixed;
+  top: 0;
+  left: 0;  
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+}
+.greeting__modal-shadow{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #38557033;
+  backdrop-filter: blur(4px);
+}
+.greeting__modal-content{
+  width: 50%;
+  height: 80%;
+  overflow: auto;
+  background: #fff;
+  background: url("../../assets//bg001.jpg") no-repeat center/cover;
+  position: relative;
+  border-radius: 15px;
+  color: var(--bg-td);
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: greetingModal .5s .5s forwards;
+}
+
+@keyframes greetingModal {
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.greeting__modal-content div{
+  position: relative;
+  background: #fffe;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+}
+.greeting__modal-content h3{
+  margin-bottom: 30px;
+}
+.greeting__modal-content ul{
+  padding-left: 16px;
+  line-height: 1.8;
+}
+.greeting__modal-content i{
+  display: block;
+  line-height: 1.6;
+}
+
+
+@media screen and (max-width:990px) {
+  .greeting__modal-content{
+    width: 90%;
+  }
 }

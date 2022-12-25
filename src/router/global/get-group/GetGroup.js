@@ -3,7 +3,6 @@ import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import {
-  getOneGroupAction,
   reloadGroupAction,
   reloadTeacherAction,
   reloadStudentAction,
@@ -171,7 +170,6 @@ function GetGroup({ addStudent, studentID, courses }) {
             return (
               <div className="get__group-card" key={groupId}>
                 <Link
-                  onClick={() => dispatch(getOneGroupAction(item))}
                   to={`${pathname.pathnameFormat()}/get-group/${groupId}`}
                 >
                   <img src={images[major]} alt={major + " " + level} />
@@ -180,7 +178,6 @@ function GetGroup({ addStudent, studentID, courses }) {
                   </h3>
                 </Link>
                 <Link
-                  // onClick={() => dispatch(getOneGroupAction(item))}
                   to={`${pathname.pathnameFormat()}/get-teacher/${
                     teacherInfo._id
                   }`}
@@ -230,7 +227,6 @@ function GetGroup({ addStudent, studentID, courses }) {
                 ) : (
                   <div className="get__group-btn">
                     <Link
-                      onClick={() => dispatch(getOneGroupAction(item))}
                       to={groupId}
                     >
                       <button>Batafsil</button>

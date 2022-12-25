@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from "react";
 import "./OneTeacher.css";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {
   reloadTeacherAction,
   reloadGroupAction,
@@ -15,6 +15,7 @@ import Skeleton from "../../../components/skeleton/Skeleton";
 function OneTeacher() {
   let { id } = useParams();
   const [innerReload, setInnerReload] = useState(false);
+  const navigate = useNavigate()
   const { data: teacher } = useFetch(
     `/api/teachers/${id}`,
     innerReload
@@ -42,6 +43,7 @@ function OneTeacher() {
   } = data;
   return (
     <div className="one__teacher">
+      <button onClick={()=> navigate(-1)} className="backBtn"><b>&#10140;</b><span>Orqaga</span></button>
       <h2 className="one__student-title">O'qituvchi haqida batafsil ma'lumot</h2>
       <div className="one__student-head">
         <img src={gender === "male" ? male : female} alt="" />

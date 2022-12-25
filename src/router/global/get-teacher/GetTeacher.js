@@ -139,12 +139,10 @@ function GetTeacher() {
                 </p>
                 <div className="get__student-btn">
                   <Link
-                    // onClick={() => dispatch(getOneStudentAction(item))}
                     to={item?._id}
                   >
                     <button>Batafsil</button>
                   </Link>
-                  <button style={{ background: "crimson" }}>O'chirish</button>
                 </div>
               </div>
             </div>

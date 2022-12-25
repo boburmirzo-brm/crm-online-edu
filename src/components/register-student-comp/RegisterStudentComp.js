@@ -9,6 +9,7 @@ import Loader from "../../components/loader/Loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { reloadStudentAction } from "../../context/action/action";
+import call from "../../assets/call.png"
 
 let initializeValue = {
   firstName: "",
@@ -32,6 +33,7 @@ function RegisterStudentComp({ isReceptionist }) {
   const [loading, setLoading] = useState(false);
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [data, setData] = useState(initializeValue);
+  const [modal, setModal] = useState(false);
 
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -79,6 +81,9 @@ function RegisterStudentComp({ isReceptionist }) {
         console.log(data);
 
         setData(initializeValue);
+        if(!isReceptionist){
+          setModal(true)
+        }
         if (isReceptionist) {
           navigate(`${pathname.pathnameFormat()}/get-student`);
           dispatch(reloadStudentAction());
@@ -97,8 +102,13 @@ function RegisterStudentComp({ isReceptionist }) {
   };
   return (
     <>
-      <div className="above__form">
-        <h3 className="global__title">O'quvchini ro'yxatga olish</h3>
+        
+      <div className="above__form"> 
+        <h3 className="global__title">
+          {
+            !isReceptionist ? <button onClick={()=> navigate(-1)} className="backBtn"><b>&#10140;</b><span>Orqaga</span></button>:""
+          }
+           O'quvchini ro'yxatga olish</h3>
       </div>
       <form onSubmit={handleSubmit} className="form">
         <div className="form__field">
@@ -332,6 +342,20 @@ function RegisterStudentComp({ isReceptionist }) {
           {loading ? "Kuting..." : "Tizimga kiritish"}
         </button>
       </form>
+      {
+        modal ?    <div className="greeting__modal">
+        <div className="greeting__modal-shadow"></div>
+        <div className="greeting__modal-content register__modal">
+          <div>
+          <h4>Muvaffaqiyatli to'ldirdingiz</h4>
+          <p>Qisqa muddatda sizga aloqaga chiqamiz</p>
+          <img src={call} alt="" />
+          <button onClick={()=> navigate(-1)} className="form__btn">Yaxshi, tushundim</button>
+          </div>
+        </div>
+      </div>:<></>
+      }
+   
       {loading && <Loader />}
     </>
   );

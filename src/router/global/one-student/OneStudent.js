@@ -3,7 +3,7 @@ import React, { memo, useState, useEffect } from "react";
 import "./OneStudent.css";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {
   reloadTeacherAction,
   reloadGroupAction,
@@ -16,6 +16,7 @@ import AddStudentToGroup from "../../../components/add-student-to-group/AddStude
 function OneStudent() {
   const [oneId, setOneId] = useState(null);
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate()
 
   let { id } = useParams();
   const { pathname } = useLocation();
@@ -34,8 +35,10 @@ function OneStudent() {
   if (!one) {
     return <Skeleton title={"O'quvchi haqida batafsil ma'lumot"} />;
   }
+  console.log(one);
   return (
     <div className="one__student">
+      <button onClick={()=> navigate(-1)} className="backBtn"><b>&#10140;</b><span>Orqaga</span></button>
       <h2 className="one__student-title">O'quvchi haqida batafsil ma'lumot</h2>
       <div className="one__student-head">
         <img src={one?.gender === "male" ? male : female} alt="" />
@@ -61,7 +64,7 @@ function OneStudent() {
           <hr className="hr" />
           {one?.wantedCourse ? (
             <p>
-              <span>Qiziqqan kurslari:</span>{" "}
+              <span>Qiziqqan kurslari:</span>
               <b>{one?.wantedCourse.toUpperCase()}</b>
             </p>
           ) : (
@@ -69,7 +72,7 @@ function OneStudent() {
           )}
           {one?.wantedDay ? (
             <p>
-              <span>Vaqti:</span>{" "}
+              <span>Vaqti:</span>
               <b>
                 {one?.wantedDay} - {one?.wantedTime}
               </b>
@@ -77,6 +80,7 @@ function OneStudent() {
           ) : (
             ""
           )}
+          <p><span>Biz haqimizda:</span><b>{one?.aboutUs}</b></p>
           <br />
           <button className="btn-py">O'zgartirish</button>
           <button

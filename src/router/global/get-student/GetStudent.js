@@ -6,8 +6,6 @@ import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link, useLocation } from "react-router-dom";
 import {
-  getOneStudentAction,
-  reloadAction,
   reloadGroupAction,
   reloadTeacherAction,
   reloadStudentAction,
@@ -33,7 +31,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
         .delete(`/api/students/${_id}`)
         .then(({ data }) => {
           console.log(data);
-          dispatch(reloadAction());
+          dispatch(reloadStudentAction());
         })
         .catch(({ response }) => console.log(response));
     }
@@ -90,7 +88,6 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
         {data?.map((item, inx) => (
           <div key={inx} className="get__student-card">
             <Link
-              onClick={() => dispatch(getOneStudentAction(item))}
               to={`${pathname.pathnameFormat()}/get-student/${item._id}`}
             >
               <img src={item.gender === "male" ? male : female} alt="" />
@@ -143,7 +140,6 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
             ) : (
               <div className="get__student-btn">
                 <Link
-                  onClick={() => dispatch(getOneStudentAction(item))}
                   to={item._id}
                 >
                   <button>Batafsil</button>

@@ -10,7 +10,6 @@ import {
   reloadGroupAction,
   reloadTeacherAction,
   reloadStudentAction,
-  getOneStudentAction,
 } from "../../../../context/action/action";
 import axios from "../../../../api";
 
@@ -103,7 +102,6 @@ const AddStudentsIntoGroup = ({
                   </div>
                   <div className="add_student_into_group__student_head">
                     <Link
-                      onClick={() => dispatch(getOneStudentAction(item))}
                       to={`${pathname.pathnameFormat()}/get-student/${studentId}`}
                     >
                       <span title={[firstName, lastName, middleName].join(" ")}>

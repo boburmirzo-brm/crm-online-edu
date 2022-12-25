@@ -13,7 +13,6 @@ import {
   reloadTeacherAction,
   reloadGroupAction,
   reloadStudentAction,
-  getOneStudentAction,
 } from "../../../context/action/action";
 
 function OneGroup() {
@@ -155,6 +154,7 @@ function OneGroup() {
   return (
     <>
       <div className="one__group">
+      <button onClick={()=> navigate(-1)} className="backBtn"><b>&#10140;</b><span>Orqaga</span></button>
         <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
         <div className="one__group-head">
           <div className="one__group-item">
@@ -304,7 +304,6 @@ function OneGroup() {
                 <span>{idx + 1}</span>
                 <p>
                   <Link
-                    onClick={() => dispatch(getOneStudentAction(item))}
                     to={`${pathname.pathnameFormat()}/get-student/${_id}`}
                   >
                     {firstName} {lastName} {middleName} (
