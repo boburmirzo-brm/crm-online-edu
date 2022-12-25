@@ -6,22 +6,25 @@ import AddStudentsIntoGroup from "./addStudentsIntoGroup/AddStudentsIntoGroup";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { TEACHER_MAJOR, levels, days, times } from "../../../static";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
-import Skeleton from "../../../components/skeleton/Skeleton"
+import Skeleton from "../../../components/skeleton/Skeleton";
 import {
   reloadTeacherAction,
   reloadGroupAction,
   reloadStudentAction,
+  getOneStudentAction,
 } from "../../../context/action/action";
 
 function OneGroup() {
-  let {id} = useParams()
+  let { id } = useParams();
 
   const [innerReload, setInnerReload] = useState(false);
   const { data: group, loading } = useFetch(`/api/groups/${id}`, innerReload);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const teachers = useSelector((s) => s?.getTeachers);
 
   const [data, setData] = useState(null);
@@ -63,9 +66,10 @@ function OneGroup() {
         .patch(`/api/groups/${data?._id}`, data)
         .then(({ data }) => {
           console.log(data);
+          setInnerReload((e) => !e);
+          setAreInputsDisabled((e) => !e);
           dispatch(reloadGroupAction());
           dispatch(reloadTeacherAction());
-          setAreInputsDisabled((e) => !e);
         })
         .catch(({ response }) => {
           console.log(response);
@@ -76,21 +80,46 @@ function OneGroup() {
     }
   };
 
-  const handleSubmitDelete = (studentID, firstName, lastName) => {
+  const handleSubmitDeleteStudent = (studentID, firstName, lastName) => {
     let dataInner = { studentID };
+    let groupIDInner = group._id;
+
+    // console.log("studentId: " + studentID);
+    // console.log("groupId: " + groupIDInner);
 
     if (
       window.confirm(`${firstName} ${lastName} ni rostan o'chirmoqchimisiz?`)
     ) {
       setIsLoading(true);
       axios
-        .patch(`/api/groups/remove-student/${group._id}`, dataInner)
+        .patch(`/api/groups/remove-student/${groupIDInner}`, dataInner)
         .then(({ data }) => {
           console.log(data);
-          setInnerReload((e) => !e);
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           dispatch(reloadTeacherAction());
+          setInnerReload((e) => !e);
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const handleDeleteGroupById = () => {
+    if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
+      setIsLoading(true);
+      axios
+        .delete(`/api/groups/${group._id}`)
+        .then(({ data }) => {
+          console.log(data);
+          dispatch(reloadGroupAction());
+          dispatch(reloadStudentAction());
+          dispatch(reloadTeacherAction());
+          navigate(`${pathname.pathnameFormat()}/get-group`);
         })
         .catch(({ response }) => {
           console.log(response);
@@ -120,8 +149,8 @@ function OneGroup() {
         });
     }
   };
-  if(!data || isLoading){
-    return <Skeleton title={"Guruh haqida batafsil malumot"}/>
+  if (!data || isLoading) {
+    return <Skeleton title={"Guruh haqida batafsil malumot"} />;
   }
   return (
     <>
@@ -138,7 +167,7 @@ function OneGroup() {
               id="major"
               defaultValue={data?.major}
             >
-              {TEACHER_MAJOR.map((el, idx) => (
+              {TEACHER_MAJOR?.map((el, idx) => (
                 <option key={idx} title={el}>
                   {el}
                 </option>
@@ -170,7 +199,7 @@ function OneGroup() {
               <option value={data?.teacherInfo?._id || ""}>
                 {data?.teacherInfo?.firstName} {data?.teacherInfo?.lastName}
               </option>
-              {teachers.map((el, idx) => (
+              {teachers?.map((el, idx) => (
                 <option
                   key={idx}
                   value={el._id || ""}
@@ -241,7 +270,12 @@ function OneGroup() {
               : "Ma'lumotlarni saqlash"}
           </button>
           {!group?.enrolledStudents?.length ? (
-            <button className="one__group-btnDanger">Guruhni o'chirish</button>
+            <button
+              onClick={handleDeleteGroupById}
+              className="one__group-btnDanger"
+            >
+              Guruhni o'chirish
+            </button>
           ) : !group?.isActive ? (
             <button
               onClick={handleChangerOfActiveStatus}
@@ -263,29 +297,37 @@ function OneGroup() {
           {!group?.enrolledStudents?.length && (
             <p className="one__group-warning">O'quvchalar hali qo'shilmagan</p>
           )}
-          {group?.enrolledStudents?.map(
-            ({ firstName, lastName, middleName, tel, _id }, inx) => (
+          {group?.enrolledStudents?.map((item, idx) => {
+            const { firstName, lastName, middleName, tel, _id } = item;
+            return (
               <div key={_id} className="one__group-card">
-                <span>{inx + 1}</span>
+                <span>{idx + 1}</span>
                 <p>
-                  {firstName} {lastName} {middleName} (
-                  {tel?.map((el, idx) => (
-                    <span key={idx} title={el}>
-                      {el}
-                    </span>
-                  ))}
-                  )
+                  <Link
+                    onClick={() => dispatch(getOneStudentAction(item))}
+                    to={`${pathname.pathnameFormat()}/get-student/${_id}`}
+                  >
+                    {firstName} {lastName} {middleName} (
+                    {tel?.map((el, idx) => (
+                      <span key={idx} title={el}>
+                        {el}
+                      </span>
+                    ))}
+                    )
+                  </Link>
                 </p>
                 <button
                   disabled={isLoading}
-                  onClick={() => handleSubmitDelete(_id, firstName, lastName)}
+                  onClick={() =>
+                    handleSubmitDeleteStudent(_id, firstName, lastName)
+                  }
                   className="one__group-btnDanger"
                 >
                   Guruhdan chiqarib yuborish
                 </button>
               </div>
-            )
-          )}
+            );
+          })}
           <div style={{ textAlign: "right", marginTop: "30px" }}>
             <button
               onClick={() => setStudentsModal(true)}
@@ -306,6 +348,7 @@ function OneGroup() {
           ""
         )}
       </div>
+      {loading && <Loader />}
     </>
   );
 }
