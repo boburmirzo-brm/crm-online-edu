@@ -10,11 +10,11 @@ module.exports = Date.prototype.getOwnDate = function () {
 };
 
 module.exports = Array.prototype.enrolledCourses = function () {
-  return this?.reduce((a, c) => (a += c.enrolledCourses?.length ? 1 : 0), 0);
+  return this?.reduce((a, c) => (a += c.enrolledCourses?.length && !c.isActive ? 1 : 0), 0);
 };
 
 module.exports = Array.prototype.unenrolledCourses = function () {
-  return this?.reduce((a, c) => (a += !c.enrolledCourses?.length ? 1 : 0), 0);
+  return this?.reduce((a, c) => (a += !c.enrolledCourses?.length && !c.isEnd ? 1 : 0), 0);
 };
 
 module.exports = Array.prototype.isActiveTrue = function () {

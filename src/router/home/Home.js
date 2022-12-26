@@ -11,7 +11,7 @@ function Home() {
           <img src={logo} alt="" />
           <span>Algoritm EDU</span>
         </div>
-        <div>
+        <div className='nav__btns nav__btnsShow'>
           <Link to={`/login`}>Tizimga kirish</Link>
           <Link to={`/register-student`}>Ro'yhatdan o'tish</Link>
         </div>
@@ -22,7 +22,10 @@ function Home() {
         <span>uchun bilimli</span>
         <span>bo'ling.</span>
       </h1>
-
+      <div className='nav__btns nav__btnsHide'>
+          <Link to={`/login`}>Tizimga kirish</Link>
+          <Link to={`/register-student`}>Ro'yhatdan o'tish</Link>
+      </div>
     </div>
   )
 }

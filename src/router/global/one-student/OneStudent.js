@@ -265,7 +265,7 @@ function OneStudent() {
             />
           </p>
           <div>
-            {<ShowingEnteredNumbers data={one} setData={setOne} />}
+            {<ShowingEnteredNumbers data={one} notDelete={true} setData={setOne} />}
             {areInputsDisabled ? (
               ""
             ) : (
@@ -311,7 +311,6 @@ function OneStudent() {
               ))}
             </select>
           </p>
-          <hr className="hr" />
           {one?.wantedCourse ||
           one?.wantedDay ||
           one?.wantedTime ||
@@ -321,7 +320,7 @@ function OneStudent() {
             ""
           )}
           {one?.wantedCourse ? (
-            <p>
+            <p className="one__student-wanted">
               <span>Kurslari:</span>
               <b>{one?.wantedCourse}</b>
             </p>
@@ -329,7 +328,7 @@ function OneStudent() {
             ""
           )}
           {one?.wantedDay ? (
-            <p>
+            <p className="one__student-wanted">
               <span>Kuni:</span>
               <b>{one?.wantedDay}</b>
             </p>
@@ -337,7 +336,7 @@ function OneStudent() {
             ""
           )}
           {one?.wantedTime ? (
-            <p>
+            <p className="one__student-wanted">
               <span>Vaqti:</span>
               <b>{one?.wantedTime}</b>
             </p>
@@ -345,7 +344,7 @@ function OneStudent() {
             ""
           )}
           {one?.aboutUs ? (
-            <p>
+            <p className="one__student-wanted">
               <span>Biz haqimizda:</span>
               <b>{one?.aboutUs}</b>
             </p>

@@ -2,9 +2,6 @@
   padding: 30px;
   padding-bottom: 200px;
 }
-.one__student b {
-    text-transform: uppercase;
-}
 .one__student-title {
   font-weight: 500;
   color: var(--bg-td);
@@ -71,25 +68,17 @@
 .one__student-container {
   display: flex;
 }
-.one__student-special {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+
 .one__student-input:disabled,
 .one__student-textarea:disabled {
   border: 1px solid transparent;
   color: #0044889f;
   background: #fbfbfc;
-  cursor: not-allowed;
 }
 .one__student-select:disabled {
   border: 1px solid transparent;
   color: var(--bg-td);
   background: #fbfbfc;
-  cursor: not-allowed;
 }
 .one__student-card {
   display: flex;
@@ -118,4 +107,13 @@
 }
 .one__student-card:nth-child(1) b {
   display: inline-block;
+}
+.one__student-special {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.one__student-wanted{
+  font-size: 13px;
 }

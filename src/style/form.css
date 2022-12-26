@@ -1,6 +1,6 @@
 .form {
-  padding-left: 30px;
   width: 50%;
+  padding-left: 30px;
 }
 .form__field {
   margin: 4px;
@@ -48,6 +48,10 @@
   color: #fff;
   background: var(--bg-danger);
 }
+.regStu__deleteNone:hover{
+  color: red;
+  background: transparent;
+}
 
 .form__btn {
   margin-top: 15px;
@@ -75,8 +79,9 @@
   justify-content: space-between;
 }
 
-@media screen and (max-width: 700px) {
-  .regStu__form {
+@media screen and (max-width: 800px) {
+  .form {
     width: 100%;
+    padding:0 ;
   }
 }

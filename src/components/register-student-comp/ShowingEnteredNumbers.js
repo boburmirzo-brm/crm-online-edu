@@ -1,15 +1,19 @@
 // @ts-nocheck
 import React, { memo } from "react";
 
-const ShowingEnteredNumbers = ({ data, setData }) => {
+const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
   return data.tel.length ? (
     <div>
-      Sizning telefon ramalaringiz:{" "}
+      {
+        notDelete? <span>Tel: </span> : "Sizning telefon ramalaringiz:"
+      }
+      {" "}
       {data.tel.map((el, idx) => (
         <span
           title={`shu raqam( ${el} ) ni o'chirishni xohlaysizmi?`}
-          className="regStu__deleteNumber"
+          className={notDelete ? "":"regStu__deleteNumber " }
           onClick={() => {
+            if(notDelete){return null}
             let confirm = window.confirm(
               `shu raqam( ${el} ) ni o'chirmoqchimisiz?`
             );

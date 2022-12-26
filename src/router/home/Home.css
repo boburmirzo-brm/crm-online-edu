@@ -2,12 +2,12 @@
     width: 100%;
     height: 100vh;
     background: url("../../assets/bg002.jpg") no-repeat center/cover;
-    background-size: 150%;
+    background-size: 170%;
     animation: homeBg 2s linear forwards;
 }
 @keyframes homeBg {
     to{
-        background-size: 100%;
+        background-size: 120%;
     }
 }
 .home__navbar{
@@ -33,7 +33,7 @@
     filter: brightness(0%) invert(100%);
     opacity: .6;
 }
-.home__navbar a{
+.nav__btns a{
     background: green;
     margin-right: 12px;
     padding: 8px 24px;
@@ -43,11 +43,12 @@
     opacity: .4;
     box-shadow: 2px 2px 5px #0001;
     transition: .3s;
+    display: inline-block;
 }
-.home__navbar a:nth-child(1){
+.nav__btns a:nth-child(1){
     background: var(--bg-py);
 }
-.home__navbar a:hover{
+.nav__btns a:hover{
     opacity: .7;
     cursor: pointer;
     box-shadow: 4px 4px 10px #0002;
@@ -79,5 +80,53 @@
     to{
         transform: translateY(0);
         opacity: 1;
+    }
+}
+.nav__btnsHide{
+    display: none;
+    padding-left: 5%;
+}
+.nav__btnsHide a{
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    .home{
+        background-size: cover;
+        animation-play-state: paused;
+    }
+    .home__title{
+        padding-top: 50px;
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .home__title{
+        font-size: 50px;
+        padding-top: 20px;
+    }
+    .home__logo span{
+        font-size: 22px;
+    }
+    .home__logo img{
+        width: 32px;
+    }
+    .nav__btnsShow{
+        display: none;
+    }
+    .nav__btnsHide{
+        display: block;
+    }
+    
+}
+@media screen and (max-width: 550px){
+    .home__title{
+        font-size: 32px;
+    }
+}
+@media screen and (max-width: 550px){
+    .home__title{
+        font-size: 28px;
     }
 }

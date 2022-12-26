@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./RegisterStudent.css";
 import RegisterStudentComp from "../../components/register-student-comp/RegisterStudentComp";
-import {FaLaptopCode,FaMobileAlt} from "react-icons/fa"
+import {FaLaptopCode} from "react-icons/fa"
 import {GiNotebook} from "react-icons/gi"
 
 function RegisterStudent() {

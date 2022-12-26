@@ -28,9 +28,10 @@ function GetGroup({ addStudent, studentID, courses }) {
   const teachers = useSelector((s) => s?.getTeachers);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-  const [type, setType] = useState("all");
+  const [type, setType] = useState(localStorage.getItem("filterGroupType") || "all");
   const [filterData, setFilterData] = useState([]);
 
+  
   // Zokirkhon
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(null);
@@ -40,14 +41,16 @@ function GetGroup({ addStudent, studentID, courses }) {
   // console.log(filterData);
   // console.log(courses);
   useEffect(() => {
+    // localStorage.setItem("filterGroupActive", active)
+    localStorage.setItem("filterGroupType", type)
     if (type === "all") {
+     console.log(active);
       return setFilterData(groups?.filter((i) => i.isActive === active));
     }
     setFilterData(
       groups?.filter((i) => i.major === type && i.isActive === active)
     );
   }, [type, groups, active]);
-
   /*
     useEffect(() => {
     if (type === "all") {
