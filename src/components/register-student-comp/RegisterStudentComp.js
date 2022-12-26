@@ -350,7 +350,7 @@ function RegisterStudentComp({ isReceptionist }) {
           <h4>Muvaffaqiyatli to'ldirdingiz</h4>
           <p>Qisqa muddatda sizga aloqaga chiqamiz</p>
           <img src={call} alt="" />
-          <button onClick={()=> navigate(-1)} className="form__btn">Yaxshi, tushundim</button>
+          <button onClick={()=> navigate(-1)} className="form__btn">Bosh sahifaga qaytish</button>
           </div>
         </div>
       </div>:<></>

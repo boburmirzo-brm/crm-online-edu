@@ -23,11 +23,10 @@
   backdrop-filter: blur(4px);
 }
 .greeting__modal-content{
-  width: 50%;
+  width: 400px;
   height: 80%;
   overflow: auto;
   background: #fff;
-  background: url("../../assets//bg001.jpg") no-repeat center/cover;
   position: relative;
   border-radius: 15px;
   color: var(--bg-td);
@@ -44,10 +43,11 @@
 }
 .greeting__modal-content div{
   position: relative;
-  background: #fffe;
   width: 100%;
   height: 100%;
   padding: 30px;
+  z-index: 2;
+
 }
 .greeting__modal-content h3{
   margin-bottom: 30px;
@@ -59,10 +59,28 @@
 .greeting__modal-content i{
   display: block;
   line-height: 1.6;
+  padding-bottom: 10px;
+}
+.greeting__modal-content button{
+  margin-bottom: 80px;
 }
 
-
-@media screen and (max-width:990px) {
+.greeting__modal-content svg{
+  position: absolute;
+  right: 50px;
+  bottom: 150px;
+  font-size: 150px;
+  z-index: 0;
+  opacity: .1;
+  color: #555;
+  transform: rotate(20deg);
+}
+.greeting__modal-content svg:nth-child(2){
+  bottom: 30px;
+  font-size: 120px;
+  transform: rotate(0deg);
+}
+@media screen and (max-width:800px) {
   .greeting__modal-content{
     width: 90%;
   }
