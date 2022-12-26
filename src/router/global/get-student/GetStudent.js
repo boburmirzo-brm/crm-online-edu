@@ -102,7 +102,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
               Tug'ilgan sana: <b>{item.birthYear} yil</b>
             </p>
             <p style={{ flex: 1 }}>
-              Tel <b>{item.tel?.map((i) => i + " ")}</b>
+              Tel: <b>{item.tel?.map((i) => i + " ")}</b>
             </p>
             {!item.enrolledCourses.length && (
               <span className="get__student-notGroup">

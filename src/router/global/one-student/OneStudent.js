@@ -4,17 +4,19 @@ import "./OneStudent.css";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
-// import {
-//   reloadTeacherAction,
-//   reloadGroupAction,
-// } from "../../../context/action/action";
+import {
+  reloadTeacherAction,
+  reloadGroupAction,
+  reloadStudentAction,
+} from "../../../context/action/action";
 import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
 import Skeleton from "../../../components/skeleton/Skeleton";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
-import { regions, times, days, genders } from "../../../static";
+import { regions, genders } from "../../../static";
 import ShowingEnteredNumbers from "../../../components/register-student-comp/ShowingEnteredNumbers";
+import { useDispatch } from "react-redux";
 
 const initializeData = {
   _id: "63a92a30b141665b89177aeb",
@@ -81,6 +83,7 @@ function OneStudent() {
   const [oneId, setOneId] = useState(null);
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let { id } = useParams();
   const { pathname } = useLocation();
@@ -140,6 +143,9 @@ function OneStudent() {
           console.log(data);
           setInnerReload((e) => !e);
           setAreInputsDisabled((e) => !e);
+          dispatch(reloadTeacherAction());
+          dispatch(reloadGroupAction());
+          dispatch(reloadStudentAction());
         })
         .catch((err) => {
           console.log(err?.data);
@@ -149,6 +155,28 @@ function OneStudent() {
         });
     }
   };
+
+  const handleDeleteStudent = () => {
+    if (window.confirm(`${one?.firstName} ${one?.lastName} ni o'chirasizmi?`)) {
+      setIsLoading(true);
+      axios
+        .delete(`/api/students/${one?._id}`)
+        .then(({ data }) => {
+          console.log(data);
+          dispatch(reloadTeacherAction());
+          dispatch(reloadGroupAction());
+          dispatch(reloadStudentAction());
+          navigate(`${pathname.pathnameFormat()}/get-student`);
+        })
+        .catch((err) => {
+          console.log(err?.data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
   return (
     <div className="one__student">
       <button onClick={() => navigate(-1)} className="backBtn">
@@ -284,88 +312,46 @@ function OneStudent() {
             </select>
           </p>
           <hr className="hr" />
-          <b className="one__student-special">O'quvchi hohlagan</b>
+          {one?.wantedCourse ||
+          one?.wantedDay ||
+          one?.wantedTime ||
+          one?.aboutUs ? (
+            <b className="one__student-special">O'quvchi hohlagan</b>
+          ) : (
+            ""
+          )}
           {one?.wantedCourse ? (
             <p>
               <span>Kurslari:</span>
-              <input
-                type="text"
-                disabled={areInputsDisabled}
-                className="one__student-input"
-                onChange={handleChange}
-                style={{ textTransform: "uppercase" }}
-                value={one?.wantedCourse}
-                name="wantedCourse"
-                id="wantedCourse"
-                required
-              />
+              <b>{one?.wantedCourse}</b>
             </p>
           ) : (
             ""
           )}
           {one?.wantedDay ? (
-            <>
-              <p>
-                <span>Kuni:</span>
-                <select
-                  disabled={areInputsDisabled}
-                  className="one__student-select"
-                  onChange={handleChange}
-                  defaultValue={one?.wantedDay}
-                  name="wantedDay"
-                  id="wantedDay"
-                  required
-                >
-                  <option disabled={true} value="">
-                    tanlang
-                  </option>
-                  {days.map((el, idx) => (
-                    <option key={idx} title={el} value={el}>
-                      {el.toUpperCase()}
-                    </option>
-                  ))}
-                </select>{" "}
-              </p>
-              <p>
-                <span>Vaqti:</span>
-                <select
-                  disabled={areInputsDisabled}
-                  className="one__student-select"
-                  onChange={handleChange}
-                  defaultValue={one?.wantedTime}
-                  name="wantedTime"
-                  id="wantedTime"
-                  required
-                >
-                  <option disabled={true} value="">
-                    tanlang
-                  </option>
-                  {times.map((el, idx) => (
-                    <option key={idx} title={el} value={el}>
-                      {el.toUpperCase()}
-                    </option>
-                  ))}
-                </select>
-              </p>
-            </>
+            <p>
+              <span>Kuni:</span>
+              <b>{one?.wantedDay}</b>
+            </p>
           ) : (
             ""
           )}
-          <p>
-            <span>Biz haqimizda:</span>
-            <textarea
-              disabled={areInputsDisabled}
-              className="one__student-textarea"
-              rows="4"
-              cols="50"
-              onChange={handleChange}
-              value={one?.aboutUs}
-              type="text"
-              name="aboutUs"
-              id="aboutUs"
-              autoComplete="off"
-            ></textarea>
-          </p>
+          {one?.wantedTime ? (
+            <p>
+              <span>Vaqti:</span>
+              <b>{one?.wantedTime}</b>
+            </p>
+          ) : (
+            ""
+          )}
+          {one?.aboutUs ? (
+            <p>
+              <span>Biz haqimizda:</span>
+              <b>{one?.aboutUs}</b>
+            </p>
+          ) : (
+            ""
+          )}
           <br />
           <button
             disabled={isLoading}
@@ -388,18 +374,23 @@ function OneStudent() {
           >
             Guruhga qo'shish
           </button>
-          <button
-            title={
-              areInputsDisabled
-                ? "O'chirib yuborish"
-                : "Iltimos birinchi ma'lumotlarni saqlang"
-            }
-            disabled={!areInputsDisabled}
-            style={{ marginLeft: "8px" }}
-            className="btn-danger"
-          >
-            O'chirib yuborish
-          </button>
+          {one?.enrolledCourses?.length ? (
+            ""
+          ) : (
+            <button
+              onClick={handleDeleteStudent}
+              title={
+                areInputsDisabled
+                  ? "O'chirib yuborish"
+                  : "Iltimos birinchi ma'lumotlarni saqlang"
+              }
+              disabled={isLoading || !areInputsDisabled}
+              style={{ marginLeft: "8px" }}
+              className="btn-danger"
+            >
+              O'chirib yuborish
+            </button>
+          )}
         </div>
       </div>
       <h2 className="one__student-title">O'quvchi tahsil olayotgan guruhlar</h2>

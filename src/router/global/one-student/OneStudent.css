@@ -2,6 +2,9 @@
   padding: 30px;
   padding-bottom: 200px;
 }
+.one__student b {
+    text-transform: uppercase;
+}
 .one__student-title {
   font-weight: 500;
   color: var(--bg-td);
