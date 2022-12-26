@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, {memo} from "react";
+import React, { memo } from "react";
 
 const ShowingEnteredNumbers = ({ data, setData }) => {
   return data.tel.length ? (
@@ -20,8 +20,7 @@ const ShowingEnteredNumbers = ({ data, setData }) => {
             }
           }}
           key={idx}
-        >
-          {el},{" "}
+        >{el},{" "}
         </span>
       ))}
     </div>
