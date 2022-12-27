@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     gap: 30px;
     margin: 30px;
+    color: var(--bg-td);
 }
 
 .statistics__item{

@@ -40,3 +40,19 @@
 .skeleton__body div{
     height: 40px;
 }
+
+
+@media screen and (max-width:750px) {
+    .skeleton__head {
+        flex-direction: column;
+    }
+    .skeleton__head > div:first-child{
+        width: 80%;
+    }
+    .skeleton__head > div:nth-child(2){
+        width: 80%;
+    }
+    .skeleton__body{
+        width: calc(80% + 30px);
+    }
+}

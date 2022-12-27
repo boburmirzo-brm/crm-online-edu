@@ -177,3 +177,29 @@
   font-weight: 100;
   margin-right: 10px;
 }
+
+@media screen and (max-width:750px) {
+  .get__navbar{
+    min-height: 90px;
+  }
+  .get__collection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-left: 0px;
+  }
+  .get__item {
+    margin-left: 20px;
+  }
+  .get__controller {
+    position: static;
+  }
+  .get__group-navbar{
+    min-height: 50px;
+  }
+  .get__group-navbar .get__collection{
+    flex-direction: row;
+  }
+}
+

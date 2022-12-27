@@ -115,8 +115,10 @@ function CreateMember() {
   };
   return (
     <>
+      <div className="get__navbar get__group-navbar">
+        <h3>Hodimlarni ro'yxatga olish</h3>
+      </div>
       <div className="global__router">
-        <h3 className="global__title">Hodimlarni ro'yxatga olish</h3>
         <form onSubmit={handleSubmit} className="form">
          
 

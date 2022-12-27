@@ -107,9 +107,11 @@ function RegisterStudentComp({ isReceptionist }) {
           {
             !isReceptionist ? <button onClick={()=> navigate(-1)} className="backBtn register__back"><b>&#10140;</b><span>Orqaga</span></button>:""
           }
-        <h3 className="register__title">
-           O'quvchini ro'yxatga olish</h3>
-      <form onSubmit={handleSubmit} className="form register__formCon">
+          {
+            !isReceptionist ? <h3 className="register__title"> O'quvchini ro'yxatga olish</h3>:<></>
+          }
+        
+      <form onSubmit={handleSubmit} className={`form ${!isReceptionist? "register__formCon":""}`}>
         <div className="form__field">
           <label htmlFor="firstName">Ism: </label>
           <div>

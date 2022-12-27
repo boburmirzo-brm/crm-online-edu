@@ -76,8 +76,10 @@ function CreateGroup() {
   };
   return (
     <>
+      <div className="get__navbar get__group-navbar">
+        <h3>Guruh qo'shish</h3>
+      </div>
       <div className="global__router">
-        <h3 className="global__title">Guruh qo'shish</h3>
         <form onSubmit={handleSubmit} className="form">
           <div className="form__field">
             <label>O'qituvchi: </label>

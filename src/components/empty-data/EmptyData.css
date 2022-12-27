@@ -1,0 +1,9 @@
+.empty__data{
+    text-align: center;
+    padding-top: 20px;
+    color: var(--bg-td);
+    width: 100%;
+}
+.empty__data img{
+    width: 250px;
+}

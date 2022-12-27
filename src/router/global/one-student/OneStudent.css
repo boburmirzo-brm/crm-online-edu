@@ -23,6 +23,8 @@
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  filter: contrast(40%) saturate(9);
+
 }
 .one__student-head p,
 .one__student-head div {
@@ -116,4 +118,12 @@
 }
 .one__student-wanted{
   font-size: 13px;
+}
+
+
+
+@media screen and (max-width:750px) {
+  .one__student-head {
+    flex-direction: column;
+  }
 }

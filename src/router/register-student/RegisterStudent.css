@@ -24,7 +24,7 @@
 }
 .greeting__modal-content{
   width: 400px;
-  height: 80%;
+  /* height: 80%; */
   overflow: auto;
   background: #fff;
   position: relative;
@@ -32,7 +32,7 @@
   color: var(--bg-td);
   transform: translateY(-50px);
   opacity: 0;
-  animation: greetingModal .5s .5s forwards;
+  animation: greetingModal .5s .15s forwards;
 }
 
 @keyframes greetingModal {

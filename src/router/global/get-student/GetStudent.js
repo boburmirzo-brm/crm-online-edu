@@ -12,6 +12,7 @@ import {
 import axios from "../../../api";
 import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
+import EmptyData from "../../../components/empty-data/EmptyData";
 
 const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
   "NEW_STUDENT",
@@ -112,18 +113,18 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       </div>
       <div className="get__controller">
         <input type="text" placeholder="O'quvchi FISH..." />
-        <select name="" id="">
+        {/* <select name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (
             <option key={inx} value={i}>
               {i.toUpperCase()}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
       {/* <h3 className="global__title">O'quvchilar</h3> */}
       <div className="get__student-container">
-        {!filterStudents.length ? <p>O'quvchilar mavjud emas</p> : <></>}
+        {!filterStudents.length ? <EmptyData text={"O'quvchilar topilmadi"}/> : <></>}
         {filterStudents?.map((item, inx) => (
           <div key={inx} className="get__student-card">
             <Link to={`${pathname.pathnameFormat()}/get-student/${item._id}`}>

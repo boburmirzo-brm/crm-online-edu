@@ -14,13 +14,14 @@ import AddStudentInGroup from "../../../components/add-student-in-group/AddStude
 
 // images
 import bugalteriya from "../../../assets/Bug'alteriya.jpg";
-import dtmTest from "../../../assets/DTM ga tayyorgarlik.jpg";
+import dtm from "../../../assets/DTM ga tayyorgarlik.jpg";
 import english from "../../../assets/english.jpg";
 import it from "../../../assets/it.jpg";
 import matematika from "../../../assets/matematika.jpg";
 import russia from "../../../assets/russia.jpg";
 import english_kids from "../../../assets/english_kids.jpg";
 import russia_kids from "../../../assets/russia_kids.jpg";
+import EmptyData from "../../../components/empty-data/EmptyData";
 
 function GetGroup({ addStudent, studentID, courses }) {
   const groups = useSelector((s) => s?.getGroups);
@@ -81,7 +82,7 @@ function GetGroup({ addStudent, studentID, courses }) {
     russia,
     english,
     matematika,
-    dtmTest,
+    dtm,
     bugalteriya,
     english_kids,
     russia_kids,
@@ -107,9 +108,9 @@ function GetGroup({ addStudent, studentID, courses }) {
   };
   return (
     <div className="global__router">
-      <div className="get__navbar">
+      <div className="get__navbar get__group-navbar">
         <h3>Guruhlar</h3>
-        <ul className="get__collection">
+        <ul className="get__collection ">
           <li
             onClick={() => setActive(false)}
             className={`get__item ${active ? "" : "get__item-active"}`}
@@ -145,7 +146,7 @@ function GetGroup({ addStudent, studentID, courses }) {
                 type === i ? "get__controller-active" : ""
               } `}
             >
-              {i}{" "}
+              {i.toUpperCase()}
               <span>
                 {
                   groups?.filter(
@@ -249,7 +250,7 @@ function GetGroup({ addStudent, studentID, courses }) {
             );
           })
         ) : (
-          <p>Guruhlar mavjud emas!</p>
+          <EmptyData text={"Guruhlar topilmadi"}/>
         )}
       </div>
       <AddStudentInGroup

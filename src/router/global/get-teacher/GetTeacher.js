@@ -7,6 +7,7 @@ import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
+import EmptyData from "../../../components/empty-data/EmptyData"
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
@@ -148,6 +149,10 @@ function GetTeacher() {
             </div>
           );
         })}
+
+        {
+          !filterTeachers.length && <EmptyData text={"O'qituvchilar topilmadi"}/>
+        }
       </div>
     </div>
   );

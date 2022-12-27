@@ -85,7 +85,9 @@ const gender = {
 function Statistics() {
   return (
     <div className='statistics'>
-      <h3 className='global__title'>O'quv markazi Statistikasi</h3>
+        <div className="get__navbar get__group-navbar">
+        <h3>O'quv markazi Statistikasi</h3>
+      </div>
       <div className="statistics__container">
         <div className="statistics__item">
           <ChartCom data={major} title="Yo'nalish"/>

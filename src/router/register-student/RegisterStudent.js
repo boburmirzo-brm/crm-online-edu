@@ -15,7 +15,7 @@ function RegisterStudent() {
         <div className="greeting__modal-content">
           <div>
           <h3>Kurs haqida qisqacha</h3>
-          <i>O'qish hafta uch kun ikki soatdan bo'ladi.</i>
+          <i>O'qish haftada uch kun ikki soatdan bo'ladi.</i>
           <i>Tajribali ustozlar darslarni qiziqarli va samarali holatda o'tishadi.</i>
           <i>Har bosqich yakunida imtihon olinadi.</i>
           <br />

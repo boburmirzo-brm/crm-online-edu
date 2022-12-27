@@ -84,6 +84,8 @@
     border-radius: 50%;
     font-size: 20px;
     opacity: .6;
+    z-index: 20;
+    display: none;
 }
 
 
@@ -94,11 +96,15 @@
 }
 
 @media screen and (max-width:990px){
+    .sidebar__menu{
+        display: block;
+    }
     .sidebar{
         position: fixed;
         top: 0;
         left: -350px;
         transition: .3s;
+        z-index: 20;
     }
     .sidebar__show{
         left: 0;
@@ -108,7 +114,6 @@
 @media screen and (max-width:600px){
     .sidebar{
         width: 80%;
-        z-index: 20;
         left: -80%;
     }
     .sidebar__show{
