@@ -44,7 +44,7 @@ function GetGroup({ addStudent, studentID, courses }) {
     // localStorage.setItem("filterGroupActive", active)
     localStorage.setItem("filterGroupType", type)
     if (type === "all") {
-     console.log(active);
+    //  console.log(active);
       return setFilterData(groups?.filter((i) => i.isActive === active));
     }
     setFilterData(
@@ -88,7 +88,7 @@ function GetGroup({ addStudent, studentID, courses }) {
   });
   const addStudentThisGroup = (groupId) => {
     let data = { studentID };
-    console.log(data);
+    // console.log(data);
     setIsLoading(true);
     axios
       .patch(`/api/groups/add-student/${groupId}`, data)

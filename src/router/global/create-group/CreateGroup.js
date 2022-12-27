@@ -53,7 +53,7 @@ function CreateGroup() {
     // copyData[key] = +t.value.replace(/\D/g, "");
   };
 
-  console.log(data);
+  // console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();

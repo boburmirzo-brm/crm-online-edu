@@ -13,28 +13,36 @@ import axios from "../../../api";
 import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 
-const [NEW_STUDENT,STUDENT_OF_GROUP,ALL_STUDENT] = ["NEW_STUDENT", "STUDENT_OF_GROUP","ALL_STUDENT"]
+const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
+  "NEW_STUDENT",
+  "STUDENT_OF_GROUP",
+  "ALL_STUDENT",
+];
 function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
   const [id, setId] = useState(null);
   const [courses, setCourses] = useState([]);
   const [filterStudents, setStudents] = useState([]);
-  const [filterType, setFilterType] = useState(localStorage.getItem("filterStudent") || NEW_STUDENT);
+  const [filterType, setFilterType] = useState(
+    localStorage.getItem("filterStudent") || NEW_STUDENT
+  );
 
-  useEffect(()=> {
-    localStorage.setItem("filterStudent", filterType)
-    if(!data){return }
-    if(NEW_STUDENT === filterType){
-      setStudents(data?.filter(i=> !i.enrolledCourses.length && !i.isEnd ))
-    }else if(STUDENT_OF_GROUP === filterType){
-      setStudents(data?.filter(i=> i.enrolledCourses.length  && !i.isActive ))
-    }else if(ALL_STUDENT === filterType){
-      setStudents(data?.filter(i=> i.enrolledCourses.length && i.isActive ))
+  useEffect(() => {
+    localStorage.setItem("filterStudent", filterType);
+    if (!data) {
+      return;
     }
-  }, [data,filterType])
-  
-  console.log(filterStudents);
+    if (NEW_STUDENT === filterType) {
+      setStudents(data?.filter((i) => !i.enrolledCourses.length && !i.isEnd));
+    } else if (STUDENT_OF_GROUP === filterType) {
+      setStudents(data?.filter((i) => i.enrolledCourses.length && !i.isActive));
+    } else if (ALL_STUDENT === filterType) {
+      setStudents(data?.filter((i) => i.enrolledCourses.length && i.isActive));
+    }
+  }, [data, filterType]);
+
+  // console.log(filterStudents);
 
   // Zokirkhon
   const [isLoading, setIsLoading] = useState(false);
@@ -71,19 +79,33 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       });
   };
 
-
   return (
     <div className="global__router">
       <div className="get__navbar">
         <h3>O'quvchilar</h3>
         <ul className="get__collection">
-          <li onClick={()=> setFilterType(NEW_STUDENT)} className={`get__item ${NEW_STUDENT===filterType?"get__item-active":""}`}>
+          <li
+            onClick={() => setFilterType(NEW_STUDENT)}
+            className={`get__item ${
+              NEW_STUDENT === filterType ? "get__item-active" : ""
+            }`}
+          >
             Yangi O'quvchilar <span>{data?.unenrolledCourses()}</span>
           </li>
-          <li onClick={()=> setFilterType(STUDENT_OF_GROUP)} className={`get__item ${STUDENT_OF_GROUP===filterType?"get__item-active":""}`}>
+          <li
+            onClick={() => setFilterType(STUDENT_OF_GROUP)}
+            className={`get__item ${
+              STUDENT_OF_GROUP === filterType ? "get__item-active" : ""
+            }`}
+          >
             Yangi Guruh O'quvchilari <span>{data?.enrolledCourses()}</span>
           </li>
-          <li onClick={()=> setFilterType(ALL_STUDENT)} className={`get__item ${ALL_STUDENT===filterType?"get__item-active":""}`}>
+          <li
+            onClick={() => setFilterType(ALL_STUDENT)}
+            className={`get__item ${
+              ALL_STUDENT === filterType ? "get__item-active" : ""
+            }`}
+          >
             Markazda O'qiyotgan O'quvchilar <span>{data?.isActiveTrue()}</span>
           </li>
         </ul>
@@ -101,12 +123,10 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       </div>
       {/* <h3 className="global__title">O'quvchilar</h3> */}
       <div className="get__student-container">
-        {!filterStudents.length ? <p>O'quvchilar mavjud emas</p> : <></>} 
+        {!filterStudents.length ? <p>O'quvchilar mavjud emas</p> : <></>}
         {filterStudents?.map((item, inx) => (
           <div key={inx} className="get__student-card">
-            <Link
-              to={`${pathname.pathnameFormat()}/get-student/${item._id}`}
-            >
+            <Link to={`${pathname.pathnameFormat()}/get-student/${item._id}`}>
               <img src={item.gender === "male" ? male : female} alt="" />
               <h3>
                 {item.firstName} {item.lastName} {item.middleName}
@@ -156,9 +176,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
               </>
             ) : (
               <div className="get__student-btn">
-                <Link
-                  to={item._id}
-                >
+                <Link to={item._id}>
                   <button>Batafsil</button>
                 </Link>
                 <button
