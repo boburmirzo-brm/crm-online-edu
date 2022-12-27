@@ -35,17 +35,22 @@ function Sidebar({ info, degree }) {
       </NavLink>
       <div className="sidebar__collection">
         {
-          GLOBAL_ROUTERS?.map((item,inx)=><NavLink
-          key={inx}
-          onClick={()=>setShow(false)}
-          to={pathname.pathnameFormat()+item.path}
-          className={({ isActive }) =>
-            "sidebar__item " + (isActive && "sidebar__active")
+          GLOBAL_ROUTERS?.map((item,inx)=>{
+            if(item[pathname.pathnameFormat(3).split('/').slice(-1)[0]]){
+              return  <NavLink
+              key={inx}
+              onClick={()=>setShow(false)}
+              to={pathname.pathnameFormat()+item.path}
+              className={({ isActive }) =>
+                "sidebar__item " + (isActive && "sidebar__active")
+              }
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </NavLink>
+            }
           }
-        >
-          {item.icon}
-          <span>{item.title}</span>
-        </NavLink> )
+          )
         }
       </div>
       <button className="sidebar__logOut" onClick={logOut}>Tizimdan chiqish</button>

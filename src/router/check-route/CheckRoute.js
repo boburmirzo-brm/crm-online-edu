@@ -52,7 +52,7 @@ function CheckRoute() {
   useEffect(() => {
     dispatch(getTeachersAction(teachers?.data));
   }, [teachers ,dispatch, reloadTeacher]);
-
+  console.log();
   return (
     <div className="check__route">
       {teachers.loading && <Loader />}
@@ -73,9 +73,13 @@ function CheckRoute() {
           <Route path={`${path}/get-group/:id`} element={<OneGroup/>}/>
           <Route path={`${path}/get-teacher/:id`} element={<OneTeacher/>}/>
 
-          {GLOBAL_ROUTERS?.map((item, inx) => (
-            <Route key={inx} path={path + item.path} element={item.element} />
-          ))}
+          {GLOBAL_ROUTERS?.map((item, inx) => {
+            if(item[params["*"].split("/")[0]]){
+              return (
+                <Route key={inx} path={path + item.path} element={item.element} />
+              )
+            }
+          })}
         </Routes>
       </div>
     </div>
