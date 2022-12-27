@@ -1,11 +1,13 @@
 .custom__field {
   margin-top: 1.5rem;
+  color: var(--bg-td);
 }
 .custom__field div {
   margin-left: 3px;
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-bottom: 5px;
 }
 .register__modal{
   text-align: center;

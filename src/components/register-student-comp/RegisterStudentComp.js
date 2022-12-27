@@ -250,6 +250,7 @@ function RegisterStudentComp({ isReceptionist }) {
                     onChange={handleChange}
                     value={el}
                     name="wantedCourse"
+                   
                     id={el}
                     autoComplete="off"
                   />

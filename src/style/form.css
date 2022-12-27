@@ -15,7 +15,7 @@
 .form__field input,
 .form__field textarea,
 .form__field select {
-  color: var(--bg-dark);
+  color: var(--bg-td);
 }
 .form__field select,
 .form__field textarea,

@@ -146,7 +146,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
                 Guruhga qo'shilmagan
               </span>
             )}
-            {item.wantedCourse.length ? (
+            {item.wantedCourse.length && !item.isActive && !item.enrolledCourses.length ? (
               <div className="get__student-extra">
                 <p>
                   Fan: <i>{item.wantedCourse}</i>
