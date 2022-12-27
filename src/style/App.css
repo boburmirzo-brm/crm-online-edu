@@ -87,8 +87,13 @@
 }
 .get__controller-collection {
   display: flex;
-  gap: 20px;
+  gap: 10px;
+  overflow: auto;
   list-style: none;
+  padding-bottom: 5px;
+}
+.get__controller-collection::-webkit-scrollbar{
+  height: 6px;
 }
 .get__controller-item {
   font-size: 14px;

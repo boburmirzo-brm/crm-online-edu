@@ -1,11 +1,13 @@
-import React, {memo} from "react";
+import React, {memo, useState} from "react";
 import "./Sidebar.css";
 import { NavLink, useLocation } from "react-router-dom";
 import {GLOBAL_ROUTERS} from "../../static/router"
 import { useDispatch } from "react-redux"
 import { logOutAction } from "../../context/action/action"
+import {FiMenu, FiX} from "react-icons/fi"
 
 function Sidebar({ info, degree }) {
+  const [show, setShow] = useState(false)
   const { pathname } = useLocation();
   const dispatch = useDispatch()
   const logOut = ()=>{
@@ -13,7 +15,8 @@ function Sidebar({ info, degree }) {
       dispatch(logOutAction())
   }
   return (
-    <div className="sidebar">
+    <>
+        <div className={`sidebar ${show?"sidebar__show":""}`}>
       <h2 className="sidebar__logo">Algoritm EDU</h2>
       <NavLink
         to={`${pathname.pathnameFormat(3)}`}
@@ -34,6 +37,7 @@ function Sidebar({ info, degree }) {
         {
           GLOBAL_ROUTERS?.map((item,inx)=><NavLink
           key={inx}
+          onClick={()=>setShow(false)}
           to={pathname.pathnameFormat()+item.path}
           className={({ isActive }) =>
             "sidebar__item " + (isActive && "sidebar__active")
@@ -46,6 +50,11 @@ function Sidebar({ info, degree }) {
       </div>
       <button className="sidebar__logOut" onClick={logOut}>Tizimdan chiqish</button>
     </div>
+    <button onClick={()=>setShow(p=>!p)} className="sidebar__menu">
+      {show? <FiX/>:  <FiMenu/>}
+     
+    </button>
+    </>
   );
 }
 

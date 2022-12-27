@@ -76,11 +76,19 @@
     text-transform: uppercase;
     text-align: center;
     color:#e7bd52;
-    margin-top: 50px;
+    margin-top: 20px;
     padding-top: 14px;
     border-top: 1px solid #ddd;
     font-size: 12px;
     letter-spacing: 1px;
+}
+.login__container a{
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #e7bd52;
 }
 
 @media screen and (max-width:1600px) {

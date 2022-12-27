@@ -42,6 +42,9 @@
   .register__title{
     margin-left: 0;
   }
+  .register__formCon{
+    padding: 0;
+  }
 }
 
 @media screen and (max-width:500px){

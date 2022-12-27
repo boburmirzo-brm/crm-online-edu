@@ -109,7 +109,7 @@ function RegisterStudentComp({ isReceptionist }) {
           }
         <h3 className="register__title">
            O'quvchini ro'yxatga olish</h3>
-      <form onSubmit={handleSubmit} className="form">
+      <form onSubmit={handleSubmit} className="form register__formCon">
         <div className="form__field">
           <label htmlFor="firstName">Ism: </label>
           <div>

@@ -72,9 +72,47 @@
     opacity: .8;
     cursor: pointer;
 }
+.sidebar__menu{
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-py);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    opacity: .6;
+}
+
 
 @media screen and (max-width:1600px) {
     .sidebar{
         width: 350px;
     }
+}
+
+@media screen and (max-width:990px){
+    .sidebar{
+        position: fixed;
+        top: 0;
+        left: -350px;
+        transition: .3s;
+    }
+    .sidebar__show{
+        left: 0;
+    }
+}
+
+@media screen and (max-width:600px){
+    .sidebar{
+        width: 80%;
+        z-index: 20;
+        left: -80%;
+    }
+    .sidebar__show{
+        left: 0;
+    }
+
 }

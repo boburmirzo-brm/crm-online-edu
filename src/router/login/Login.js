@@ -4,6 +4,7 @@ import logo from "../../assets/logo.jpg";
 import { useDispatch } from "react-redux";
 import axios from "../../api";
 import {authAction} from "../../context/action/action"
+import {Link} from "react-router-dom"
 
 function LoginContainer() {
   const [username, setUsername] = useState("");
@@ -61,6 +62,7 @@ function LoginContainer() {
         <button disabled={loading} type="submit">
           Jo'natish
         </button>
+        <Link to={"/"}>Bosh Sahifa</Link>
         <p className="login__edu">Algoritm education center</p>
       </form>
     </div>
