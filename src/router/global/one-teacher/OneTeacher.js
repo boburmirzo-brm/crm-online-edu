@@ -80,9 +80,12 @@ function OneTeacher() {
           </p>
           <br />
           <button className="btn-py">O'zgartirish</button>
-          <button style={{ marginLeft: "8px" }} className="btn-danger">
+          {
+            !groups.length && <button style={{ marginLeft: "8px" }} className="btn-danger">
             O'chirib yuborish
           </button>
+          }
+         
         </div>
       </div>
       <h2 className="one__student-title">O'qituvchining guruhlari</h2>
@@ -93,13 +96,24 @@ function OneTeacher() {
           <span>{inx+1}.</span>
           <div className="one__student-item">
             <b>Fan</b>
+            <div>
             <p>{item?.major}</p>
             <p>{item?.level}</p>
+            </div>
           </div>
           <div className="one__student-item">
             <b>Kun vaqti</b>
+            <div>
             <p>{item?.day}</p>
             <p>{item?.time}</p>
+            </div>
+          </div>
+          <div className="one__student-item">
+            <b>Start / Exam</b>
+            <div>
+            <p>{item?.firstLesson || "26.12.2022"}</p>
+            <p>{item?.expectedExamDay || "20.02.2023"}</p>
+            </div>
           </div>
           <div className="one__student-item">
             <b>Xona</b>

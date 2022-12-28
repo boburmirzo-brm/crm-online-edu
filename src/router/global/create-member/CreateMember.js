@@ -211,6 +211,10 @@ function CreateMember() {
             <div>
               <input
                 onChange={(e) => setTempPhoneNumber(e.target.value)}
+                onBlur={(e)=> {
+                  setTempPhoneNumber(e.target.value)
+                  handleAddTelNumToArrOfData()
+                }}
                 value={tempPhoneNumber}
                 type="text"
                 placeholder="+998901234567"
@@ -257,6 +261,8 @@ function CreateMember() {
                 placeholder="misol: 1998"
                 name="birthYear"
                 id="birthYear"
+                minLength={4}
+                maxLength={4}
                 required
                 autoComplete="off"
               />

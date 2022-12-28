@@ -31,7 +31,6 @@ function OneGroup() {
   useEffect(() => {
     setData(group);
   }, [group]);
-
   // console.log(data);
   // console.log(teachers);
   const [StudentsModal, setStudentsModal] = useState(false);
@@ -221,7 +220,7 @@ function OneGroup() {
             >
               {days.map((el, idx) => (
                 <option key={idx} value={el} title={el}>
-                  {el}
+                  {el === "M/W/F"? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
                 </option>
               ))}
             </select>
@@ -241,6 +240,34 @@ function OneGroup() {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="one__group-item">
+            <p>Boshlangan vaqti</p>
+            <input
+              // onChange={handleChange}
+              disabled={areInputsDisabled}
+              value={data?.firstLesson || "26.12.2022"}
+              type="text"
+              placeholder="Boshlangan vaqti..."
+              name="firstLesson"
+              id="firstLesson"
+              required
+              autoComplete="off"
+            />
+          </div>
+          <div className="one__group-item">
+            <p>Imtihon vaqti</p>
+            <input
+              // onChange={handleChange}
+              disabled={areInputsDisabled}
+              value={data?.expectedExamDay || "20.02.2023"}
+              type="text"
+              placeholder="Imtihon vaqti..."
+              name="expectedExamDay"
+              id="expectedExamDay"
+              required
+              autoComplete="off"
+            />
           </div>
           <div className="one__group-item">
             <p>Xona</p>
@@ -301,16 +328,16 @@ function OneGroup() {
             const { firstName, lastName, middleName, tel, _id } = item;
             return (
               <div key={_id} className="one__group-card">
-                <span>{idx + 1}</span>
                 <p>
+                <span>{idx + 1}. </span>
                   <Link
                     to={`${pathname.pathnameFormat()}/get-student/${_id}`}
                   >
                     {firstName} {lastName} {middleName} (
                     {tel?.map((el, idx) => (
-                      <span key={idx} title={el}>
+                      <b key={idx} title={el}>
                         {el}
-                      </span>
+                      </b>
                     ))}
                     )
                   </Link>

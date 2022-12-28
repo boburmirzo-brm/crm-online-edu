@@ -101,6 +101,10 @@ function RegisterStudentComp({ isReceptionist }) {
         setLoading(false);
       });
   };
+  const setAutoTel = (e)=>{
+    setTempPhoneNumber(e.target.value)
+    handleAddTelNumToArrOfData()
+  }
   return (
     <>
         
@@ -113,7 +117,7 @@ function RegisterStudentComp({ isReceptionist }) {
         
       <form onSubmit={handleSubmit} className={`form ${!isReceptionist? "register__formCon":""}`}>
         <div className="form__field">
-          <label htmlFor="firstName">Ism: </label>
+          <label htmlFor="firstName">Ism: <span style={{color:"crimson"}}>*</span></label>
           <div>
             <input
               onChange={handleChange}
@@ -129,7 +133,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="lastName">Familya: </label>
+          <label htmlFor="lastName">Familya: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -145,7 +149,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="middleName">Otasining ismi: </label>
+          <label htmlFor="middleName">Otasining ismi: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -161,7 +165,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="birthYear">Tug'ilgan yil: </label>
+          <label htmlFor="birthYear">Tug'ilgan yil: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -170,6 +174,8 @@ function RegisterStudentComp({ isReceptionist }) {
               type="string"
               placeholder="misol: 1998"
               name="birthYear"
+              minLength={4}
+              maxLength={4}
               id="birthYear"
               required
               autoComplete="off"
@@ -177,7 +183,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label>Hudud: </label>
+          <label>Hudud: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <select
               onChange={handleChange}
@@ -199,11 +205,12 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="tel">Telefon raqam: </label>
+          <label htmlFor="tel">Telefon raqam: <span style={{color:"crimson"}}>*</span> </label>
           {<ShowingEnteredNumbers data={data} setData={setData} />}
           <div>
             <input
               onChange={(e) => setTempPhoneNumber(e.target.value)}
+              onBlur={(e)=> setAutoTel(e)}
               value={tempPhoneNumber}
               type="text"
               placeholder="+998901234567"
@@ -219,7 +226,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label>Jinsingiz tanlang: </label>
+          <label>Jinsingiz tanlang: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <select
               onChange={handleChange}
@@ -243,7 +250,7 @@ function RegisterStudentComp({ isReceptionist }) {
           <>
             <div className="custom__field">
               <label htmlFor="wantedCourse">
-                Qaysi kurslarni o'qishni xohlaysiz:{" "}
+                Qaysi kurslarni o'qishni xohlaysiz: <span style={{color:"crimson"}}>*</span>
               </label>
               {TEACHER_MAJOR.map((el, idx) => (
                 <div key={idx}>
@@ -279,7 +286,7 @@ function RegisterStudentComp({ isReceptionist }) {
               </div>
             </div> */}
             <div className="form__field">
-              <label>Qaysi kunlari o'qishni hohlaysiz: </label>
+              <label>Qaysi kunlari o'qishni hohlaysiz: <span style={{color:"crimson"}}>*</span> </label>
               <div>
                 <select
                   onChange={handleChange}
@@ -293,14 +300,14 @@ function RegisterStudentComp({ isReceptionist }) {
                   </option>
                   {days.map((el, idx) => (
                     <option key={idx} title={el} value={el}>
-                      {el.toUpperCase()}
+                      {el === "M/W/F"? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
             <div className="form__field">
-              <label>Qaysi vaqtda o'qishni hohlaysiz: </label>
+              <label>Qaysi vaqtda o'qishni hohlaysiz: <span style={{color:"crimson"}}>*</span> </label>
               <div>
                 <select
                   onChange={handleChange}
@@ -322,7 +329,7 @@ function RegisterStudentComp({ isReceptionist }) {
             </div>
             <div className="form__field">
               <label htmlFor="aboutUs">
-                Biz haqimizda qayerdan eshitdingiz?:{" "}
+                Biz haqimizda qayerdan eshitdingiz?: <i>(Ixtiyoriy)</i>
               </label>
               <div>
                 <textarea

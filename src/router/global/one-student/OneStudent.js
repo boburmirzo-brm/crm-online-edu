@@ -404,13 +404,17 @@ function OneStudent() {
             <span>{inx + 1}.</span>
             <div className="one__student-item">
               <b>Fan</b>
-              <p>{item?.major}</p>
-              <p>{item?.level}</p>
+              <div>
+                <p>{item?.major}</p>
+                <p>{item?.level}</p>
+              </div>
             </div>
             <div className="one__student-item">
               <b>Kun vaqti</b>
-              <p>{item?.day}</p>
-              <p>{item?.time}</p>
+              <div>
+                <p>{item?.day}</p>
+                <p>{item?.time}</p>
+              </div>
             </div>
             <div className="one__student-item" style={{ flex: 1 }}>
               <Link
@@ -420,8 +424,10 @@ function OneStudent() {
               >
                 <>
                   <b>O'qituvchi</b>
+                  <div>
                   <p>{item?.teacherInfo?.lastName}</p>
                   <p>{item?.teacherInfo?.firstName}</p>
+                  </div>
                 </>
               </Link>
             </div>

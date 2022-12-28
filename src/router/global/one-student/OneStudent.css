@@ -95,7 +95,7 @@
   margin-bottom: 10px;
 }
 .one__student-item {
-  width: 150px;
+  width: 120px;
 }
 .one__student-btn {
   display: flex;
@@ -121,9 +121,39 @@
 }
 
 
-
+@media screen and (max-width:1200px){
+  .one__student-card {
+    width: 100%;
+  }
+}
 @media screen and (max-width:750px) {
   .one__student-head {
     flex-direction: column;
+  }
+  .one__student-head img {
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin: auto;
+  }
+  .one__student-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 20px;
+  }
+  .one__student-item {
+    width: 100%;
+  }
+  .one__student-card:nth-child(even) b {
+    display: inline-block;
+  }
+  .one__student-card:nth-child(odd) b {
+    display: inline-block;
+  }
+  .one__student-item div{
+    display: flex;
+    gap: 15px;
   }
 }

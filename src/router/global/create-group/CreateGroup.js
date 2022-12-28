@@ -173,7 +173,7 @@ function CreateGroup() {
 
                 {days.map((el, idx) => (
                   <option key={idx} value={el} title={el}>
-                    {el}
+                    {el === "M/W/F"? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
                   </option>
                 ))}
               </select>

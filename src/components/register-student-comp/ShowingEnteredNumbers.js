@@ -2,12 +2,11 @@
 import React, { memo } from "react";
 
 const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
-  return data.tel.length ? (
-    <div>
+  return  (
+    <div className="showingEnteredNumbers">
       {
         notDelete? <span>Tel: </span> : "Sizning telefon ramalaringiz:"
       }
-      {" "}
       {data.tel.map((el, idx) => (
         <span
           title={`shu raqam( ${el} ) ni o'chirishni xohlaysizmi?`}
@@ -27,10 +26,11 @@ const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
         >{el},{" "}
         </span>
       ))}
+      {
+        !data.tel.length && <i>Tel kiritilmagan</i>
+      }
     </div>
-  ) : (
-    ""
-  );
+  ) ;
 };
 
 export default memo(ShowingEnteredNumbers);

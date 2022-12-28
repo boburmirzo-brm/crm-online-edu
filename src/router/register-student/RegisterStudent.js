@@ -27,6 +27,7 @@ function RegisterStudent() {
             <li>Ism va familyani to'liq kiriting</li>
             <li>Telefon raqamni ham to'ldiring</li>
             <li>O'qishni hohlayotgan faningizni ham to'ldiring</li>
+            <li><span style={{color:"crimson"}}>*</span> malumotlarni to'liq va batafsil to'ldiring</li>
           </ul>
           <button onClick={()=> setModal(false)} className="form__btn">Hammasini tushundim</button>
           </div>

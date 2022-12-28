@@ -34,6 +34,9 @@
 .register__back{
   margin-left: 30px;
 }
+.showingEnteredNumbers {
+  color: var(--bg-td);
+}
 
 @media screen and (max-width:800px) {
   .register__back{

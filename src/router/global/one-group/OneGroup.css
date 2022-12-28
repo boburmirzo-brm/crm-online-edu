@@ -33,7 +33,8 @@
   width: 125px;
 }
 .one__group-item select:disabled,
-.one__group-item input:disabled {
+.one__group-item input:disabled,
+.one__group-item input:disabled::placeholder{
   border: 1px solid transparent;
   color: var(--bg-td);
   background: #fff;
@@ -90,4 +91,21 @@
 .one__group-warning {
   text-align: center;
   color: crimson;
+}
+
+
+
+@media screen and (max-width:750px) {
+  .one__group-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+  .one__group-btnDanger{
+    margin-top: 5px;
+  }
 }
