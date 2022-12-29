@@ -80,6 +80,34 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       });
   };
 
+  const handleOnKeyUpSearch = ({ target: { value } }) => {
+    axios
+      .get("/api/students/search", {
+        method: "GET",
+        params: {
+          input: value.toLowerCase(),
+        },
+      })
+      .then(({ data }) => {
+        console.log("natija: ");
+        console.log(data);
+        if (data.state && data.data?.length) {
+          setStudents(data.data);
+        } else {
+          setStudents(
+            data?.filter((i) => !i.enrolledCourses.length && !i.isEnd)
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("xatolik: ");
+        console.log(err);
+      })
+      .finally(() => {
+        // do smth
+      });
+  };
+
   return (
     <div className="global__router">
       <div className="get__navbar">
@@ -112,7 +140,11 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
         </ul>
       </div>
       <div className="get__controller">
-        <input type="text" placeholder="O'quvchi FISH..." />
+        <input
+          type="text"
+          placeholder="O'quvchi FISH..."
+          onKeyUp={handleOnKeyUpSearch}
+        />
         {/* <select name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (
@@ -124,7 +156,11 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       </div>
       {/* <h3 className="global__title">O'quvchilar</h3> */}
       <div className="get__student-container">
-        {!filterStudents.length ? <EmptyData text={"O'quvchilar topilmadi"}/> : <></>}
+        {!filterStudents.length ? (
+          <EmptyData text={"O'quvchilar topilmadi"} />
+        ) : (
+          <></>
+        )}
         {filterStudents?.map((item, inx) => (
           <div key={inx} className="get__student-card">
             <Link to={`${pathname.pathnameFormat()}/get-student/${item._id}`}>
@@ -147,7 +183,9 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
                 Guruhga qo'shilmagan
               </span>
             )}
-            {item.wantedCourse.length && !item.isActive && !item.enrolledCourses.length ? (
+            {item.wantedCourse.length &&
+            !item.isActive &&
+            !item.enrolledCourses.length ? (
               <div className="get__student-extra">
                 <p>
                   Fan: <i>{item.wantedCourse}</i>
