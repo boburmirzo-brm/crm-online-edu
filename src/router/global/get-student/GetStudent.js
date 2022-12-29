@@ -88,12 +88,13 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
           input: value.toLowerCase(),
         },
       })
-      .then(({ data }) => {
+      .then(({ data: innerData }) => {
         console.log("natija: ");
-        console.log(data);
-        if (data.state && data.data?.length) {
-          setStudents(data.data);
+        console.log(innerData);
+        if (innerData.data.length) {
+          setStudents(innerData.data);
         } else {
+          setFilterType(localStorage.getItem("filterStudent") || NEW_STUDENT);
           setStudents(
             data?.filter((i) => !i.enrolledCourses.length && !i.isEnd)
           );
