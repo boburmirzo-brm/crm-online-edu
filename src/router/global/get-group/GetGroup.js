@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import {
   reloadGroupAction,
   reloadTeacherAction,
@@ -28,21 +28,21 @@ function GetGroup({ addStudent, studentID, courses }) {
   // console.log(groups)
   const teachers = useSelector((s) => s?.getTeachers);
   const dispatch = useDispatch();
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(localStorage.getItem("filterGroupActive") === "active" );
   const [type, setType] = useState(localStorage.getItem("filterGroupType") || "all");
   const [filterData, setFilterData] = useState([]);
 
-  
   // Zokirkhon
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(null);
   const [students, setStudents] = useState([]);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // console.log(filterData);
   // console.log(courses);
   useEffect(() => {
-    // localStorage.setItem("filterGroupActive", active)
+    localStorage.setItem("filterGroupActive", active ? "active":"new")
     localStorage.setItem("filterGroupType", type)
     if (type === "all") {
     //  console.log(active);
@@ -105,6 +105,28 @@ function GetGroup({ addStudent, studentID, courses }) {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+
+  const handleDeleteGroupById = (_id) => {
+    if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
+      setIsLoading(true);
+      axios
+        .delete(`/api/groups/${_id}`)
+        .then(({ data }) => {
+          console.log(data);
+          dispatch(reloadGroupAction());
+          dispatch(reloadStudentAction());
+          dispatch(reloadTeacherAction());
+          // navigate(`${pathname.pathnameFormat()}/get-group`);
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
   return (
     <div className="global__router">
@@ -243,7 +265,12 @@ function GetGroup({ addStudent, studentID, courses }) {
                     >
                       O'quvchilar
                     </button>
-                    <button style={{ background: "crimson" }}>O'chirish</button>
+                    {
+                      !enrolledStudents.length && <button 
+                      onClick={()=> handleDeleteGroupById(groupId)}
+                      style={{ background: "crimson" }}>O'chirish</button>
+                    }
+                    
                   </div>
                 )}
               </div>

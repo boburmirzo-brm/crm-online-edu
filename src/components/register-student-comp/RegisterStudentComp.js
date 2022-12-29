@@ -75,6 +75,9 @@ function RegisterStudentComp({ isReceptionist }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    data.middleName = data.middleName.split(" ")[0].capitalLetter() + (data.gender==="male"?" o'g'li":" qizi")
+    data.firstName = data.firstName.capitalLetter()
+    data.lastName = data.lastName.capitalLetter()
     setLoading(true);
     axios
       .post("/api/students", data)
