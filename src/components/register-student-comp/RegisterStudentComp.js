@@ -32,7 +32,7 @@ let initializeValue = {
 };
 function RegisterStudentComp({ isReceptionist }) {
   const [loading, setLoading] = useState(false);
-  const [tempPhoneNumber, setTempPhoneNumber] = useState("");
+  const [tempPhoneNumber, setTempPhoneNumber] = useState("+998");
   const [data, setData] = useState(initializeValue);
   const [modal, setModal] = useState(false);
 
@@ -68,7 +68,7 @@ function RegisterStudentComp({ isReceptionist }) {
       return alert("bu telefon raqamni kiritdingiz");
     }
     newFormData.tel.push(tempPhoneNumber);
-    setTempPhoneNumber("");
+    setTempPhoneNumber("+998");
     setData(newFormData);
   };
 
@@ -78,6 +78,8 @@ function RegisterStudentComp({ isReceptionist }) {
     data.middleName = data.middleName.split(" ")[0].capitalLetter() + (data.gender==="male"?" o'g'li":" qizi")
     data.firstName = data.firstName.capitalLetter()
     data.lastName = data.lastName.capitalLetter()
+
+      
     setLoading(true);
     axios
       .post("/api/students", data)
@@ -104,10 +106,6 @@ function RegisterStudentComp({ isReceptionist }) {
         setLoading(false);
       });
   };
-  const setAutoTel = (e)=>{
-    setTempPhoneNumber(e.target.value)
-    handleAddTelNumToArrOfData()
-  }
   return (
     <>
         
@@ -120,7 +118,7 @@ function RegisterStudentComp({ isReceptionist }) {
         
       <form onSubmit={handleSubmit} className={`form ${!isReceptionist? "register__formCon":""}`}>
         <div className="form__field">
-          <label htmlFor="firstName">Ism: <span style={{color:"crimson"}}>*</span></label>
+          <label htmlFor="firstName">Ismingiz: <span style={{color:"crimson"}}>*</span></label>
           <div>
             <input
               onChange={handleChange}
@@ -136,7 +134,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="lastName">Familya: <span style={{color:"crimson"}}>*</span> </label>
+          <label htmlFor="lastName">Familyangiz: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -152,7 +150,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="middleName">Otasining ismi: <span style={{color:"crimson"}}>*</span> </label>
+          <label htmlFor="middleName">Otangizning ismi: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -168,7 +166,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="birthYear">Tug'ilgan yil: <span style={{color:"crimson"}}>*</span> </label>
+          <label htmlFor="birthYear">Tug'ilgan yilingiz: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <input
               onChange={handleChange}
@@ -186,7 +184,7 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label>Hudud: <span style={{color:"crimson"}}>*</span> </label>
+          <label>Qayerdansiz: <span style={{color:"crimson"}}>*</span> </label>
           <div>
             <select
               onChange={handleChange}
@@ -208,16 +206,20 @@ function RegisterStudentComp({ isReceptionist }) {
           </div>
         </div>
         <div className="form__field">
-          <label htmlFor="tel">Telefon raqam: <span style={{color:"crimson"}}>*</span> </label>
+          <label htmlFor="tel">Telefon raqamingiz (avval o'zingiznikini keyin ota-onangizning tel raqamini kiriting): <span style={{color:"crimson"}}>*</span> </label>
           {<ShowingEnteredNumbers data={data} setData={setData} />}
           <div>
             <input
               onChange={(e) => setTempPhoneNumber(e.target.value)}
-              onBlur={(e)=> setAutoTel(e)}
+              onBlur={(e)=> {
+                setTempPhoneNumber(e.target.value)
+                handleAddTelNumToArrOfData()
+              }}
               value={tempPhoneNumber}
               type="text"
-              placeholder="+998901234567"
+              placeholder="tel number"
               autoComplete="off"
+              required
             />
             <button
               className="form__btn"
@@ -332,7 +334,7 @@ function RegisterStudentComp({ isReceptionist }) {
             </div>
             <div className="form__field">
               <label htmlFor="aboutUs">
-                Biz haqimizda qayerdan eshitdingiz?: <i>(Ixtiyoriy)</i>
+                Qo'shimcha ma'lumot yozish uchun?: <i>(Ixtiyoriy)</i>
               </label>
               <div>
                 <textarea

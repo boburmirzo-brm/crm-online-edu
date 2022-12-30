@@ -61,3 +61,25 @@ module.exports = Array.prototype.allTeachersIsActiveFalse = function () {
 module.exports = String.prototype.pathnameFormat = function (index=3) {
   return this?.split("/").slice(0, index).join("/");
 };
+
+module.exports = String.prototype.studentUz = function (str) {
+  let initializeValue = {
+    firstName: "Ism",
+    lastName: "Familya",
+    middleName: "Otasini ismi",
+    birthYear: "Tug'ilgan yil",
+    region: "Yashash manzil",
+    startedDate: "Boshlangan vaqt",
+    tel: "Telefon raqam",
+    gender: "Jins",
+    aboutUs: "Biz haqimizda",
+    wantedCourse: "Kurs",
+    wantedDay: "Kun",
+    wantedTime: "Vaqt",
+    monthlyPayment: "To'lov",
+    isActive: "Aktive",
+    isEnd: "Yakun",
+    enrolledCourses: "O'qiyotgan kurs",
+  };
+  return initializeValue[str]
+};

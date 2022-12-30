@@ -1,11 +1,12 @@
 // @ts-nocheck
 import React, { memo } from "react";
+import {BsTrash} from "react-icons/bs"
 
 const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
   return  (
     <div className="showingEnteredNumbers">
       {
-        notDelete? <span>Tel: </span> : "Sizning telefon ramalaringiz:"
+        notDelete && <span>Tel: </span> 
       }
       {data.tel.map((el, idx) => (
         <span
@@ -23,12 +24,10 @@ const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
             }
           }}
           key={idx}
-        >{el},{" "}
+        >{el} <BsTrash/>
         </span>
       ))}
-      {
-        !data.tel.length && <i>Tel kiritilmagan</i>
-      }
+    
     </div>
   ) ;
 };

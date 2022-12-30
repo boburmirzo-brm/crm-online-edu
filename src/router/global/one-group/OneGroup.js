@@ -64,7 +64,6 @@ function OneGroup() {
       axios
         .patch(`/api/groups/${data?._id}`, data)
         .then(({ data }) => {
-          console.log(data);
           setInnerReload((e) => !e);
           setAreInputsDisabled((e) => !e);
           dispatch(reloadGroupAction());
@@ -96,7 +95,7 @@ function OneGroup() {
           console.log(data);
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
-          dispatch(reloadTeacherAction());
+          // dispatch(reloadTeacherAction());
           setInnerReload((e) => !e);
         })
         .catch(({ response }) => {
@@ -114,9 +113,9 @@ function OneGroup() {
       axios
         .delete(`/api/groups/${group._id}`)
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           dispatch(reloadGroupAction());
-          dispatch(reloadStudentAction());
+          // dispatch(reloadStudentAction());
           dispatch(reloadTeacherAction());
           navigate(`${pathname.pathnameFormat()}/get-group`);
         })
@@ -148,7 +147,7 @@ function OneGroup() {
         });
     }
   };
-  if (!data || isLoading) {
+  if (!data) {
     return <Skeleton title={"Guruh haqida batafsil malumot"} />;
   }
   return (
@@ -290,12 +289,13 @@ function OneGroup() {
                 ? "Guruhni o'zgartirish"
                 : "Ma'lumotlarni saqlash"
             }
+            disabled={isLoading}
             onClick={() => handleChangeDisableAndSaveData()}
             className="one__group-btnSuccess"
           >
             {areInputsDisabled
               ? "Guruhni o'zgartirish"
-              : "Ma'lumotlarni saqlash"}
+              : isLoading? "Kuting..." :  "Saqlash" }
           </button>
           {!group?.enrolledStudents?.length ? (
             <button

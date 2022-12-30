@@ -72,7 +72,7 @@
 }
 .get__controller input,
 .get__controller select {
-  width: 250px;
+  width: 350px;
   height: 34px;
   border: 1px solid #ddd;
   outline: none;
@@ -84,6 +84,35 @@
 .get__controller select {
   width: 150px;
   text-indent: 0;
+}
+.get__student-search{
+  position: absolute;
+  top: 100%;
+  left: 30px;
+  width: 350px;
+  height: 300px;
+  background: #fff;
+  box-shadow: 5px 5px 10px #0002;
+  border-radius: 0 0 8px 8px;
+  padding: 12px;
+  overflow: auto;
+  font-size: 14px;
+}
+.get__student-search a{
+  display: block;
+  margin-bottom: 8px;
+  color: var(--bg-td);
+}
+.get__student-search a span{
+}
+.get__student-search p{
+  text-align: center;
+  color: crimson;
+}
+.get__student-search img{
+  width: 30px;
+  display: block;
+  margin: auto;
 }
 .get__controller-collection {
   display: flex;
@@ -193,7 +222,7 @@
     margin-left: 20px;
   }
   .get__controller {
-    position: static;
+    position: relative;
   }
   .get__group-navbar{
     min-height: 50px;

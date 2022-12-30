@@ -10,21 +10,25 @@ import {
   reloadStudentAction,
 } from "../../../context/action/action";
 import axios from "../../../api";
-import { TEACHER_MAJOR } from "../../../static/index";
+// import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
+import loadingGif from "../../../assets/loading-gif.gif"
 
 const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
   "NEW_STUDENT",
   "STUDENT_OF_GROUP",
   "ALL_STUDENT",
 ];
-function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
+function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStudents }) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
   const [id, setId] = useState(null);
   const [courses, setCourses] = useState([]);
-  const [filterStudents, setStudents] = useState([]);
+  const [filterStudents, setFilterStudents] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const [filterType, setFilterType] = useState(
     localStorage.getItem("filterStudent") || NEW_STUDENT
   );
@@ -35,11 +39,11 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
       return;
     }
     if (NEW_STUDENT === filterType) {
-      setStudents(data?.filter((i) => !i.enrolledCourses.length && !i.isEnd));
+      setFilterStudents(data?.filter((i) => !i.enrolledCourses.length && !i.isEnd));
     } else if (STUDENT_OF_GROUP === filterType) {
-      setStudents(data?.filter((i) => i.enrolledCourses.length && !i.isActive));
+      setFilterStudents(data?.filter((i) => i.enrolledCourses.length && !i.isActive));
     } else if (ALL_STUDENT === filterType) {
-      setStudents(data?.filter((i) => i.enrolledCourses.length && i.isActive));
+      setFilterStudents(data?.filter((i) => i.enrolledCourses.length && i.isActive));
     }
   }, [data, filterType]);
 
@@ -70,6 +74,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
         // dispatch(reloadTeacherAction());
+        setStudents([...studentsInGroup,studentId ])
       })
       .catch(({ response }) => {
         console.log(response);
@@ -80,6 +85,9 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
   };
 
   const handleOnKeyUpSearch = ({ target: { value } }) => {
+    setInputValue(value)
+    if(value.length < 3){return}
+    setSearchLoading(true)
     axios
       .get("/api/students/search", {
         method: "GET",
@@ -88,23 +96,14 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
         },
       })
       .then(({ data: innerData }) => {
-        console.log("natija: ");
-        console.log(innerData);
-        if (innerData.data.length) {
-          setStudents(innerData.data);
-        } else {
-          setFilterType(localStorage.getItem("filterStudent") || NEW_STUDENT);
-          setStudents(
-            data?.filter((i) => !i.enrolledCourses.length && !i.isEnd)
-          );
-        }
+        setSearchResults(innerData.data)
       })
       .catch((err) => {
         console.log("xatolik: ");
         console.log(err);
       })
       .finally(() => {
-        // do smth
+        setSearchLoading(false)
       });
   };
 
@@ -145,6 +144,27 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
           placeholder="O'quvchi FISH..."
           onKeyUp={handleOnKeyUpSearch}
         />
+        {
+          inputValue.length >= 3 &&  <div className="get__student-search">
+            {!searchResults.length && !searchLoading && <p>O'quvchi topilmadi</p>}
+           
+            {
+              searchResults?.map((i, inx)=><Link 
+              key={inx} 
+              to={`${pathname.pathnameFormat()}/get-student/${i._id}`}>
+                  <b>{inx+1}. </b>
+                  <span>{i.firstName}</span>{" "}
+                  <span>{i.lastName}</span>{" "}
+                  <span>{i.middleName}</span>{" "}
+                  <i>({i.birthYear})</i>
+                </Link>)
+            }
+            {
+              searchLoading && <img src={loadingGif} alt="" />
+            }
+          </div>
+        }
+       
         {/* <select name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (

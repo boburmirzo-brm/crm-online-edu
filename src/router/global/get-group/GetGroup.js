@@ -23,7 +23,7 @@ import english_kids from "../../../assets/english_kids.jpg";
 import russia_kids from "../../../assets/russia_kids.jpg";
 import EmptyData from "../../../components/empty-data/EmptyData";
 
-function GetGroup({ addStudent, studentID, courses }) {
+function GetGroup({ addStudent, studentID, courses,setCourses }) {
   const groups = useSelector((s) => s?.getGroups);
   // console.log(groups)
   const teachers = useSelector((s) => s?.getTeachers);
@@ -97,7 +97,8 @@ function GetGroup({ addStudent, studentID, courses }) {
         console.log(data);
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
-        dispatch(reloadTeacherAction());
+        // dispatch(reloadTeacherAction());
+        setCourses([...courses,groupId ])
       })
       .catch(({ response }) => {
         console.log(response);

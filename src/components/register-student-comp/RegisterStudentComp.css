@@ -36,6 +36,15 @@
 }
 .showingEnteredNumbers {
   color: var(--bg-td);
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.showingEnteredNumbers span{
+  display: flex;
+  align-items: center;
+  padding: 3px 10px;
+  gap: 6px;
 }
 
 @media screen and (max-width:800px) {

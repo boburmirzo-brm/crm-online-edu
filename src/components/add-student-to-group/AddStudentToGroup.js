@@ -13,7 +13,7 @@ function AddStudentToGroup({ id, setId, courses, setCourses }) {
         className="add_studentToGroup-modal"
       ></div>
       <div className="add_studentToGroup-content">
-        <GetGroup addStudent={true} studentID={id} courses={courses} />
+        <GetGroup addStudent={true} studentID={id} courses={courses}  setCourses={setCourses}/>
       </div>
     </div>
   ) : (

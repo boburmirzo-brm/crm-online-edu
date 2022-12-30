@@ -58,6 +58,11 @@
   opacity: 1;
   box-shadow: 2px 2px 6px #0004;
 }
+.one__group-btnSuccess:disabled{
+  opacity: .6;
+  cursor: default;
+  box-shadow:0 0 0;
+}
 .one__group-btnDanger {
   margin-left: 5px;
   background: crimson;

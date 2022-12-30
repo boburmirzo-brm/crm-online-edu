@@ -17,6 +17,7 @@ const AddStudentInGroup = ({ id, setId, students, setStudents }) => {
           addStudentInGroup={true}
           groupIdInGroup={id}
           studentsInGroup={students}
+          setStudents={setStudents}
         />
       </div>
     </div>

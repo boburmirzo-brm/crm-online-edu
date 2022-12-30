@@ -132,7 +132,6 @@ function OneStudent() {
   };
 
   const handleActiveStatusAndUpdateData = () => {
-    console.log(one);
     if (areInputsDisabled) {
       setAreInputsDisabled((e) => !e);
     } else {
@@ -140,10 +139,9 @@ function OneStudent() {
       axios
         .patch(`/api/students/${one?._id}`, one)
         .then(({ data }) => {
-          console.log(data);
           setInnerReload((e) => !e);
           setAreInputsDisabled((e) => !e);
-          dispatch(reloadTeacherAction());
+          // dispatch(reloadTeacherAction());
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
         })
@@ -163,7 +161,7 @@ function OneStudent() {
         .delete(`/api/students/${one?._id}`)
         .then(({ data }) => {
           console.log(data);
-          dispatch(reloadTeacherAction());
+          // dispatch(reloadTeacherAction());
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           navigate(`${pathname.pathnameFormat()}/get-student`);
@@ -358,7 +356,7 @@ function OneStudent() {
             onClick={handleActiveStatusAndUpdateData}
             className="btn-py"
           >
-            {areInputsDisabled ? "O'zgartirish" : "Ma'lumotlarni saqlash"}
+            {areInputsDisabled ? "O'zgartirish" : isLoading? "Kuting..." : "Saqlash"}
           </button>
           <button
             title={
