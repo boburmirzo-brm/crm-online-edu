@@ -67,7 +67,6 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
     axios
       .patch(`/api/groups/add-student/${groupIdInGroup}`, innerData)
       .then(({ data }) => {
-        console.log(data);
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
         // dispatch(reloadTeacherAction());
@@ -211,7 +210,7 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup }) {
                 >
                   {studentsInGroup.includes(item._id)
                     ? "O'quvchi guruhga qo'shilgan"
-                    : "Bu O'quvchini qo'shish"}
+                    : "O'quvchini qo'shish"}
                 </button>
               </>
             ) : (

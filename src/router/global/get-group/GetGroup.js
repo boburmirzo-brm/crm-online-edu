@@ -247,7 +247,7 @@ function GetGroup({ addStudent, studentID, courses }) {
                     >
                       {courses.includes(groupId)
                         ? "Bu guruhda o'qiyapti"
-                        : "Bu guruhga qo'shish"}
+                        : "Guruhga qo'shish"}
                     </button>
                   </>
                 ) : (

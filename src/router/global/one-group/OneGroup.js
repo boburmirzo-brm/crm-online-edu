@@ -14,6 +14,7 @@ import {
   reloadGroupAction,
   reloadStudentAction,
 } from "../../../context/action/action";
+import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
 
 function OneGroup() {
   let { id } = useParams();
@@ -244,7 +245,7 @@ function OneGroup() {
           <div className="one__group-item">
             <p>Boshlangan vaqti</p>
             <input
-              // onChange={handleChange}
+              onChange={handleChange}
               disabled={areInputsDisabled}
               value={data?.firstLesson || "26.12.2022"}
               type="text"
@@ -258,7 +259,7 @@ function OneGroup() {
           <div className="one__group-item">
             <p>Imtihon vaqti</p>
             <input
-              // onChange={handleChange}
+              onChange={handleChange}
               disabled={areInputsDisabled}
               value={data?.expectedExamDay || "20.02.2023"}
               type="text"
@@ -364,12 +365,18 @@ function OneGroup() {
           </div>
         </div>
         {StudentsModal ? (
-          <AddStudentsIntoGroup
-            groupID={group?._id}
-            enrolledStudents={data?.enrolledStudents}
-            setStudentsModal={setStudentsModal}
-            setInnerReload={setInnerReload}
-          />
+          // <AddStudentsIntoGroup
+          //   groupID={group?._id}
+          //   enrolledStudents={data?.enrolledStudents}
+          //   setStudentsModal={setStudentsModal}
+          //   setInnerReload={setInnerReload}
+          // />
+          <AddStudentInGroup
+          id={group?._id}
+          setId={setStudentsModal}
+          students={data?.enrolledStudents}
+          setStudents={false}
+        />
         ) : (
           ""
         )}

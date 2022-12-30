@@ -2,6 +2,27 @@ import React from 'react'
 import ChartCom from '../../../components/chart/ChartCom'
 import "./Statistics.css"
 
+import { Chart as 
+  ChartJS, 
+  ArcElement, 
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend, } from 'chart.js';
+import { Doughnut , Pie, PolarArea, Bar} from 'react-chartjs-2';
+
+ChartJS.register(
+  ArcElement, 
+  Tooltip, 
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend);
+
 const major = {
   labels: ['IT', 'English', 'Russian', 'DTM'],
   datasets: [
@@ -82,6 +103,34 @@ const gender = {
   ],
 };
 
+
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Algoritm',
+    },
+  },
+};
+
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+const dataBar = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [840_000, 1_350_000, 2_100_000, 3_460_000, 5_600_000, 8_600_000],
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+  
+  ],
+};
 function Statistics() {
   return (
     <div className='statistics'>
@@ -90,15 +139,18 @@ function Statistics() {
       </div>
       <div className="statistics__container">
         <div className="statistics__item">
-          <ChartCom data={major} title="Yo'nalish"/>
+          <ChartCom data={major} options={options} title="Yo'nalish"/>
         </div>
         <div className="statistics__item">
-          <ChartCom data={region} title="Hudud"/>
+          <ChartCom data={region} options={options} title="Hudud"/>
         </div>
         <div className="statistics__item">
-          <ChartCom data={gender} title="Gender"/>
+          <ChartCom data={gender} options={options} title="Gender"/>
         </div>
       </div>
+        <div className="">
+          <Bar options={options} data={dataBar} />;
+        </div>
     </div>
   )
 }

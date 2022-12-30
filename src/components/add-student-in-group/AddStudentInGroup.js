@@ -8,7 +8,7 @@ const AddStudentInGroup = ({ id, setId, students, setStudents }) => {
       <div
         onClick={() => {
           setId(null);
-          setStudents([]);
+          setStudents && setStudents([]);
         }}
         className="add_studentInGroup-modal"
       ></div>

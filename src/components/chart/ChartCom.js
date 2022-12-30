@@ -22,10 +22,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 //     }
 //   },
 // };
-function ChartCom({data,title}) {
+function ChartCom({data,title,options}) {
   return <div>
     <h3>{title}</h3>
-     <Pie data={data}/>
+     <Pie options={options} data={data}/>
   </div>;
 }
 
