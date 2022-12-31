@@ -11,10 +11,10 @@ import {
   genders,
   TEACHER_MAJOR,
 } from "../../../static";
-import { useDispatch } from "react-redux"
-import {reloadTeacherAction} from "../../../context/action/action"
-import { useNavigate, useLocation } from "react-router-dom"
-
+import { useDispatch } from "react-redux";
+import { reloadTeacherAction } from "../../../context/action/action";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 let initializeValue = {
   username: "",
@@ -44,9 +44,9 @@ function CreateMember() {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [showTeacherMajors, setShowTeacherMajors] = useState(false);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch()
-  const {pathname} = useLocation()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // console.log(data);
   const handleChange = ({ target: t }) => {
@@ -99,15 +99,19 @@ function CreateMember() {
     axios
       .post("/api/sign-up", data)
       .then(({ data }) => {
-        console.log(data);
+        toast.success(data?.msg, {
+          autoClose: 5000,
+        });
         setData(initializeValue);
         [region, gender, major].forEach((e) => (e.value = ""));
         setShowTeacherMajors(false);
-        dispatch(reloadTeacherAction())
-        navigate(`${pathname.pathnameFormat()}/get-teacher`)
+        dispatch(reloadTeacherAction());
+        navigate(`${pathname.pathnameFormat()}/get-teacher`);
       })
       .catch(({ response: { data } }) => {
-        console.log(data?.msg);
+        toast.error(data?.msg, {
+          autoClose: 5000,
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -120,8 +124,6 @@ function CreateMember() {
       </div>
       <div className="global__router">
         <form onSubmit={handleSubmit} className="form">
-         
-
           <div className="form__field">
             <label htmlFor="firstName">Ism: </label>
             <div>
@@ -211,9 +213,9 @@ function CreateMember() {
             <div>
               <input
                 onChange={(e) => setTempPhoneNumber(e.target.value)}
-                onBlur={(e)=> {
-                  setTempPhoneNumber(e.target.value)
-                  handleAddTelNumToArrOfData()
+                onBlur={(e) => {
+                  setTempPhoneNumber(e.target.value);
+                  handleAddTelNumToArrOfData();
                 }}
                 value={tempPhoneNumber}
                 type="text"

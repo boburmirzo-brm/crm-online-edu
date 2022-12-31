@@ -13,15 +13,22 @@ import axios from "../../../api";
 // import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
-import loadingGif from "../../../assets/loading-gif.gif"
-import {FiX} from "react-icons/fi"
+import loadingGif from "../../../assets/loading-gif.gif";
+import { FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
   "NEW_STUDENT",
   "STUDENT_OF_GROUP",
   "ALL_STUDENT",
 ];
-function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStudents,setClose }) {
+function GetStudent({
+  addStudentInGroup,
+  groupIdInGroup,
+  studentsInGroup,
+  setStudents,
+  setClose,
+}) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
   const [id, setId] = useState(null);
@@ -40,11 +47,17 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
       return;
     }
     if (NEW_STUDENT === filterType) {
-      setFilterStudents(data?.filter((i) => !i.enrolledCourses.length && !i.isEnd));
+      setFilterStudents(
+        data?.filter((i) => !i.enrolledCourses.length && !i.isEnd)
+      );
     } else if (STUDENT_OF_GROUP === filterType) {
-      setFilterStudents(data?.filter((i) => i.enrolledCourses.length && !i.isActive));
+      setFilterStudents(
+        data?.filter((i) => i.enrolledCourses.length && !i.isActive)
+      );
     } else if (ALL_STUDENT === filterType) {
-      setFilterStudents(data?.filter((i) => i.enrolledCourses.length && i.isActive));
+      setFilterStudents(
+        data?.filter((i) => i.enrolledCourses.length && i.isActive)
+      );
     }
   }, [data, filterType]);
 
@@ -59,10 +72,15 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
       axios
         .delete(`/api/students/${_id}`)
         .then(({ data }) => {
-          console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
+          // console.log(data);
           dispatch(reloadStudentAction());
         })
-        .catch(({ response }) => console.log(response));
+        .catch(({ response: { data } }) => {
+          toast.error(data?.msg, { autoClose: 5000 });
+        });
     }
   };
 
@@ -72,13 +90,18 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
     axios
       .patch(`/api/groups/add-student/${groupIdInGroup}`, innerData)
       .then(({ data }) => {
+        toast.success(data?.msg, {
+          autoClose: 5000,
+        });
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
         // dispatch(reloadTeacherAction());
-        setStudents([...studentsInGroup,studentId ])
+        setStudents([...studentsInGroup, studentId]);
       })
-      .catch(({ response }) => {
-        console.log(response);
+      .catch(({ response: { data } }) => {
+        toast.error(data?.msg, {
+          autoClose: 5000,
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -86,9 +109,11 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
   };
 
   const handleOnKeyUpSearch = ({ target: { value } }) => {
-    setInputValue(value)
-    if(value.length < 3){return}
-    setSearchLoading(true)
+    setInputValue(value);
+    if (value.length < 3) {
+      return;
+    }
+    setSearchLoading(true);
     axios
       .get("/api/students/search", {
         method: "GET",
@@ -97,14 +122,14 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
         },
       })
       .then(({ data: innerData }) => {
-        setSearchResults(innerData.data)
+        setSearchResults(innerData.data);
       })
       .catch((err) => {
         console.log("xatolik: ");
         console.log(err);
       })
       .finally(() => {
-        setSearchLoading(false)
+        setSearchLoading(false);
       });
   };
   return (
@@ -143,12 +168,17 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
             <span>{data?.isActiveTrue()}</span>
           </li>
         </ul>
-        {
-          addStudentInGroup && <button onClick={()=>{
-            setStudents([])
-            setClose(null)
-          }} className="get__navbar-close"><FiX/></button>
-        }
+        {addStudentInGroup && (
+          <button
+            onClick={() => {
+              setStudents([]);
+              setClose(null);
+            }}
+            className="get__navbar-close"
+          >
+            <FiX />
+          </button>
+        )}
       </div>
       <div className="get__controller">
         <input
@@ -157,27 +187,26 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
           placeholder="O'quvchi FISH..."
           onKeyUp={handleOnKeyUpSearch}
         />
-        {
-          inputValue.length >= 3 &&  <div className="get__student-search">
-            {!searchResults.length && !searchLoading && <p>O'quvchi topilmadi</p>}
-           
-            {
-              searchResults?.map((i, inx)=><Link 
-              key={inx} 
-              to={`${pathname.pathnameFormat()}/get-student/${i._id}`}>
-                  <b>{inx+1}. </b>
-                  <span>{i.firstName}</span>{" "}
-                  <span>{i.lastName}</span>{" "}
-                  <span>{i.middleName}</span>{" "}
-                  <i>({i.birthYear})</i>
-                </Link>)
-            }
-            {
-              searchLoading && <img src={loadingGif} alt="" />
-            }
+        {inputValue.length >= 3 && (
+          <div className="get__student-search">
+            {!searchResults.length && !searchLoading && (
+              <p>O'quvchi topilmadi</p>
+            )}
+
+            {searchResults?.map((i, inx) => (
+              <Link
+                key={inx}
+                to={`${pathname.pathnameFormat()}/get-student/${i._id}`}
+              >
+                <b>{inx + 1}. </b>
+                <span>{i.firstName}</span> <span>{i.lastName}</span>{" "}
+                <span>{i.middleName}</span> <i>({i.birthYear})</i>
+              </Link>
+            ))}
+            {searchLoading && <img src={loadingGif} alt="" />}
           </div>
-        }
-       
+        )}
+
         {/* <select name="" id="">
           <option value="all">Barcha yo'nalishlar</option>
           {TEACHER_MAJOR?.map((i, inx) => (
@@ -208,22 +237,35 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
             <p>
               Tug'ilgan sana: <b>{item.birthYear}</b>
             </p>
-            <p >
-              Tel: <b>{item.tel?.map((i, inx) => <a key={inx} href={`tel:${i}`}>{i}</a>)}</b>
+            <p>
+              Tel:{" "}
+              <b>
+                {item.tel?.map((i, inx) => (
+                  <a key={inx} href={`tel:${i}`}>
+                    {i}
+                  </a>
+                ))}
+              </b>
             </p>
-            {
-                !item.isActive &&
-                !item.enrolledCourses.length && 
-                <p style={{ flex: 1 }}>
-                  Sana: <b>
-                    {new Date(item.startedDate).getDate()}.
-                    {new Date(item.startedDate).getMonth()}.
-                    {new Date(item.startedDate).getFullYear()} / {" "}
-                    {new Date(item.startedDate).getHours().toString().padStart(2, "0")}:
-                    {new Date(item.startedDate).getMinutes().toString().padStart(2, "0")}
-                  </b>
-                </p>
-            }
+            {!item.isActive && !item.enrolledCourses.length && (
+              <p style={{ flex: 1 }}>
+                Sana:{" "}
+                <b>
+                  {new Date(item.startedDate).getDate()}.
+                  {new Date(item.startedDate).getMonth()}.
+                  {new Date(item.startedDate).getFullYear()} /{" "}
+                  {new Date(item.startedDate)
+                    .getHours()
+                    .toString()
+                    .padStart(2, "0")}
+                  :
+                  {new Date(item.startedDate)
+                    .getMinutes()
+                    .toString()
+                    .padStart(2, "0")}
+                </b>
+              </p>
+            )}
             {!item.enrolledCourses.length && (
               <span className="get__student-notGroup">
                 Guruhga qo'shilmagan

@@ -17,6 +17,8 @@ import AddStudentToGroup from "../../../components/add-student-to-group/AddStude
 import { regions, genders } from "../../../static";
 import ShowingEnteredNumbers from "../../../components/register-student-comp/ShowingEnteredNumbers";
 import { useDispatch } from "react-redux";
+import EmptyData from "../../../components/empty-data/EmptyData";
+import { toast } from "react-toastify";
 
 const initializeData = {
   _id: "63a92a30b141665b89177aeb",
@@ -88,7 +90,10 @@ function OneStudent() {
   let { id } = useParams();
   const { pathname } = useLocation();
   const [innerReload, setInnerReload] = useState(false);
-  const { data: student } = useFetch(`/api/students/${id}`, innerReload);
+  const { fetchError, data: student } = useFetch(
+    `/api/students/${id}`,
+    innerReload
+  );
   const [one, setOne] = useState(initializeData);
 
   // news By Zokirkhon
@@ -104,6 +109,9 @@ function OneStudent() {
     setCourses(student?.enrolledCourses?.map((el) => el._id));
   }, [student]);
   if (!one) {
+    if (fetchError.length) {
+      return <EmptyData text={`O'quvchi topilmadi, ${fetchError}`} />;
+    }
     return <Skeleton title={"O'quvchi haqida batafsil ma'lumot"} />;
   }
   // console.log(one);
@@ -139,14 +147,19 @@ function OneStudent() {
       axios
         .patch(`/api/students/${one?._id}`, one)
         .then(({ data }) => {
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           setInnerReload((e) => !e);
           setAreInputsDisabled((e) => !e);
           // dispatch(reloadTeacherAction());
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
         })
-        .catch((err) => {
-          console.log(err?.data);
+        .catch(({ response: { data } }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -160,14 +173,19 @@ function OneStudent() {
       axios
         .delete(`/api/students/${one?._id}`)
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           // dispatch(reloadTeacherAction());
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           navigate(`${pathname.pathnameFormat()}/get-student`);
         })
-        .catch((err) => {
-          console.log(err?.data);
+        .catch(({ response: { data } }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -263,7 +281,13 @@ function OneStudent() {
             />
           </p>
           <div>
-            {<ShowingEnteredNumbers data={one} notDelete={true} setData={setOne} />}
+            {
+              <ShowingEnteredNumbers
+                data={one}
+                notDelete={true}
+                setData={setOne}
+              />
+            }
             {areInputsDisabled ? (
               ""
             ) : (
@@ -356,7 +380,11 @@ function OneStudent() {
             onClick={handleActiveStatusAndUpdateData}
             className="btn-py"
           >
-            {areInputsDisabled ? "O'zgartirish" : isLoading? "Kuting..." : "Saqlash"}
+            {areInputsDisabled
+              ? "O'zgartirish"
+              : isLoading
+              ? "Kuting..."
+              : "Saqlash"}
           </button>
           <button
             title={
@@ -423,8 +451,8 @@ function OneStudent() {
                 <>
                   <b>O'qituvchi</b>
                   <div>
-                  <p>{item?.teacherInfo?.lastName}</p>
-                  <p>{item?.teacherInfo?.firstName}</p>
+                    <p>{item?.teacherInfo?.lastName}</p>
+                    <p>{item?.teacherInfo?.firstName}</p>
                   </div>
                 </>
               </Link>

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation,useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   reloadGroupAction,
   reloadTeacherAction,
@@ -11,6 +11,7 @@ import "./GetGroup.css";
 import { TEACHER_MAJOR } from "../../../static/index";
 import axios from "../../../api";
 import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
+import { toast } from "react-toastify";
 
 // images
 import bugalteriya from "../../../assets/Bug'alteriya.jpg";
@@ -22,15 +23,19 @@ import russia from "../../../assets/russia.jpg";
 import english_kids from "../../../assets/english_kids.jpg";
 import russia_kids from "../../../assets/russia_kids.jpg";
 import EmptyData from "../../../components/empty-data/EmptyData";
-import { FiX } from "react-icons/fi"
+import { FiX } from "react-icons/fi";
 
-function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
+function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
   const groups = useSelector((s) => s?.getGroups);
   // console.log(groups)
   const teachers = useSelector((s) => s?.getTeachers);
   const dispatch = useDispatch();
-  const [active, setActive] = useState(localStorage.getItem("filterGroupActive") === "active" );
-  const [type, setType] = useState(localStorage.getItem("filterGroupType") || "all");
+  const [active, setActive] = useState(
+    localStorage.getItem("filterGroupActive") === "active"
+  );
+  const [type, setType] = useState(
+    localStorage.getItem("filterGroupType") || "all"
+  );
   const [filterData, setFilterData] = useState([]);
 
   // Zokirkhon
@@ -43,10 +48,10 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
   // console.log(filterData);
   // console.log(courses);
   useEffect(() => {
-    localStorage.setItem("filterGroupActive", active ? "active":"new")
-    localStorage.setItem("filterGroupType", type)
+    localStorage.setItem("filterGroupActive", active ? "active" : "new");
+    localStorage.setItem("filterGroupType", type);
     if (type === "all") {
-    //  console.log(active);
+      //  console.log(active);
       return setFilterData(groups?.filter((i) => i.isActive === active));
     }
     setFilterData(
@@ -95,20 +100,24 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
     axios
       .patch(`/api/groups/add-student/${groupId}`, data)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
+        toast.success(data?.msg, {
+          autoClose: 5000,
+        });
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
         // dispatch(reloadTeacherAction());
-        setCourses([...courses,groupId ])
+        setCourses([...courses, groupId]);
       })
-      .catch(({ response }) => {
-        console.log(response);
+      .catch(({ response: { data } }) => {
+        toast.error(data?.msg, {
+          autoClose: 5000,
+        });
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
-
 
   const handleDeleteGroupById = (_id) => {
     if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
@@ -150,12 +159,17 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
             <span>{groups?.filter((el) => el.isActive === true).length}</span>
           </li>
         </ul>
-        {
-          addStudent && <button onClick={()=>{
-            setCourses([])
-            setClose(null)
-          }} className="get__navbar-close"><FiX/></button>
-        }
+        {addStudent && (
+          <button
+            onClick={() => {
+              setCourses([]);
+              setClose(null);
+            }}
+            className="get__navbar-close"
+          >
+            <FiX />
+          </button>
+        )}
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">
@@ -203,9 +217,7 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
             } = item;
             return (
               <div className="get__group-card" key={groupId}>
-                <Link
-                  to={`${pathname.pathnameFormat()}/get-group/${groupId}`}
-                >
+                <Link to={`${pathname.pathnameFormat()}/get-group/${groupId}`}>
                   <img src={images[major]} alt={major + " " + level} />
                   <h3>
                     {major.capitalLetter()} {level}
@@ -260,9 +272,7 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
                   </>
                 ) : (
                   <div className="get__group-btn">
-                    <Link
-                      to={groupId}
-                    >
+                    <Link to={groupId}>
                       <button>Batafsil</button>
                     </Link>
                     <button
@@ -273,19 +283,21 @@ function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
                     >
                       O'quvchilar
                     </button>
-                    {
-                      !enrolledStudents.length && <button 
-                      onClick={()=> handleDeleteGroupById(groupId)}
-                      style={{ background: "crimson" }}>O'chirish</button>
-                    }
-                    
+                    {!enrolledStudents.length && (
+                      <button
+                        onClick={() => handleDeleteGroupById(groupId)}
+                        style={{ background: "crimson" }}
+                      >
+                        O'chirish
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
             );
           })
         ) : (
-          <EmptyData text={"Guruhlar topilmadi"}/>
+          <EmptyData text={"Guruhlar topilmadi"} />
         )}
       </div>
       <AddStudentInGroup

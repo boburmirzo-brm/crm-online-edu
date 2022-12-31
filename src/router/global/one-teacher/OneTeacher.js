@@ -15,6 +15,8 @@ import Skeleton from "../../../components/skeleton/Skeleton";
 import { AiOutlineEye } from "react-icons/ai";
 import { TEACHER_MAJOR, regions, genders } from "../../../static";
 import ShowingEnteredNumbers from "../../../components/register-student-comp/ShowingEnteredNumbers";
+import EmptyData from "../../../components/empty-data/EmptyData";
+import { toast } from "react-toastify";
 
 const initializeData = {
   _id: "",
@@ -52,11 +54,16 @@ function OneTeacher() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { data: teacher } = useFetch(`/api/teachers/${id}`, innerReload);
+  const { fetchError, data: teacher } = useFetch(
+    `/api/teachers/${id}`,
+    innerReload
+  );
   const [data, setData] = useState(initializeData);
   const { pathname } = useLocation();
 
-  useEffect(() => setData(teacher), [teacher]);
+  useEffect(() => {
+    setData(teacher);
+  }, [teacher]);
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -94,13 +101,17 @@ function OneTeacher() {
       axios
         .patch(`/api/teachers/${data?._id}`, data)
         .then(({ data }) => {
-          console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           setAreInputsDisabled(true);
           setInnerReload((e) => !e);
           dispatch(reloadTeacherAction());
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(({ response: { data } }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -118,12 +129,16 @@ function OneTeacher() {
       axios
         .delete(`/api/teachers/${data?._id}`)
         .then(({ data }) => {
-          console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           dispatch(reloadTeacherAction());
           navigate(`${pathname.pathnameFormat()}/get-teacher`);
         })
         .catch(({ response: { data } }) => {
-          console.log(data);
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -134,6 +149,9 @@ function OneTeacher() {
   // console.log(data);
 
   if (!data) {
+    if (fetchError.length) {
+      return <EmptyData text={`O'qituvchi topilmadi! ${fetchError}`} />;
+    }
     return <Skeleton title={"O'qituvchi haqida batafsil ma'lumot"} />;
   }
   let {
@@ -146,7 +164,6 @@ function OneTeacher() {
     middleName,
     password,
     region,
-    tel,
     username,
   } = data;
   return (

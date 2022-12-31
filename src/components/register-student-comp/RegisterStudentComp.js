@@ -12,6 +12,7 @@ import { reloadStudentAction } from "../../context/action/action";
 import call from "../../assets/call.png";
 import Confetti from "react-confetti";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 let initializeValue = {
   firstName: "",
@@ -74,8 +75,8 @@ function RegisterStudentComp({ isReceptionist }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!data.tel.length){
-      return alert("tel")
+    if (!data.tel.length) {
+      return alert("tel");
     }
     data.middleName =
       data.middleName.split(" ")[0].capitalLetter() +
@@ -86,8 +87,15 @@ function RegisterStudentComp({ isReceptionist }) {
     setLoading(true);
     axios
       .post("/api/students", data)
-      .then(({ data }) => {
-        console.log(data);
+      .then(({ innerData }) => {
+        // console.log(innerData);
+        toast.success(
+          innerData?.msg.capitalLetter() ||
+            "Muvaffaqiyatli ro'yxatdan o'tdingiz!",
+          {
+            autoClose: 5000,
+          }
+        );
 
         setData(initializeValue);
         if (!isReceptionist) {
@@ -98,12 +106,17 @@ function RegisterStudentComp({ isReceptionist }) {
           dispatch(reloadStudentAction());
         }
         // select option larni tozalash
-        [region, gender, wantedDay, wantedTime].forEach((e) => (e.value = ""));
+        [region, gender, wantedDay, wantedTime].forEach((e) => {
+          e.value = "";
+          e.checked = false;
+        });
       })
       .catch((err) => {
         console.log(err?.data);
         // quyida alert dagi xabar backend dan kelyapti
-        // alert(err?.data?.msg);
+        toast.error(err?.response?.data?.msg, "Tizimga kirita olmadi", {
+          autoClose: 5000,
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -137,7 +150,10 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={handleChange}
               value={data.firstName}
-              style={{ outline: data.firstName.length >= 3 ? "3.5px solid #aeddae" : "" }}
+              style={{
+                outline:
+                  data.firstName.length >= 3 ? "3.5px solid #aeddae" : "",
+              }}
               title="Ismingizni kiriting"
               type="text"
               placeholder="ism..."
@@ -162,7 +178,9 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={handleChange}
               value={data.lastName}
-              style={{ outline: data.lastName.length >= 3 ? "3.5px solid #aeddae" : "" }}
+              style={{
+                outline: data.lastName.length >= 3 ? "3.5px solid #aeddae" : "",
+              }}
               title="Familyangizni kiriting"
               type="text"
               placeholder="familya..."
@@ -187,7 +205,10 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={handleChange}
               value={data.middleName}
-              style={{ outline: data.middleName.length >= 3 ? "3.5px solid #aeddae" : "" }}
+              style={{
+                outline:
+                  data.middleName.length >= 3 ? "3.5px solid #aeddae" : "",
+              }}
               title="Kimning o'g'li ekanligingizni kiriting"
               type="text"
               placeholder="misol: Abdulloh o'g'li"
@@ -212,7 +233,9 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={handleChange}
               value={data.birthYear}
-              style={{ outline: data.birthYear >= 1910 ? "3.5px solid #aeddae" : "" }}
+              style={{
+                outline: data.birthYear >= 1910 ? "3.5px solid #aeddae" : "",
+              }}
               title="Tug'ilgan yilingizni kiriting"
               type="text"
               placeholder="misol: 1998"
@@ -223,7 +246,7 @@ function RegisterStudentComp({ isReceptionist }) {
               required
               autoComplete="off"
             />
-            {data.birthYear >= 1910  ? (
+            {data.birthYear >= 1910 ? (
               <AiOutlineCheckCircle style={{ color: "green" }} />
             ) : (
               <AiOutlineCloseCircle style={{ color: "crimson" }} />
@@ -270,7 +293,9 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={(e) => setTempPhoneNumber(e.target.value)}
               onBlur={(e) => {
-                if(tempPhoneNumber.length < 8){return}
+                if (tempPhoneNumber.length < 8) {
+                  return;
+                }
                 setTempPhoneNumber(e.target.value);
                 handleAddTelNumToArrOfData();
               }}
@@ -288,17 +313,19 @@ function RegisterStudentComp({ isReceptionist }) {
               minLength={9}
               maxLength={15}
             />
-            {data.tel.length ||  tempPhoneNumber.length > 8  ? (
+            {data.tel.length || tempPhoneNumber.length > 8 ? (
               <AiOutlineCheckCircle style={{ color: "green" }} />
             ) : (
               <AiOutlineCloseCircle style={{ color: "crimson" }} />
             )}
             <button
               className="form__btn"
-              onClick={()=> {
-                if(tempPhoneNumber.length < 8){return}
-                handleAddTelNumToArrOfData()
-              } }
+              onClick={() => {
+                if (tempPhoneNumber.length < 8) {
+                  return;
+                }
+                handleAddTelNumToArrOfData();
+              }}
               type="button"
             >
               Telefon raqam qo'shish
