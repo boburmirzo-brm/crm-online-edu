@@ -4,6 +4,7 @@ import "./OneTeacher.css";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   reloadTeacherAction,
   reloadGroupAction,
@@ -41,6 +42,7 @@ const initializeData = {
 
 function OneTeacher() {
   let { id } = useParams();
+  const dispatch = useDispatch();
   const [innerReload, setInnerReload] = useState(false);
 
   // zokirkhon
@@ -80,7 +82,7 @@ function OneTeacher() {
   };
 
   const handleToggleAndUpdateData = () => {
-    console.log(data);
+    // console.log(data);
     if (areInputsDisabled) {
       setAreInputsDisabled(false);
       setShowPassword(true);
@@ -88,21 +90,44 @@ function OneTeacher() {
       console.log("update qilish kerak");
       setAreInputsDisabled(true);
       setShowPassword(false);
-      // setIsLoading(true);
-      // axios
-      //   .patch(`/api/students/${one?._id}`, one)
-      //   .then(({ data }) => {
-      //     console.log(data);
-      //     setInnerReload((e) => !e);
-      //     setAreInputsDisabled((e) => !e);
-      //     dispatch(reloadTeacherAction());
-      //   })
-      //   .catch((err) => {
-      //     console.log(err?.data);
-      //   })
-      //   .finally(() => {
-      //     setIsLoading(false);
-      //   });
+      setIsLoading(true);
+      axios
+        .patch(`/api/teachers/${data?._id}`, data)
+        .then(({ data }) => {
+          console.log(data);
+          setAreInputsDisabled(true);
+          setInnerReload((e) => !e);
+          dispatch(reloadTeacherAction());
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const handleDeleteTeacher = () => {
+    if (
+      window.confirm(
+        `${data?.firstName} ${data?.lastName} ni o'chirmoqchimisiz?`
+      )
+    ) {
+      setIsLoading(true);
+      axios
+        .delete(`/api/teachers/${data?._id}`)
+        .then(({ data }) => {
+          console.log(data);
+          dispatch(reloadTeacherAction());
+          navigate(`${pathname.pathnameFormat()}/get-teacher`);
+        })
+        .catch(({ response: { data } }) => {
+          console.log(data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -331,12 +356,17 @@ function OneTeacher() {
           </div>
 
           <br />
-          <button className="btn-py" onClick={handleToggleAndUpdateData}>
+          <button
+            disabled={isLoading}
+            className="btn-py"
+            onClick={handleToggleAndUpdateData}
+          >
             {areInputsDisabled ? "O'zgartirish" : "Ma'lumotlarni saqlash"}
           </button>
           {!groups.length && (
             <button
-              disabled={areInputsDisabled}
+              onClick={handleDeleteTeacher}
+              disabled={isLoading || !areInputsDisabled}
               style={{ marginLeft: "8px" }}
               className="btn-danger"
             >

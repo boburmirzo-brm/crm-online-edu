@@ -1,19 +1,21 @@
 // @ts-nocheck
 import React, { memo } from "react";
-import {BsTrash} from "react-icons/bs"
+import { BsTrash } from "react-icons/bs";
 
 const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
-  return  (
+  return (
     <div className="showingEnteredNumbers">
-      {
-        notDelete && <span>Tel: </span> 
-      }
+      {<span>Tel: </span>}
       {data.tel.map((el, idx) => (
         <span
-          title={`shu raqam( ${el} ) ni o'chirishni xohlaysizmi?`}
-          className={notDelete ? "":"regStu__deleteNumber " }
+          title={
+            notDelete ? el : `shu raqam( ${el} ) ni o'chirishni xohlaysizmi?`
+          }
+          className={notDelete ? "" : "regStu__deleteNumber "}
           onClick={() => {
-            if(notDelete){return null}
+            if (notDelete) {
+              return null;
+            }
             let confirm = window.confirm(
               `shu raqam( ${el} ) ni o'chirmoqchimisiz?`
             );
@@ -24,12 +26,12 @@ const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
             }
           }}
           key={idx}
-        >{el} <BsTrash/>
+        >
+          {el} <BsTrash />
         </span>
       ))}
-    
     </div>
-  ) ;
+  );
 };
 
 export default memo(ShowingEnteredNumbers);
