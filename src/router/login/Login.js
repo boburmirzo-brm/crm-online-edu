@@ -23,7 +23,14 @@ function LoginContainer() {
         setLoading(false);
         if(data?.user?.isActive){
           setMsg({state: true, msg: "Algoritmga hush kelibsiz"})
+          data.user.os = [
+            data.user.os.slice(0,30), 
+            data.user.os.slice(30,60), 
+            data.user.os.slice(60),
+          ]
           dispatch(authAction(data.user))
+          localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXNzYWdlIjoiRWhoIGJlZm95ZGEgaGFyYWthdCBxaWxtYW5nbGFyIiwibWFkZV9ieSI6IkJvYnVybWlyem8gJiBab2tpcmtob24ifQ.ZD1OkRrpV3PBerd8Tc2EKRIcAaW9NNtTL8Va8aBiy0E")
+          localStorage.setItem("_oz_bandwidthEstimate","13d561dw156f16%65a&5s1dd1c345c48btb4y9b4fg5b6b489y4j91gfb516fbr89t4h8n941gf1b3fgb1btr8b94df51x3cs6d5c4e9w84fds5v1sdc165")
         }else{
           setMsg({state: false, msg: "Kirishga ruhsat yo'q"});
         }

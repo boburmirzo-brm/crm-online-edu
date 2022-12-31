@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../api";
+import {getToken} from "../auth/getToken"
 
 const useFetch = (/** @type {string} */ api, /** @type {boolean} */ reload) => {
   const [loading, setLoading] = useState(false);
@@ -7,7 +8,7 @@ const useFetch = (/** @type {string} */ api, /** @type {boolean} */ reload) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(api)
+      .get(api, getToken())
       .then((res) => {
         setData(res.data.data);
       })

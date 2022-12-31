@@ -10,7 +10,7 @@ import RegisterStudent from './router/register-student/RegisterStudent';
 import { useSelector } from "react-redux"
 
 function App() {
-  const auth = useSelector(s=>s?.auth)
+  const auth = useSelector(s=>s?.has_interop_upgraded)
   return (
     <div className="App">
       <Routes>

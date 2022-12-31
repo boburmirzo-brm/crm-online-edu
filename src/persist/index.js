@@ -3,13 +3,13 @@ import { legacy_createStore as createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-export const storageName = "algoritm-table";
+export const storageName = "__system";
 
 const persistConfig = {
   key: storageName,
   storage,
   blacklist: [],
-  whitelist: ["auth"],
+  whitelist: ["has_interop_upgraded","auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -16,13 +16,12 @@ import OneGroup from "../global/one-group/OneGroup";
 import OneTeacher from "../global/one-teacher/OneTeacher";
 
 function CheckRoute() {
-  const user = useSelector(s=>s?.auth)
+  const user = useSelector(s=>s?.has_interop_upgraded)
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
   let params = useParams();
   let changePath = params["*"].split("/").slice(1).join("") &&
     "/" + params["*"].split("/").slice(1).join("/");
   let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
-
   const content = useRef()
   useEffect(()=> {
     content.current.scrollTo({
