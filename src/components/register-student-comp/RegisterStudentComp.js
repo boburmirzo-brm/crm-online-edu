@@ -212,7 +212,7 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={handleChange}
               value={data.birthYear}
-              style={{ outline: data.birthYear >= 1000 ? "3.5px solid #aeddae" : "" }}
+              style={{ outline: data.birthYear >= 1910 ? "3.5px solid #aeddae" : "" }}
               title="Tug'ilgan yilingizni kiriting"
               type="text"
               placeholder="misol: 1998"
@@ -223,7 +223,7 @@ function RegisterStudentComp({ isReceptionist }) {
               required
               autoComplete="off"
             />
-            {data.birthYear >= 1000  ? (
+            {data.birthYear >= 1910  ? (
               <AiOutlineCheckCircle style={{ color: "green" }} />
             ) : (
               <AiOutlineCloseCircle style={{ color: "crimson" }} />
@@ -270,6 +270,7 @@ function RegisterStudentComp({ isReceptionist }) {
             <input
               onChange={(e) => setTempPhoneNumber(e.target.value)}
               onBlur={(e) => {
+                if(tempPhoneNumber.length < 8){return}
                 setTempPhoneNumber(e.target.value);
                 handleAddTelNumToArrOfData();
               }}
@@ -294,7 +295,10 @@ function RegisterStudentComp({ isReceptionist }) {
             )}
             <button
               className="form__btn"
-              onClick={handleAddTelNumToArrOfData}
+              onClick={()=> {
+                if(tempPhoneNumber.length < 8){return}
+                handleAddTelNumToArrOfData()
+              } }
               type="button"
             >
               Telefon raqam qo'shish
