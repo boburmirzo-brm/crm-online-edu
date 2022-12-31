@@ -7,7 +7,7 @@ import female from "../../../assets/female-icon.webp";
 import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
-import EmptyData from "../../../components/empty-data/EmptyData"
+import EmptyData from "../../../components/empty-data/EmptyData";
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
@@ -102,10 +102,14 @@ function GetTeacher() {
           return (
             <div key={_id} className="get__teacher-card">
               <div className="get__teacher-cardHead">
-                <img src={gender === "male" ? male : female} alt="" />
+                <Link to={item?._id}>
+                  <img src={gender === "male" ? male : female} alt="" />
+                </Link>
                 <div>
                   <h4>
-                    {lastName} {firstName} {middleName}
+                    <Link to={item?._id}>
+                      {lastName} {firstName} {middleName}
+                    </Link>
                   </h4>
                   <p>
                     Fan: <b>{major}</b>
@@ -139,9 +143,7 @@ function GetTeacher() {
                   </b>
                 </p>
                 <div className="get__student-btn">
-                  <Link
-                    to={item?._id}
-                  >
+                  <Link to={item?._id}>
                     <button>Batafsil</button>
                   </Link>
                 </div>
@@ -150,9 +152,9 @@ function GetTeacher() {
           );
         })}
 
-        {
-          !filterTeachers.length && <EmptyData text={"O'qituvchilar topilmadi"}/>
-        }
+        {!filterTeachers?.length && (
+          <EmptyData text={"O'qituvchilar topilmadi"} />
+        )}
       </div>
     </div>
   );
