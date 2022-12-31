@@ -127,6 +127,10 @@
   }
 }
 @media screen and (max-width:750px) {
+  .one__student {
+    padding: 10px;
+    padding-bottom: 200px;
+  }
   .one__student-head {
     flex-direction: column;
   }

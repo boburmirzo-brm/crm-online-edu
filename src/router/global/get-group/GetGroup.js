@@ -22,8 +22,9 @@ import russia from "../../../assets/russia.jpg";
 import english_kids from "../../../assets/english_kids.jpg";
 import russia_kids from "../../../assets/russia_kids.jpg";
 import EmptyData from "../../../components/empty-data/EmptyData";
+import { FiX } from "react-icons/fi"
 
-function GetGroup({ addStudent, studentID, courses,setCourses }) {
+function GetGroup({ addStudent, studentID, courses,setCourses, setClose }) {
   const groups = useSelector((s) => s?.getGroups);
   // console.log(groups)
   const teachers = useSelector((s) => s?.getTeachers);
@@ -131,7 +132,7 @@ function GetGroup({ addStudent, studentID, courses,setCourses }) {
   };
   return (
     <div className="global__router">
-      <div className="get__navbar get__group-navbar">
+      <div className="get__navbar ">
         <h3>Guruhlar</h3>
         <ul className="get__collection ">
           <li
@@ -149,6 +150,12 @@ function GetGroup({ addStudent, studentID, courses,setCourses }) {
             <span>{groups?.filter((el) => el.isActive === true).length}</span>
           </li>
         </ul>
+        {
+          addStudent && <button onClick={()=>{
+            setCourses([])
+            setClose(null)
+          }} className="get__navbar-close"><FiX/></button>
+        }
       </div>
       <div className="get__controller">
         <ul className="get__controller-collection">

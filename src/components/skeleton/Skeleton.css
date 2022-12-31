@@ -43,6 +43,9 @@
 
 
 @media screen and (max-width:750px) {
+    .skeleton{
+        padding: 10px;
+    }
     .skeleton__head {
         flex-direction: column;
     }

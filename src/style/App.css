@@ -15,7 +15,7 @@
   background: var(--bg-dark2);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 6;
   padding-left: 30px;
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@
 .get__controller {
   position: sticky;
   top: 50px;
-  z-index: 10;
+  z-index: 5;
   width: 100%;
   padding-left: 30px;
   height: 50px;
@@ -206,29 +206,60 @@
   font-weight: 100;
   margin-right: 10px;
 }
+.get__item p:nth-child(1){
+  display: inline-block;
+}
+.get__item p:nth-child(2){
+  display: none;
+}
+.get__navbar-close{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 36px;
+  height: 36px;
+  border-radius: 0 0 0 24px;
+  border: none;
+  color: #fff;
+  background: crimson;
+  cursor: pointer;
+}
 
 @media screen and (max-width:750px) {
   .get__navbar{
-    min-height: 90px;
+    min-height: 64px;
+    padding-left: 10px;
+    padding-top: 5px;
+    flex-direction: column;
+    align-items: flex-start;
   }
   .get__collection {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     gap: 8px;
     margin-left: 0px;
+    margin-top: 10px;
   }
   .get__item {
-    margin-left: 20px;
+    margin-left: 0px;
+    margin-right: 20px;
+  }
+  .get__item p:nth-child(1){
+    display: none;
+  }
+  .get__item p:nth-child(2){
+    display: inline-block;
   }
   .get__controller {
     position: relative;
+    top: 0;
+    padding-left: 10px;
   }
-  .get__group-navbar{
-    min-height: 50px;
+  .get__student-search{
+    left: 10px;
+    width: calc(100% - 30px);
   }
-  .get__group-navbar .get__collection{
-    flex-direction: row;
+  .get__controller .get__student-searchInput{
+    width: 100%;
   }
 }
 

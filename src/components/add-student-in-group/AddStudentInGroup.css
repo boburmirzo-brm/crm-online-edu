@@ -33,3 +33,10 @@
         opacity: 1;
     }
 }
+
+
+@media screen and (max-width:750px) {
+    .add_studentInGroup-content{
+        width: 95%;
+    }
+}

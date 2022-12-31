@@ -14,13 +14,14 @@ import axios from "../../../api";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import loadingGif from "../../../assets/loading-gif.gif"
+import {FiX} from "react-icons/fi"
 
 const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
   "NEW_STUDENT",
   "STUDENT_OF_GROUP",
   "ALL_STUDENT",
 ];
-function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStudents }) {
+function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStudents,setClose }) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
   const [id, setId] = useState(null);
@@ -106,7 +107,6 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
         setSearchLoading(false)
       });
   };
-
   return (
     <div className="global__router">
       <div className="get__navbar">
@@ -118,7 +118,9 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
               NEW_STUDENT === filterType ? "get__item-active" : ""
             }`}
           >
-            Yangi O'quvchilar <span>{data?.unenrolledCourses()}</span>
+            <p>Yangi O'quvchilar </p>
+            <p>Yangi </p>
+            <span>{data?.unenrolledCourses()}</span>
           </li>
           <li
             onClick={() => setFilterType(STUDENT_OF_GROUP)}
@@ -126,7 +128,9 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
               STUDENT_OF_GROUP === filterType ? "get__item-active" : ""
             }`}
           >
-            Yangi Guruh O'quvchilari <span>{data?.enrolledCourses()}</span>
+            <p>Yangi Guruh O'quvchilari </p>
+            <p>Yangi Guruh</p>
+            <span>{data?.enrolledCourses()}</span>
           </li>
           <li
             onClick={() => setFilterType(ALL_STUDENT)}
@@ -134,13 +138,22 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
               ALL_STUDENT === filterType ? "get__item-active" : ""
             }`}
           >
-            Markazda O'qiyotgan O'quvchilar <span>{data?.isActiveTrue()}</span>
+            <p>Markazda O'qiyotgan O'quvchilar </p>
+            <p>Barcha </p>
+            <span>{data?.isActiveTrue()}</span>
           </li>
         </ul>
+        {
+          addStudentInGroup && <button onClick={()=>{
+            setStudents([])
+            setClose(null)
+          }} className="get__navbar-close"><FiX/></button>
+        }
       </div>
       <div className="get__controller">
         <input
           type="text"
+          className="get__student-searchInput"
           placeholder="O'quvchi FISH..."
           onKeyUp={handleOnKeyUpSearch}
         />
@@ -190,14 +203,27 @@ function GetStudent({ addStudentInGroup, groupIdInGroup, studentsInGroup,setStud
               </h3>
             </Link>
             <p>
-              Manzil: <b>{item.region}</b>
+              Manzil: <b>{item.region.capitalLetter()}</b>
             </p>
             <p>
-              Tug'ilgan sana: <b>{item.birthYear} yil</b>
+              Tug'ilgan sana: <b>{item.birthYear}</b>
             </p>
-            <p style={{ flex: 1 }}>
-              Tel: <b>{item.tel?.map((i) => i + " ")}</b>
+            <p >
+              Tel: <b>{item.tel?.map((i, inx) => <a key={inx} href={`tel:${i}`}>{i}</a>)}</b>
             </p>
+            {
+                !item.isActive &&
+                !item.enrolledCourses.length && 
+                <p style={{ flex: 1 }}>
+                  Sana: <b>
+                    {new Date(item.startedDate).getDate()}.
+                    {new Date(item.startedDate).getMonth()}.
+                    {new Date(item.startedDate).getFullYear()} / {" "}
+                    {new Date(item.startedDate).getHours().toString().padStart(2, "0")}:
+                    {new Date(item.startedDate).getMinutes().toString().padStart(2, "0")}
+                  </b>
+                </p>
+            }
             {!item.enrolledCourses.length && (
               <span className="get__student-notGroup">
                 Guruhga qo'shilmagan

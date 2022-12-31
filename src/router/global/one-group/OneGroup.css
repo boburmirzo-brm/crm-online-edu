@@ -101,6 +101,9 @@
 
 
 @media screen and (max-width:750px) {
+  .one__group {
+    padding: 10px;
+  }
   .one__group-card {
     display: flex;
     flex-direction: column;

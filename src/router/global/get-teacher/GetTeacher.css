@@ -49,3 +49,14 @@
     transform: translateY(3px);
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 750px){
+    .get__teacher-container{
+        gap: 10px;
+        margin: 10px;
+    }
+    .get__teacher-card{
+        width: 100%;
+    }
+}

@@ -2,3 +2,10 @@
     padding: 30px;
     padding-bottom: 200px;
 }
+
+@media screen and (max-width:750px){
+    .one__teacher{
+        padding: 10px;
+        padding-bottom: 200px;
+    }
+}
