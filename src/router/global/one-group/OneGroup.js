@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useState } from "react";
 import "./OneGroup.css";
 import { useDispatch, useSelector } from "react-redux";
-import AddStudentsIntoGroup from "./addStudentsIntoGroup/AddStudentsIntoGroup";
+// import AddStudentsIntoGroup from "./addStudentsIntoGroup/AddStudentsIntoGroup";
 import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { TEACHER_MAJOR, levels, days, times } from "../../../static";
@@ -15,12 +15,18 @@ import {
   reloadStudentAction,
 } from "../../../context/action/action";
 import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
+import EmptyData from "../../../components/empty-data/EmptyData";
+import { toast } from "react-toastify";
 
 function OneGroup() {
   let { id } = useParams();
 
   const [innerReload, setInnerReload] = useState(false);
-  const { data: group, loading } = useFetch(`/api/groups/${id}`, innerReload);
+  const {
+    fetchError,
+    data: group,
+    loading,
+  } = useFetch(`/api/groups/${id}`, innerReload);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,13 +70,18 @@ function OneGroup() {
       axios
         .patch(`/api/groups/${data?._id}`, data)
         .then(({ data }) => {
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           setInnerReload((e) => !e);
           setAreInputsDisabled((e) => !e);
           dispatch(reloadGroupAction());
           dispatch(reloadTeacherAction());
         })
-        .catch(({ response }) => {
-          console.log(response);
+        .catch(({ response: {data} }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -92,14 +103,18 @@ function OneGroup() {
       axios
         .patch(`/api/groups/remove-student/${groupIDInner}`, dataInner)
         .then(({ data }) => {
-          console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           // dispatch(reloadTeacherAction());
           setInnerReload((e) => !e);
         })
-        .catch(({ response }) => {
-          console.log(response);
+        .catch(({ response: {data} }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -114,13 +129,18 @@ function OneGroup() {
         .delete(`/api/groups/${group._id}`)
         .then(({ data }) => {
           // console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           dispatch(reloadGroupAction());
-          // dispatch(reloadStudentAction());
+          dispatch(reloadStudentAction());
           dispatch(reloadTeacherAction());
           navigate(`${pathname.pathnameFormat()}/get-group`);
         })
-        .catch(({ response }) => {
-          console.log(response);
+        .catch(({ response: { data} }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -134,13 +154,19 @@ function OneGroup() {
         .get(`/api/groups/isactiveTrue/${group._id}`)
         .then(({ data }) => {
           console.log(data);
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
           setInnerReload((e) => !e);
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           dispatch(reloadTeacherAction());
+          
         })
-        .catch(({ response }) => {
-          console.log(response);
+        .catch(({ response: {data} }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
         })
         .finally(() => {
           setIsLoading(false);
@@ -148,12 +174,18 @@ function OneGroup() {
     }
   };
   if (!data) {
+    if (fetchError.length) {
+      return <EmptyData text={`Guruh topilmadi, ${fetchError}`} />;
+    }
     return <Skeleton title={"Guruh haqida batafsil malumot"} />;
   }
   return (
     <>
       <div className="one__group">
-      <button onClick={()=> navigate(-1)} className="backBtn"><b>&#10140;</b><span>Orqaga</span></button>
+        <button onClick={() => navigate(-1)} className="backBtn">
+          <b>&#10140;</b>
+          <span>Orqaga</span>
+        </button>
         <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
         <div className="one__group-head">
           <div className="one__group-item">
@@ -220,7 +252,7 @@ function OneGroup() {
             >
               {days.map((el, idx) => (
                 <option key={idx} value={el} title={el}>
-                  {el === "M/W/F"? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
+                  {el === "M/W/F" ? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
                 </option>
               ))}
             </select>
@@ -295,7 +327,9 @@ function OneGroup() {
           >
             {areInputsDisabled
               ? "Guruhni o'zgartirish"
-              : isLoading? "Kuting..." :  "Saqlash" }
+              : isLoading
+              ? "Kuting..."
+              : "Saqlash"}
           </button>
           {!group?.enrolledStudents?.length ? (
             <button
@@ -330,10 +364,8 @@ function OneGroup() {
             return (
               <div key={_id} className="one__group-card">
                 <p>
-                <span>{idx + 1}. </span>
-                  <Link
-                    to={`${pathname.pathnameFormat()}/get-student/${_id}`}
-                  >
+                  <span>{idx + 1}. </span>
+                  <Link to={`${pathname.pathnameFormat()}/get-student/${_id}`}>
                     {firstName} {lastName} {middleName} (
                     {tel?.map((el, idx) => (
                       <b key={idx} title={el}>
@@ -372,11 +404,11 @@ function OneGroup() {
           //   setInnerReload={setInnerReload}
           // />
           <AddStudentInGroup
-          id={group?._id}
-          setId={setStudentsModal}
-          students={data?.enrolledStudents}
-          setStudents={false}
-        />
+            id={group?._id}
+            setId={setStudentsModal}
+            students={data?.enrolledStudents}
+            setStudents={false}
+          />
         ) : (
           ""
         )}

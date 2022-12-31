@@ -5,9 +5,13 @@ import { days, times, levels, TEACHER_MAJOR } from "../../../static";
 import axios from "../../../api";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { reloadGroupAction, reloadTeacherAction } from "../../../context/action/action";
+import {
+  reloadGroupAction,
+  reloadTeacherAction,
+} from "../../../context/action/action";
 import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
+import { toast } from "react-toastify";
 
 let initializeData = {
   teacherInfo: {
@@ -61,7 +65,9 @@ function CreateGroup() {
     axios
       .post("/api/groups", data)
       .then(({ data }) => {
-        console.log(data);
+        toast.success(data?.msg, {
+          autoClose: 5000,
+        });
         dispatch(reloadGroupAction());
         dispatch(reloadTeacherAction());
         setData(initializeData);
@@ -70,7 +76,9 @@ function CreateGroup() {
         navigate(`${pathname.pathnameFormat()}/get-group`);
       })
       .catch(({ response: { data } }) => {
-        console.log(data);
+        toast.error(data?.msg, {
+          autoClose: 5000,
+        });
       })
       .finally(() => setLoading(false));
   };
@@ -173,7 +181,7 @@ function CreateGroup() {
 
                 {days.map((el, idx) => (
                   <option key={idx} value={el} title={el}>
-                    {el === "M/W/F"? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
+                    {el === "M/W/F" ? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
                   </option>
                 ))}
               </select>
