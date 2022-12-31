@@ -12,6 +12,8 @@ import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
 import Skeleton from "../../../components/skeleton/Skeleton";
 import { AiOutlineEye } from "react-icons/ai";
+import { TEACHER_MAJOR, regions, genders } from "../../../static";
+import ShowingEnteredNumbers from "../../../components/register-student-comp/ShowingEnteredNumbers";
 
 const initializeData = {
   _id: "",
@@ -40,9 +42,10 @@ const initializeData = {
 function OneTeacher() {
   let { id } = useParams();
   const [innerReload, setInnerReload] = useState(false);
+
   // zokirkhon
   const [showPassword, setShowPassword] = useState(false);
-  const [areInputsDisabled, setAreInputsDisabled] = useState(false);
+  const [areInputsDisabled, setAreInputsDisabled] = useState(true);
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +53,7 @@ function OneTeacher() {
   const { data: teacher } = useFetch(`/api/teachers/${id}`, innerReload);
   const [data, setData] = useState(initializeData);
   const { pathname } = useLocation();
+
   useEffect(() => setData(teacher), [teacher]);
 
   const handleChange = ({ target: t }) => {
@@ -77,12 +81,14 @@ function OneTeacher() {
 
   const handleToggleAndUpdateData = () => {
     console.log(data);
-    if (!areInputsDisabled) {
-      setAreInputsDisabled(true);
+    if (areInputsDisabled) {
+      setAreInputsDisabled(false);
+      setShowPassword(true);
     } else {
       console.log("update qilish kerak");
-      setAreInputsDisabled(false);
-      setIsLoading(true);
+      setAreInputsDisabled(true);
+      setShowPassword(false);
+      // setIsLoading(true);
       // axios
       //   .patch(`/api/students/${one?._id}`, one)
       //   .then(({ data }) => {
@@ -128,45 +134,205 @@ function OneTeacher() {
         O'qituvchi haqida batafsil ma'lumot
       </h2>
       <div className="one__student-head">
-        <img src={gender === "male" ? male : female} alt="" />
+        <img
+          src={gender === "male" ? male : female}
+          alt={`${firstName} ${lastName}`}
+          title={`${firstName} ${lastName}`}
+        />
         <div>
           <p>
-            <span>FISH: </span>
-            <b>
-              {lastName} {firstName} {middleName}
-            </b>
+            <span>Ism: </span>
+            <input
+              onChange={handleChange}
+              className="one__student-input"
+              name="firstName"
+              id="firstName"
+              disabled={areInputsDisabled}
+              value={firstName}
+              required
+              autoComplete="off"
+            />
           </p>
           <p>
-            <span>Fan: </span>
-            <b>{major.toUpperCase()}</b>
+            <span>Familya: </span>
+            <input
+              onChange={handleChange}
+              className="one__student-input"
+              name="lastName"
+              id="lastName"
+              disabled={areInputsDisabled}
+              value={lastName}
+              required
+              autoComplete="off"
+            />
           </p>
           <p>
-            <span>Manzil:</span>
-            <b>{region}</b>
-          </p>
-          <p>
-            <span>Tug'ilgan yil:</span>
-            <b>{birthYear}</b>
-          </p>
-          <p>
-            <span>Tel:</span>
-            <b>{tel.join(" / ")}</b>
+            <span>Otasining ismi: </span>
+            <input
+              onChange={handleChange}
+              className="one__student-input"
+              name="middleName"
+              id="middleName"
+              disabled={areInputsDisabled}
+              value={middleName}
+              required
+              autoComplete="off"
+            />
           </p>
           <p>
             <span>Username:</span>
-            <b>{username}</b>
+            <input
+              onChange={handleChange}
+              className="one__student-input"
+              name="username"
+              id="username"
+              disabled={areInputsDisabled}
+              value={username}
+              required
+              autoComplete="off"
+            />
           </p>
           <p>
             <span>Parol:</span>
-            <b>{showPassword ? password : "*".repeat(password.length)} </b>
+            <input
+              onChange={handleChange}
+              className="one__student-input"
+              name="password"
+              id="password"
+              disabled={areInputsDisabled}
+              value={showPassword ? password : "*".repeat(password.length)}
+              required
+              autoComplete="off"
+            />
             <AiOutlineEye
+              title={
+                areInputsDisabled && showPassword
+                  ? "parolni yashirish"
+                  : areInputsDisabled && !showPassword
+                  ? "parolni ko'rish"
+                  : "Iltimos birinchi ma'lumotni saqlang"
+              }
               className="get__teacher-eye"
-              onClick={() => setShowPassword((e) => !e)}
+              onClick={() => {
+                if (areInputsDisabled) {
+                  setShowPassword((e) => !e);
+                }
+              }}
             />
           </p>
+          <p>
+            <span>Fan: </span>
+            <select
+              onChange={handleChange}
+              defaultValue={major}
+              className="one__student-select"
+              name="major"
+              disabled={areInputsDisabled}
+              id="major"
+              required
+            >
+              <option value="">tanlang</option>
+              {TEACHER_MAJOR.map((el, idx) => {
+                return (
+                  <option key={idx} title={el} value={el}>
+                    {el.capitalLetter()}
+                  </option>
+                );
+              })}
+            </select>
+          </p>
+          <p>
+            <span>Manzil:</span>
+            <select
+              onChange={handleChange}
+              title="Hududni tanlang"
+              defaultValue={region}
+              className="one__student-select"
+              disabled={areInputsDisabled}
+              name="region"
+              id="region"
+              required
+            >
+              <option value="">tanlang</option>
+              {regions.map((el, idx) => (
+                <option key={idx} title={el} value={el}>
+                  {el.capitalLetter()}
+                </option>
+              ))}
+            </select>
+          </p>
+          <p>
+            <span>Tug'ilgan yil:</span>
+            <input
+              onChange={handleChange}
+              value={birthYear}
+              className="one__student-input"
+              disabled={areInputsDisabled}
+              title="Tug'ilgan yilingizni kiriting"
+              type="text"
+              name="birthYear"
+              id="birthYear"
+              minLength={4}
+              maxLength={4}
+              required
+              autoComplete="off"
+            />
+          </p>
+          <p>
+            <span>Jinsi: </span>
+            <select
+              onChange={handleChange}
+              className="one__student-select"
+              disabled={areInputsDisabled}
+              defaultValue={gender}
+              name="gender"
+              id="gender"
+              required
+            >
+              <option value="">tanlang</option>
+              {genders.map((el, idx) => (
+                <option key={idx} title={el.en} value={el.en}>
+                  {el.uz.capitalLetter()}
+                </option>
+              ))}
+            </select>
+          </p>
+          <div className="one__teacher-special">
+            {
+              <ShowingEnteredNumbers
+                data={data}
+                notDelete={areInputsDisabled}
+                setData={setData}
+              />
+            }
+            {areInputsDisabled ? (
+              ""
+            ) : (
+              <span>
+                <input
+                  className="one__student-input"
+                  disabled={areInputsDisabled}
+                  onChange={(e) => setTempPhoneNumber(e.target.value)}
+                  value={tempPhoneNumber}
+                  placeholder="Telefon raqam"
+                  type="text"
+                  autoComplete="off"
+                />
+                <button
+                  disabled={areInputsDisabled}
+                  className="btn-py"
+                  onClick={handleAddTelNumToArrOfData}
+                  type="button"
+                >
+                  Telefon raqam qo'shish
+                </button>
+              </span>
+            )}
+          </div>
+
           <br />
           <button className="btn-py" onClick={handleToggleAndUpdateData}>
-            {areInputsDisabled ? "Ma'lumotlarni saqlash" : "O'zgartirish"}
+            {areInputsDisabled ? "O'zgartirish" : "Ma'lumotlarni saqlash"}
           </button>
           {!groups.length && (
             <button
