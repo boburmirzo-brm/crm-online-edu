@@ -1,11 +1,31 @@
-.one__teacher{
-    padding: 30px;
-    padding-bottom: 200px;
+
+
+
+.one__teacher {
+  padding: 30px;
+  padding-bottom: 200px;
+}
+.one__teacher-special div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+}
+.one__teacher-special div span {
+  display: flex;
+  width: 250px;
+}
+.one__teacher-special div span:first-of-type {
+  margin-left: 0;
+  padding-left: 0;
+  display: inline-block;
+  width: 120px;
 }
 
+
 @media screen and (max-width:750px){
-    .one__teacher{
-        padding: 10px;
-        padding-bottom: 200px;
-    }
+  .one__teacher{
+      padding: 10px;
+      padding-bottom: 200px;
+  }
 }
