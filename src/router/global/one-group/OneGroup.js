@@ -22,6 +22,7 @@ function OneGroup() {
   let { id } = useParams();
 
   const [innerReload, setInnerReload] = useState(false);
+  const [students, setStudents] = useState([]);
   const {
     fetchError,
     data: group,
@@ -37,6 +38,7 @@ function OneGroup() {
 
   useEffect(() => {
     setData(group);
+    setStudents(group?.enrolledStudents)
   }, [group]);
   // console.log(data);
   // console.log(teachers);
@@ -149,6 +151,7 @@ function OneGroup() {
   };
 
   const handleChangerOfActiveStatus = () => {
+    if(window.confirm("Guruhni chindan faollashtirmoqchimisiz"))
     if (data.enrolledStudents?.length) {
       axios
         .get(`/api/groups/isactiveTrue/${group._id}`)
@@ -406,7 +409,7 @@ function OneGroup() {
           <AddStudentInGroup
             id={group?._id}
             setId={setStudentsModal}
-            students={data?.enrolledStudents}
+            students={data?.enrolledStudents.map(i=>i._id)}
             setStudents={false}
           />
         ) : (

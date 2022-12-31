@@ -40,7 +40,7 @@ function GetStudent({
   const [filterType, setFilterType] = useState(
     localStorage.getItem("filterStudent") || NEW_STUDENT
   );
-
+  console.log(studentsInGroup);
   useEffect(() => {
     localStorage.setItem("filterStudent", filterType);
     if (!data) {
@@ -98,8 +98,8 @@ function GetStudent({
         // dispatch(reloadTeacherAction());
         setStudents([...studentsInGroup, studentId]);
       })
-      .catch(({ response: { data } }) => {
-        toast.error(data?.msg, {
+      .catch(({ response }) => {
+        toast.error(response?.data?.msg, {
           autoClose: 5000,
         });
       })
@@ -171,7 +171,7 @@ function GetStudent({
         {addStudentInGroup && (
           <button
             onClick={() => {
-              setStudents([]);
+              // setStudents([]);
               setClose(null);
             }}
             className="get__navbar-close"
@@ -237,7 +237,7 @@ function GetStudent({
             <p>
               Tug'ilgan sana: <b>{item.birthYear}</b>
             </p>
-            <p>
+            <p style={{flex: item.isActive && item.enrolledCourses.length && 1}}>
               Tel:{" "}
               <b>
                 {item.tel?.map((i, inx) => (
