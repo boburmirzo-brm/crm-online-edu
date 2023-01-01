@@ -26,8 +26,8 @@ function GetStudent({
   addStudentInGroup,
   groupIdInGroup,
   studentsInGroup,
-  setStudents,
   setClose,
+  oneGroupReload
 }) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
@@ -94,8 +94,8 @@ function GetStudent({
         });
         dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
+        oneGroupReload(e=> !e);
         // dispatch(reloadTeacherAction());
-        setStudents([...studentsInGroup, studentId]);
       })
       .catch(({ response }) => {
         toast.error(response?.data?.msg, {
@@ -170,7 +170,6 @@ function GetStudent({
         {addStudentInGroup && (
           <button
             onClick={() => {
-              // setStudents([]);
               setClose(null);
             }}
             className="get__navbar-close"
