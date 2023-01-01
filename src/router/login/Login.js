@@ -1,5 +1,6 @@
 // @ts-nocheck
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import logo from "../../assets/logo.jpg";
 import { useDispatch } from "react-redux";
@@ -7,6 +8,12 @@ import axios from "../../api";
 import { authAction } from "../../context/action/action";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useFetchWithOutAuth } from "../../hooks/useFetchWithOutAuth";
+import {
+  getStudentsAction,
+  getGroupsAction,
+  getTeachersAction,
+} from "../../context/action/action";
 
 function LoginContainer() {
   const [username, setUsername] = useState("");
@@ -14,6 +21,20 @@ function LoginContainer() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
   const dispatch = useDispatch();
+
+  const [tempOs, setTempOs] = useState("");
+
+  const students = useFetchWithOutAuth("/api/students", tempOs);
+  const groups = useFetchWithOutAuth("/api/groups", tempOs);
+  const teachers = useFetchWithOutAuth("/api/teachers", tempOs);
+
+  useEffect(() => {
+    if (tempOs.length) {
+      dispatch(getStudentsAction(students?.data));
+      dispatch(getGroupsAction(groups?.data));
+      dispatch(getTeachersAction(teachers?.data));
+    }
+  }, [tempOs, students, groups, teachers]);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -34,12 +55,15 @@ function LoginContainer() {
               autoClose: 5000,
             });
           }, 3000);
+
           setMsg({ state: true, msg: "Algoritmga hush kelibsiz" });
+          setTempOs(data.user.os || "");
           data.user.os = [
             data.user.os.slice(0, 30),
             data.user.os.slice(30, 60),
             data.user.os.slice(60),
           ];
+
           dispatch(authAction(data.user));
           localStorage.setItem(
             "token",
