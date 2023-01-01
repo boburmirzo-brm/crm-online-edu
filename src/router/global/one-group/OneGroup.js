@@ -22,7 +22,6 @@ function OneGroup() {
   let { id } = useParams();
 
   const [innerReload, setInnerReload] = useState(false);
-  const [students, setStudents] = useState([]);
   const {
     fetchError,
     data: group,
@@ -38,7 +37,6 @@ function OneGroup() {
 
   useEffect(() => {
     setData(group);
-    setStudents(group?.enrolledStudents)
   }, [group]);
   // console.log(data);
   // console.log(teachers);
@@ -419,7 +417,7 @@ function OneGroup() {
             id={group?._id}
             setId={setStudentsModal}
             students={data?.enrolledStudents.map(i=>i._id)}
-            setStudents={false}
+            oneGroupReload={setInnerReload}
           />
         ) : (
           ""

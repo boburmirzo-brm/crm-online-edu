@@ -2,13 +2,17 @@ import React from "react";
 import "./AddStudentInGroup.css";
 import GetStudent from "../../router/global/get-student/GetStudent";
 
-const AddStudentInGroup = ({ id, setId, students, setStudents }) => {
+const AddStudentInGroup = ({
+  id,
+  setId,
+  students,
+  oneGroupReload,
+}) => {
   return id ? (
     <div className="add_studentInGroup">
       <div
         onClick={() => {
           setId(null);
-          setStudents && setStudents([]);
         }}
         className="add_studentInGroup-modal"
       ></div>
@@ -18,7 +22,7 @@ const AddStudentInGroup = ({ id, setId, students, setStudents }) => {
           groupIdInGroup={id}
           studentsInGroup={students}
           setClose={setId}
-          setStudents={setStudents}
+          oneGroupReload={oneGroupReload}
         />
       </div>
     </div>
