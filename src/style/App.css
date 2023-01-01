@@ -94,16 +94,17 @@
   background: #fff;
   box-shadow: 5px 5px 10px #0002;
   border-radius: 0 0 8px 8px;
-  padding: 12px;
   overflow: auto;
-  font-size: 14px;
+  padding-bottom: 20px;
+  font-size: 15px;
 }
 .get__student-search a{
   display: block;
-  margin-bottom: 8px;
   color: var(--bg-td);
+  padding: 10px;
 }
-.get__student-search a span{
+.get__student-search a:hover{
+  background: #dbdce956;
 }
 .get__student-search p{
   text-align: center;

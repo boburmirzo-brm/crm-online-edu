@@ -81,7 +81,7 @@ export const GLOBAL_ROUTERS = [
         element: <Statistics/>,
         icon: <AiOutlineUserAdd />,
         teacher:false,
-        admin: true,
+        admin: false,
         accounter: false,
         receptionist:false,
         owner:true,

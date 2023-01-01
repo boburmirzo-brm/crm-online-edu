@@ -288,7 +288,7 @@ function OneGroup() {
             <input
               onChange={handleChange}
               disabled={areInputsDisabled}
-              value={data?.firstLesson || "26.12.2022"}
+              value={data?.firstLesson || "00.00.0000"}
               type="text"
               placeholder="Boshlangan vaqti..."
               name="firstLesson"
@@ -302,7 +302,7 @@ function OneGroup() {
             <input
               onChange={handleChange}
               disabled={areInputsDisabled}
-              value={data?.expectedExamDay || "20.02.2023"}
+              value={data?.expectedExamDay || "00.00.0000"}
               type="text"
               placeholder="Imtihon vaqti..."
               name="expectedExamDay"

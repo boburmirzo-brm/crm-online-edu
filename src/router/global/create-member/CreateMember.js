@@ -47,12 +47,11 @@ function CreateMember() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
   // console.log(data);
+  console.log(pathname.pathnameFormat(3).split("/").slice(-1)[0]);
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
     let newFormData = structuredClone(data);
-
     let objForLast4Props = {
       teacher: "isTeacher",
       admin: "isAdmin",
@@ -242,7 +241,7 @@ function CreateMember() {
                 id="region"
                 required
               >
-                <option value="">tanlang</option>
+                <option disabled value="">tanlang</option>
                 {regions.map((el, idx) => (
                   <option key={idx} title={el} value={el}>
                     {el.capitalLetter()}
@@ -279,8 +278,8 @@ function CreateMember() {
                 name="gender"
                 id="gender"
                 required
-              >
-                <option value="">tanlang</option>
+              > 
+                <option disabled value="">tanlang</option>
                 {genders.map((el, idx) => (
                   <option key={idx} title={el.en} value={el.en}>
                     {el.uz.capitalLetter()}
@@ -299,14 +298,20 @@ function CreateMember() {
                 id="major"
                 required
               >
-                <option value="">tanlang</option>
-                {majorForCreateMember.map((el, idx) => {
-                  return (
-                    <option key={idx} title={el} value={el}>
-                      {ozbekcha[idx].capitalLetter()}
-                    </option>
-                  );
-                })}
+                <option disabled value="">tanlang</option>
+                {
+                  pathname.pathnameFormat(3).split("/").slice(-1)[0] === "owner"?
+                  majorForCreateMember.map((el, idx) => {
+                    return (
+                      <option key={idx} title={el} value={el}>
+                        {ozbekcha[idx].capitalLetter()}
+                      </option>
+                    )
+                  }):
+                  <option title="teacher" value="teacher">
+                    O'qituvchi
+                  </option>
+                }
               </select>
             </div>
           </div>
@@ -323,7 +328,7 @@ function CreateMember() {
                   id="major"
                   required
                 >
-                  <option value="">tanlang</option>
+                  <option disabled value="">tanlang</option>
                   {TEACHER_MAJOR.map((el, idx) => {
                     return (
                       <option key={idx} title={el} value={el}>

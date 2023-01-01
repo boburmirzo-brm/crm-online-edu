@@ -112,13 +112,13 @@ function GetTeacher() {
                     </Link>
                   </h4>
                   <p>
-                    Fan: <b>{major}</b>
+                    Fan: <b>{major?.capitalLetter()}</b>
                   </p>
                   <p>
-                    Manzil: <b>{region}</b>
+                    Manzil: <b>{region?.capitalLetter()}</b>
                   </p>
                   <p>
-                    Tug'ilgan sana: <b>{birthYear} yil</b>
+                    Tug'ilgan sana: <b>{birthYear}</b>
                   </p>
                 </div>
               </div>

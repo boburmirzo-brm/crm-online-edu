@@ -33,9 +33,6 @@ function CheckRoute() {
       // behavior: 'smooth',
     });
   }, [currantPath])
-    console.log(path);
-    console.log(currantPath);
-
   const reloadGroup = useSelector(s=>s?.reloadGroup)
   const reloadStudent = useSelector(s=>s?.reloadStudent)
   const reloadTeacher = useSelector(s=>s?.reloadTeacher)
