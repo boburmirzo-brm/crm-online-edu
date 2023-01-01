@@ -105,15 +105,22 @@ function OneGroup() {
       axios
         .patch(`/api/groups/remove-student/${groupIDInner}`, dataInner)
         .then(({ data }) => {
-          console.log(data?.msg);
+          if(!data.data){
+            console.log("ok");
+            toast.success(data?.msg, {
+              autoClose: 5000,
+            });
+            dispatch(reloadGroupAction());
+            dispatch(reloadStudentAction());
+            return navigate(`${pathname.pathnameFormat()}/get-group`);
+          }
           toast.success(data?.msg, {
             autoClose: 5000,
           });
+          setInnerReload((e) => !e);
           dispatch(reloadGroupAction());
           dispatch(reloadStudentAction());
           // dispatch(reloadTeacherAction());
-          setInnerReload((e) => !e);
-         
         })
         .catch(({ response: {data} }) => {
           toast.error(data?.msg, {
@@ -122,11 +129,7 @@ function OneGroup() {
         })
         .finally(() => {
           setIsLoading(false);
-          console.log(group?.enrolledStudents);
-          console.log(group.isActive);
-          if(!group?.enrolledStudents && group.isActive){
-            navigate(`${pathname.pathnameFormat()}/get-group`);
-          }
+         
         });
     }
   };
@@ -163,7 +166,6 @@ function OneGroup() {
       axios
         .get(`/api/groups/isactiveTrue/${group._id}`)
         .then(({ data }) => {
-          console.log(data);
           toast.success(data?.msg, {
             autoClose: 5000,
           });
