@@ -58,7 +58,6 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
       groups?.filter((i) => i.major === type && i.isActive === active)
     );
   }, [type, groups, active]);
-  console.log(filterData);
   /*
     useEffect(() => {
     if (type === "all") {

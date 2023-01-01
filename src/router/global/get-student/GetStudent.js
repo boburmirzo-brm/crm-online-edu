@@ -40,7 +40,6 @@ function GetStudent({
   const [filterType, setFilterType] = useState(
     localStorage.getItem("filterStudent") || NEW_STUDENT
   );
-  console.log(studentsInGroup);
   useEffect(() => {
     localStorage.setItem("filterStudent", filterType);
     if (!data) {
