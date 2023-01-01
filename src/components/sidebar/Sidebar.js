@@ -5,6 +5,8 @@ import { GLOBAL_ROUTERS } from "../../static/router";
 import { useDispatch } from "react-redux";
 import { logOutAction } from "../../context/action/action";
 import { FiMenu, FiX } from "react-icons/fi";
+import logo from "../../assets/logo2.png"
+import {IoMdRefresh} from "react-icons/io"
 
 function Sidebar({ info, degree }) {
   const [show, setShow] = useState(false);
@@ -17,7 +19,10 @@ function Sidebar({ info, degree }) {
   return (
     <>
       <div className={`sidebar ${show ? "sidebar__show" : ""}`}>
-        <h2 className="sidebar__logo">Algoritm EDU</h2>
+        <NavLink to="/" className="sidebar__logo">
+          <img src={logo} alt="" />
+          <span>Algoritm EDU</span>
+        </NavLink>
         <NavLink to={`${pathname.pathnameFormat(3)}`} className="sidebar__top">
           <div className="sidebar__circle">{info?.lastName[0]}</div>
           <div className="sidebar__name">
@@ -28,6 +33,11 @@ function Sidebar({ info, degree }) {
             {info?.major} {degree?.teacher && "Teacher"}
           </p>
         </NavLink>
+        <div style={{textAlign:"right", margin: "20px 0"}}>
+          <button onClick={()=> window.location.reload()} className="sidaber__refresh">
+            <IoMdRefresh/>
+          </button>
+        </div>
         <div className="sidebar__collection">
           {GLOBAL_ROUTERS?.map((item, inx) => {
             if (item[pathname.pathnameFormat(3).split("/").slice(-1)[0]]) {

@@ -14,21 +14,27 @@ import { getStudentsAction,getGroupsAction,getTeachersAction } from "../../conte
 import OneStudent from "../global/one-student/OneStudent";
 import OneGroup from "../global/one-group/OneGroup";
 import OneTeacher from "../global/one-teacher/OneTeacher";
+import Owner from "../owner/Owner";
 
 function CheckRoute() {
   const user = useSelector(s=>s?.has_interop_upgraded)
+  
   let [path] = Object.entries(user?.degree).find((i) => i[1]);
+  
   let params = useParams();
+  
   let changePath = params["*"].split("/").slice(1).join("") &&
-    "/" + params["*"].split("/").slice(1).join("/");
-  let currantPath = path === "owner" ? "admin" + changePath : path + changePath;
+  "/" + params["*"].split("/").slice(1).join("/");
+  let currantPath =  path + changePath;
   const content = useRef()
   useEffect(()=> {
     content.current.scrollTo({
       top: 0,
       // behavior: 'smooth',
-  });
+    });
   }, [currantPath])
+    console.log(path);
+    console.log(currantPath);
 
   const reloadGroup = useSelector(s=>s?.reloadGroup)
   const reloadStudent = useSelector(s=>s?.reloadStudent)
@@ -51,10 +57,9 @@ function CheckRoute() {
   useEffect(() => {
     dispatch(getTeachersAction(teachers?.data));
   }, [teachers ,dispatch, reloadTeacher]);
-  console.log();
   return (
     <div className="check__route">
-      {teachers.loading && <Loader />}
+      {groups.loading && <Loader />}
       <Sidebar info={user.info} degree={user.degree} />
       <div ref={content} className="check__content">
         <Routes>
@@ -64,6 +69,7 @@ function CheckRoute() {
               element={<Navigate replace to={`/check/${currantPath}`} />}
             />
           )}
+          <Route path="/owner" element={<Owner />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/receptionist" element={<Receptionist />} />
           <Route path="/teacher" element={<Teacher />} />
