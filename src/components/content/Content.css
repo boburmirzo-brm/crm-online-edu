@@ -2,6 +2,12 @@
     height: 100%;
     height: 300px;
 }
+.content__title{
+    height: 34px;
+    font-size: 20px;
+    color: var(--bg-td);
+    font-weight: 400;
+}
 .content__form{
     height: 36px;
     display: flex;
@@ -28,22 +34,22 @@
     cursor: pointer;
 }
 .content__container{
-    height: calc(100% - 36px);
+    height: calc(100% - 85px);
     overflow: auto;
     list-style: none;
 }
 .content__item{
-    line-height: 2;
     display: flex;
     align-items: flex-start;
     color: var(--bg-td);
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
 }
 .content__item:hover{
-    background: #e0e0f7;
+    background: #ebebeb;
 }
 .content__item span{
     flex: 1;
     padding-right: 20px;
 }
-
 

@@ -5,6 +5,7 @@ import { FiTrash } from "react-icons/fi"
 
 function Content({content,setContentReload}) {
     const [title, setTitle] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = (e)=>{
         e.preventDefault()
@@ -18,6 +19,7 @@ function Content({content,setContentReload}) {
         })
     }
     const handleDeleteContent = (id)=>{
+        setLoading(true)
         axios.delete(`/api/contents/${content[0]?._id}`, {
             method: "DELETE",
             params: {id}
@@ -26,21 +28,30 @@ function Content({content,setContentReload}) {
             setContentReload(p=>!p)
         }).catch(err=>{
             console.log(err);
+        }).finally(()=>{
+            setLoading(false)
         })
     }
   return (
     <div className='content'>
+        <h3 className='content__title'>O'tilgan mavzular</h3>
         <form onSubmit={handleSubmit} className="content__form">
             <input required value={title} onChange={e=>setTitle(e.target.value)} type="text" />
             <button>Qo'shish</button>
         </form>
         <ul className="content__container">
             {
-                content[0]?.titles?.reverse()?.map(({id,title}, inx)=> <li key={inx} className='content__item'>
+                reverseArray(content[0]?.titles)?.map(({id,title}, inx)=> <li key={inx} className='content__item'>
                     <b>{content[0]?.titles.length-inx}. </b>
                     <span>{title}</span>
-                    <button onClick={()=> handleDeleteContent(id)}><FiTrash/></button>
+                    <button 
+                    disabled={loading}
+                    className='btn-danger' 
+                    onClick={()=> handleDeleteContent(id)}><FiTrash/></button>
                 </li> )
+            }
+            {
+                !content[0]?.titles.length && <p style={{color:"crimson"}}>Hali mavzular kiritilmagan</p>
             }
         </ul>
     </div>
@@ -48,3 +59,11 @@ function Content({content,setContentReload}) {
 }
 
 export default Content
+
+function reverseArray (arr) {
+    var newArr = [];
+    for (var i = 0, j = arr.length - 1; i < arr.length; i++, j--) {      
+        newArr[i] = arr[j];
+    }   
+    return newArr;
+}

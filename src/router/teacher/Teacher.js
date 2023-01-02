@@ -7,7 +7,7 @@ function Teacher() {
   const user = useSelector(s=>s?.has_interop_upgraded)
   return (
     <div className='teacher'>
-        <OneTeacher teacherID={user?.info?._id } />
+        <OneTeacher teacherID={user?.info?._id } teacherSelf={true} />
     </div>
   )
 }

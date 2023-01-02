@@ -39,7 +39,7 @@ const initializeData = {
   isOwner: false,
 };
 
-function OneTeacher({ teacherID }) {
+function OneTeacher({ teacherID,teacherSelf }) {
   let { id } = useParams();
   const dispatch = useDispatch();
   const [innerReload, setInnerReload] = useState(false);
@@ -438,7 +438,7 @@ function OneTeacher({ teacherID }) {
         ) : (
           <></>
         )}
-        {groups?.map((item, inx) => (
+        {groups?.filter(i=> teacherSelf? i.isActive === teacherSelf: true)?.map((item, inx) => (
           <div key={inx} className="one__student-card">
             <span>{inx + 1}.</span>
             <div className="one__student-item">

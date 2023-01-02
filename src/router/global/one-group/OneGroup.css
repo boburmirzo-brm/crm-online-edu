@@ -3,7 +3,7 @@
 }
 .one__group-title {
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
   color: var(--bg-td);
   padding-bottom: 8px;
 }
@@ -32,7 +32,7 @@
   border: 1px solid #b3e1fc;
   outline: none;
 }
-.one__group-item:first-child select {
+.one__group-item:nth-child(2) select {
   width: 125px;
 }
 .one__group-item select:disabled,
@@ -80,9 +80,6 @@
   background: var(--bg-py);
 }
 
-.one__group-body {
-  margin-top: 20px;
-}
 .one__group-card {
   display: flex;
   align-items: center;

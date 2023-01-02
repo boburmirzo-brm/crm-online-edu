@@ -193,7 +193,6 @@ function OneGroup() {
       }
   };
 
-
   const handleCreateContent = ()=>{
     axios.post(`/api/contents`, {
       groupId:id,
@@ -204,6 +203,7 @@ function OneGroup() {
         autoClose: 5000,
       });
       setInnerReload((e) => !e);
+      setContentReload(p=>!p)
       dispatch(reloadGroupAction());
     })
     .catch(({ response: {data} }) => {
@@ -226,9 +226,9 @@ function OneGroup() {
           <b>&#10140;</b>
           <span>Orqaga</span>
         </button>
-        <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
         <div className="one__group-head">
           <div>
+          <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
           <div className="one__group-item">
             <p>Yo'nalish</p>
             <select
@@ -401,7 +401,7 @@ function OneGroup() {
               data?.isActive && !content && <button 
               onClick={handleCreateContent}
               disabled={contentLoading}
-              className="btn-py">Ish rejani faollashtirish</button>
+              className="btn-py">Ish reja qo'shish</button>
             }
             {
               data?.isActive && content && <Content setContentReload={setContentReload} content={content}/>
@@ -409,6 +409,8 @@ function OneGroup() {
          
           </div>
         </div>
+        <br />
+        <h3 className='one__group-title'>Guruh o'quvchilari</h3>
         <div className="one__group-body">
           {!group?.enrolledStudents?.length && (
             <p className="one__group-warning">O'quvchalar hali qo'shilmagan</p>
