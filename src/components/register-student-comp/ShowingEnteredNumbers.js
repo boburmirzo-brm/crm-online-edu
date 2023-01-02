@@ -5,7 +5,6 @@ import { BsTrash } from "react-icons/bs";
 const ShowingEnteredNumbers = ({ data, setData, notDelete }) => {
   return (
     <div className="showingEnteredNumbers">
-      {<span>Tel: </span>}
       {data.tel.map((el, idx) => (
         <span
           title={

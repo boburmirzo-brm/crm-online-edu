@@ -69,6 +69,9 @@ function RegisterStudentComp({ isReceptionist }) {
     if (newFormData.tel.includes(tempPhoneNumber)) {
       return alert("bu telefon raqamni kiritdingiz");
     }
+    if(newFormData.tel.length > 2){
+      return alert("3 ta telefon raqam kiritish mumkin");
+    }
     newFormData.tel.push(tempPhoneNumber);
     setTempPhoneNumber("+998");
     setData(newFormData);
