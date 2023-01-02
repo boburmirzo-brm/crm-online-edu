@@ -6,6 +6,8 @@ import GetGroup from "../router/global/get-group/GetGroup"
 import GetTeacher from "../router/global/get-teacher/GetTeacher"
 import Statistics from "../router/global/statistics/Statistics"
 import { AiOutlineUsergroupAdd, AiOutlineUserAdd } from "react-icons/ai";
+import { SlDocs, SlDoc, SlUserFollowing, SlUserFollow } from "react-icons/sl";
+import { TfiStatsUp } from "react-icons/tfi";
 
 
 export const GLOBAL_ROUTERS = [
@@ -35,7 +37,7 @@ export const GLOBAL_ROUTERS = [
         title: "Guruhlar",
         path: "/get-group",
         element: <GetGroup/>,
-        icon: <AiOutlineUsergroupAdd />,
+        icon: <SlDocs />,
         teacher:false,
         admin: true,
         accounter: false,
@@ -46,7 +48,7 @@ export const GLOBAL_ROUTERS = [
         title: "Yangi guruh ochish",
         path: "/create-group",
         element: <CreateGroup/>,
-        icon: <AiOutlineUsergroupAdd />,
+        icon: <SlDoc />,
         teacher:false,
         admin: true,
         accounter: false,
@@ -57,7 +59,7 @@ export const GLOBAL_ROUTERS = [
         title: "O'qituvchilar",
         path: "/get-teacher",
         element: <GetTeacher/>,
-        icon: <AiOutlineUserAdd />,
+        icon: <SlUserFollowing />,
         teacher:false,
         admin: true,
         accounter: false,
@@ -68,7 +70,7 @@ export const GLOBAL_ROUTERS = [
         title: "Hodimni ro'yhatga olish",
         path: "/create-member",
         element: <CreateMember/>,
-        icon: <AiOutlineUserAdd />,
+        icon: <SlUserFollow />,
         teacher:false,
         admin: true,
         accounter: false,
@@ -79,7 +81,7 @@ export const GLOBAL_ROUTERS = [
         title: "Statistika",
         path: "/statistics",
         element: <Statistics/>,
-        icon: <AiOutlineUserAdd />,
+        icon: <TfiStatsUp />,
         teacher:false,
         admin: false,
         accounter: false,

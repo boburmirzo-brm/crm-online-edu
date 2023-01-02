@@ -7,6 +7,7 @@ import { logOutAction } from "../../context/action/action";
 import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../../assets/logo2.png"
 import {IoMdRefresh} from "react-icons/io"
+import { IoExitOutline} from "react-icons/io5"
 
 function Sidebar({ info, degree }) {
   const [show, setShow] = useState(false);
@@ -30,7 +31,7 @@ function Sidebar({ info, degree }) {
             <h4>{info?.firstName}</h4>
           </div>
           <p>
-            {info?.major} {degree?.teacher && "Teacher"}
+            {info?.major} {degree?.teacher && "O'qituvchi"}
           </p>
         </NavLink>
         <div style={{textAlign:"right", margin: "20px 0"}}>
@@ -58,7 +59,7 @@ function Sidebar({ info, degree }) {
           })}
         </div>
         <button className="sidebar__logOut" onClick={logOut}>
-          Tizimdan chiqish
+          <IoExitOutline/><span>Tizimdan chiqish</span>
         </button>
       </div>
       <button onClick={() => setShow((p) => !p)} className={`sidebar__menu sidebar__menu-${show?"cancel":""}`}>

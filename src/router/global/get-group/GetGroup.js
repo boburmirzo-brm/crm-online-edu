@@ -217,17 +217,13 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
             } = item;
             return (
               <div className="get__group-card" key={groupId}>
-                <Link to={`${pathname.pathnameFormat()}/get-group/${groupId}`}>
+                <div >
                   <img src={images[major]} alt={major + " " + level} />
                   <h3>
                     {major.capitalLetter()} {level}
                   </h3>
-                </Link>
-                <Link
-                  to={`${pathname.pathnameFormat()}/get-teacher/${
-                    teacherInfo._id
-                  }`}
-                >
+                </div>
+                <div>
                   <p>
                     O'qituvchi:{" "}
                     <b>
@@ -239,7 +235,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
                       }, "")}
                     </b>
                   </p>
-                </Link>
+                </div>
                 <p>
                   Guruh xonasi: <b>{number}</b>
                 </p>

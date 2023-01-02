@@ -102,14 +102,10 @@ function GetTeacher() {
           return (
             <div key={_id} className="get__teacher-card">
               <div className="get__teacher-cardHead">
-                <Link to={item?._id}>
-                  <img src={gender === "male" ? male : female} alt="" />
-                </Link>
+                <img src={gender === "male" ? male : female} alt="" />
                 <div>
                   <h4>
-                    <Link to={item?._id}>
                       {lastName} {firstName} {middleName}
-                    </Link>
                   </h4>
                   <p>
                     Fan: <b>{major?.capitalLetter()}</b>

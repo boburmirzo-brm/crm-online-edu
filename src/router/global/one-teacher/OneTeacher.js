@@ -7,7 +7,6 @@ import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   reloadTeacherAction,
-  reloadGroupAction,
 } from "../../../context/action/action";
 import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
@@ -42,7 +41,7 @@ const initializeData = {
   isOwner: false,
 };
 
-function OneTeacher() {
+function OneTeacher({teacherID}) {
   let { id } = useParams();
   const dispatch = useDispatch();
   const [innerReload, setInnerReload] = useState(false);
@@ -55,7 +54,7 @@ function OneTeacher() {
 
   const navigate = useNavigate();
   const { fetchError, data: teacher } = useFetch(
-    `/api/teachers/${id}`,
+    `/api/teachers/${teacherID?teacherID: id}`,
     innerReload
   );
   const [data, setData] = useState(initializeData);
@@ -119,6 +118,33 @@ function OneTeacher() {
     }
   };
 
+  const handleStatusTeacher = () => {
+    if (
+      window.confirm(
+        `${data?.firstName} ${data?.lastName} ni o'chirmoqchimisiz?`
+      )
+    ) {
+      setIsLoading(true);
+      axios
+        .patch(`/api/teachers/status/${data?._id}`)
+        .then(({ data }) => {
+          toast.success(data?.msg, {
+            autoClose: 5000,
+          });
+          dispatch(reloadTeacherAction());
+          navigate(`${pathname.pathnameFormat()}/get-teacher`);
+        })
+        .catch(({ response: { data } }) => {
+          toast.error(data?.msg, {
+            autoClose: 5000,
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
   const handleDeleteTeacher = () => {
     if (
       window.confirm(
@@ -166,6 +192,7 @@ function OneTeacher() {
     region,
     username,
   } = data;
+  console.log(data);
   return (
     <div className="one__teacher">
       <button onClick={() => navigate(-1)} className="backBtn">
@@ -381,14 +408,24 @@ function OneTeacher() {
             {areInputsDisabled ? "O'zgartirish" : "Ma'lumotlarni saqlash"}
           </button>
           {!groups.length && (
-            <button
-              onClick={handleDeleteTeacher}
-              disabled={isLoading || !areInputsDisabled}
-              style={{ marginLeft: "8px" }}
-              className="btn-danger"
-            >
-              O'chirib yuborish
-            </button>
+            <>
+              <button
+                onClick={handleStatusTeacher}
+                disabled={isLoading || !areInputsDisabled}
+                style={{ marginLeft: "8px" }}
+                className={data?.isActive?"btn-danger":"btn-py" } 
+              >
+                {data?.isActive ? "Tizimdan chiqarish": "Tizimga qaytarish"} 
+              </button>
+              {
+                !data?.isActive &&     <button 
+                onClick={handleDeleteTeacher}
+                style={{ marginLeft: "8px" }} 
+                className="btn-danger">O'chirish
+                </button>
+              }
+          
+            </>
           )}
         </div>
       </div>

@@ -223,12 +223,12 @@ function GetStudent({
         )}
         {filterStudents?.map((item, inx) => (
           <div key={inx} className="get__student-card">
-            <Link to={`${pathname.pathnameFormat()}/get-student/${item._id}`}>
+            <div >
               <img src={item.gender === "male" ? male : female} alt="" />
               <h3>
                 {item.firstName} {item.lastName} {item.middleName}
               </h3>
-            </Link>
+            </div>
             <p>
               Manzil: <b>{item.region.capitalLetter()}</b>
             </p>
