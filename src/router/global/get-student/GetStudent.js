@@ -10,6 +10,7 @@ import {
   reloadStudentAction,
 } from "../../../context/action/action";
 import axios from "../../../api";
+import { getToken } from "../../../auth/getToken";
 // import { TEACHER_MAJOR } from "../../../static/index";
 import AddStudentToGroup from "../../../components/add-student-to-group/AddStudentToGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
@@ -72,7 +73,7 @@ function GetStudent({
   const deleteStudent = (_id, f, l) => {
     if (window.confirm(`${f} ${l} shu o'quvchini o'chirmoqchimisiz?`)) {
       axios
-        .delete(`/api/students/${_id}`)
+        .delete(`/api/students/${_id}`, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -90,7 +91,7 @@ function GetStudent({
     const innerData = { studentID: studentId };
     setIsLoading(true);
     axios
-      .patch(`/api/groups/add-student/${groupIdInGroup}`, innerData)
+      .patch(`/api/groups/add-student/${groupIdInGroup}`, innerData, getToken())
       .then(({ data }) => {
         toast.success(data?.msg, {
           autoClose: 5000,
@@ -120,7 +121,7 @@ function GetStudent({
     setSearchLoading(true);
     axios
       .get("/api/students/search", {
-        method: "GET",
+        ...getToken(),
         params: {
           input: value.toLowerCase(),
         },
@@ -246,12 +247,12 @@ function GetStudent({
               }}
             >
               <div className="tel__get-container">
-                  <span>Tel:</span>
-                  {!item?.tel.length && <i>Tel kiritilmagan</i>}
-                  <div>
-                    <Tel tel={item?.tel}/>
-                  </div>
+                <span>Tel:</span>
+                {!item?.tel.length && <i>Tel kiritilmagan</i>}
+                <div>
+                  <Tel tel={item?.tel} />
                 </div>
+              </div>
             </div>
             {!item.isActive && !item.enrolledCourses.length && (
               <p style={{ flex: 1 }}>

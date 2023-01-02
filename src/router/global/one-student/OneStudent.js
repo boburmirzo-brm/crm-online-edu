@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
 import Tel from "../../../components/tel/Tel";
+import { getToken } from "../../../auth/getToken";
 
 const initializeData = {
   _id: "63a92a30b141665b89177aeb",
@@ -148,7 +149,7 @@ function OneStudent() {
     } else {
       setIsLoading(true);
       axios
-        .patch(`/api/students/${one?._id}`, one)
+        .patch(`/api/students/${one?._id}`, one, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -174,7 +175,7 @@ function OneStudent() {
     if (window.confirm(`${one?.firstName} ${one?.lastName} ni o'chirasizmi?`)) {
       setIsLoading(true);
       axios
-        .delete(`/api/students/${one?._id}`)
+        .delete(`/api/students/${one?._id}`, getToken())
         .then(({ data }) => {
           // console.log(data);
           // dispatch(reloadTeacherAction());

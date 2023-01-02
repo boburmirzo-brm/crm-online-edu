@@ -15,6 +15,7 @@ import ShowingEnteredNumbers from "../../../components/register-student-comp/Sho
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
 import Tel from "../../../components/tel/Tel";
+import { getToken } from "../../../auth/getToken";
 
 const initializeData = {
   _id: "",
@@ -40,7 +41,7 @@ const initializeData = {
   isOwner: false,
 };
 
-function OneTeacher({ teacherID,teacherSelf }) {
+function OneTeacher({ teacherID, teacherSelf }) {
   let { id } = useParams();
   const dispatch = useDispatch();
   const [innerReload, setInnerReload] = useState(false);
@@ -81,7 +82,7 @@ function OneTeacher({ teacherID,teacherSelf }) {
     if (newFormData.tel.includes(tempPhoneNumber)) {
       return alert("bu telefon raqamni kiritdingiz");
     }
-    if(newFormData.tel.length > 2){
+    if (newFormData.tel.length > 2) {
       return alert("3 ta telefon raqam kiritish mumkin");
     }
     newFormData.tel.push(tempPhoneNumber);
@@ -100,7 +101,7 @@ function OneTeacher({ teacherID,teacherSelf }) {
       setShowPassword(false);
       setIsLoading(true);
       axios
-        .patch(`/api/teacher/${data?._id}`, data)
+        .patch(`/api/teacher/${data?._id}`, data, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -131,7 +132,7 @@ function OneTeacher({ teacherID,teacherSelf }) {
     ) {
       setIsLoading(true);
       axios
-        .patch(`/api/teachers/status/${data?._id}`)
+        .patch(`/api/teachers/status/${data?._id}`, {}, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -158,7 +159,7 @@ function OneTeacher({ teacherID,teacherSelf }) {
     ) {
       setIsLoading(true);
       axios
-        .delete(`/api/teachers/${data?._id}`)
+        .delete(`/api/teachers/${data?._id}`, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -200,13 +201,13 @@ function OneTeacher({ teacherID,teacherSelf }) {
   // console.log(data);
   return (
     <div className="one__teacher">
-      {
-        !teacherSelf && <button onClick={() => navigate(-1)} className="backBtn">
+      {!teacherSelf && (
+        <button onClick={() => navigate(-1)} className="backBtn">
           <b>&#10140;</b>
           <span>Orqaga</span>
         </button>
-      }
-      
+      )}
+
       <h2 className="one__student-title">
         O'qituvchi haqida batafsil ma'lumot
       </h2>
@@ -374,21 +375,22 @@ function OneTeacher({ teacherID,teacherSelf }) {
               ))}
             </select>
           </p>
-          <div >
+          <div>
             <div className="tel__container">
               <span>Tel:</span>
               <div>
-              {
-                areInputsDisabled?<Tel tel={data?.tel}/>:
-              <ShowingEnteredNumbers
-                  data={data}
-                  notDelete={areInputsDisabled}
-                  setData={setData}
-                />
-              }
+                {areInputsDisabled ? (
+                  <Tel tel={data?.tel} />
+                ) : (
+                  <ShowingEnteredNumbers
+                    data={data}
+                    notDelete={areInputsDisabled}
+                    setData={setData}
+                  />
+                )}
               </div>
             </div>
-           
+
             {areInputsDisabled ? (
               ""
             ) : (
@@ -452,46 +454,48 @@ function OneTeacher({ teacherID,teacherSelf }) {
         ) : (
           <></>
         )}
-        {groups?.filter(i=> teacherSelf? i.isActive === teacherSelf: true)?.map((item, inx) => (
-          <div key={inx} className="one__student-card">
-            <span>{inx + 1}.</span>
-            <div className="one__student-item">
-              <b>Fan</b>
-              <div>
-                <p>{item?.major}</p>
-                <p>{item?.level}</p>
+        {groups
+          ?.filter((i) => (teacherSelf ? i.isActive === teacherSelf : true))
+          ?.map((item, inx) => (
+            <div key={inx} className="one__student-card">
+              <span>{inx + 1}.</span>
+              <div className="one__student-item">
+                <b>Fan</b>
+                <div>
+                  <p>{item?.major}</p>
+                  <p>{item?.level}</p>
+                </div>
               </div>
-            </div>
-            <div className="one__student-item">
-              <b>Kun vaqti</b>
-              <div>
-                <p>{item?.day}</p>
-                <p>{item?.time}</p>
+              <div className="one__student-item">
+                <b>Kun vaqti</b>
+                <div>
+                  <p>{item?.day}</p>
+                  <p>{item?.time}</p>
+                </div>
               </div>
-            </div>
-            <div className="one__student-item">
-              <b>Start / Exam</b>
-              <div>
-                <p>{item?.firstLesson || "26.12.2022"}</p>
-                <p>{item?.expectedExamDay || "20.02.2023"}</p>
+              <div className="one__student-item">
+                <b>Start / Exam</b>
+                <div>
+                  <p>{item?.firstLesson || "26.12.2022"}</p>
+                  <p>{item?.expectedExamDay || "20.02.2023"}</p>
+                </div>
               </div>
+              <div className="one__student-item">
+                <b>Xona</b>
+                <p>{item?.room.number}</p>
+              </div>
+              <div style={{ flex: 1 }} className="one__student-item">
+                <b>O'quvchilar soni</b>
+                <p>{item?.enrolledStudents.length}</p>
+              </div>
+              <Link
+                to={`${pathname.pathnameFormat(3)}/get-group/${item._id}`}
+                className="one__student-btn"
+              >
+                <button className="btn-py">Batafsil</button>
+              </Link>
             </div>
-            <div className="one__student-item">
-              <b>Xona</b>
-              <p>{item?.room.number}</p>
-            </div>
-            <div style={{ flex: 1 }} className="one__student-item">
-              <b>O'quvchilar soni</b>
-              <p>{item?.enrolledStudents.length}</p>
-            </div>
-            <Link
-              to={`${pathname.pathnameFormat(3)}/get-group/${item._id}`}
-              className="one__student-btn"
-            >
-              <button className="btn-py">Batafsil</button>
-            </Link>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

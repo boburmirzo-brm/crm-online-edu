@@ -12,6 +12,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
 import { toast } from "react-toastify";
+import { getToken } from "../../../auth/getToken";
 
 let initializeData = {
   teacherInfo: {
@@ -63,7 +64,7 @@ function CreateGroup() {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("/api/groups", data)
+      .post("/api/groups", data, getToken())
       .then(({ data }) => {
         toast.success(data?.msg, {
           autoClose: 5000,

@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { reloadTeacherAction } from "../../../context/action/action";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getToken } from "../../../auth/getToken";
 
 let initializeValue = {
   username: "",
@@ -96,7 +97,7 @@ function CreateMember() {
 
     setLoading(true);
     axios
-      .post("/api/sign-up", data)
+      .post("/api/sign-up", data, getToken())
       .then(({ data }) => {
         toast.success(data?.msg, {
           autoClose: 5000,

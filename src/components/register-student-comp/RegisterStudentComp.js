@@ -13,6 +13,7 @@ import call from "../../assets/call.png";
 import Confetti from "react-confetti";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { getToken } from "../../auth/getToken";
 
 let initializeValue = {
   firstName: "",

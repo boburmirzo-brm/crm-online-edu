@@ -14,6 +14,7 @@ import {
   reloadGroupAction,
   reloadStudentAction,
 } from "../../../context/action/action";
+import { getToken } from "../../../auth/getToken";
 import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
@@ -43,10 +44,10 @@ function OneGroup() {
     setData(group);
   }, [group]);
 
-  const {
-    data: content,
-    loading: contentLoading,
-  } = useFetch(`/api/contents/${id}`, contentReload);
+  const { data: content, loading: contentLoading } = useFetch(
+    `/api/contents/${id}`,
+    contentReload
+  );
 
   const [StudentsModal, setStudentsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +82,7 @@ function OneGroup() {
 
       setIsLoading(true);
       axios
-        .patch(`/api/groups/${data?._id}`, data)
+        .patch(`/api/groups/${data?._id}`, data, getToken())
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
@@ -114,7 +115,11 @@ function OneGroup() {
     ) {
       setIsLoading(true);
       axios
-        .patch(`/api/groups/remove-student/${groupIDInner}`, dataInner)
+        .patch(
+          `/api/groups/remove-student/${groupIDInner}`,
+          dataInner,
+          getToken()
+        )
         .then(({ data }) => {
           if (!data.data) {
             console.log("ok");
@@ -123,6 +128,7 @@ function OneGroup() {
             });
             dispatch(reloadGroupAction());
             dispatch(reloadStudentAction());
+            dispatch(reloadTeacherAction());
             return navigate(`${pathname.pathnameFormat()}/get-group`);
           }
           toast.success(data?.msg, {
@@ -148,7 +154,7 @@ function OneGroup() {
     if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
       setIsLoading(true);
       axios
-        .delete(`/api/groups/${group._id}`)
+        .delete(`/api/groups/${group._id}`, getToken())
         .then(({ data }) => {
           // console.log(data);
           toast.success(data?.msg, {
@@ -174,7 +180,7 @@ function OneGroup() {
     if (window.confirm("Guruhni chindan faollashtirmoqchimisiz"))
       if (data.enrolledStudents?.length) {
         axios
-          .get(`/api/groups/isactiveTrue/${group._id}`)
+          .get(`/api/groups/isactiveTrue/${group._id}`, getToken())
           .then(({ data }) => {
             toast.success(data?.msg, {
               autoClose: 5000,
@@ -195,25 +201,30 @@ function OneGroup() {
       }
   };
 
-  const handleCreateContent = ()=>{
-    axios.post(`/api/contents`, {
-      groupId:id,
-      titles: []
-    })
-    .then(({ data }) => {
-      toast.success(data?.msg, {
-        autoClose: 5000,
+  const handleCreateContent = () => {
+    axios
+      .post(
+        `/api/contents`,
+        {
+          groupId: id,
+          titles: [],
+        },
+        getToken()
+      )
+      .then(({ data }) => {
+        toast.success(data?.msg, {
+          autoClose: 5000,
+        });
+        setInnerReload((e) => !e);
+        setContentReload((p) => !p);
+        dispatch(reloadGroupAction());
+      })
+      .catch(({ response: { data } }) => {
+        toast.error(data?.msg, {
+          autoClose: 5000,
+        });
       });
-      setInnerReload((e) => !e);
-      setContentReload(p=>!p)
-      dispatch(reloadGroupAction());
-    })
-    .catch(({ response: {data} }) => {
-      toast.error(data?.msg, {
-        autoClose: 5000,
-      });
-    })
-  }
+  };
 
   if (!data) {
     if (fetchError.length) {
@@ -230,189 +241,191 @@ function OneGroup() {
         </button>
         <div className="one__group-head">
           <div>
-          <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
-          <div className="one__group-item">
-            <p>Yo'nalish</p>
-            <select
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              style={{ textTransform: "uppercase" }}
-              name="major"
-              id="major"
-              defaultValue={data?.major}
-            >
-              {TEACHER_MAJOR?.map((el, idx) => (
-                <option key={idx} title={el}>
-                  {el}
+            <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
+            <div className="one__group-item">
+              <p>Yo'nalish</p>
+              <select
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                style={{ textTransform: "uppercase" }}
+                name="major"
+                id="major"
+                defaultValue={data?.major}
+              >
+                {TEACHER_MAJOR?.map((el, idx) => (
+                  <option key={idx} title={el}>
+                    {el}
+                  </option>
+                ))}
+              </select>
+              <select
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                defaultValue={data?.level}
+                name="level"
+                id="level"
+              >
+                {levels[data?.major]?.map((el, idx) => (
+                  <option key={idx} title={el}>
+                    {el}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="one__group-item">
+              <p>O'qituvchi</p>
+              <select
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                name="teacherInfo"
+                id="teacherInfo"
+                defaultValue={data?.teacherInfo?._id}
+              >
+                <option value={data?.teacherInfo?._id || ""}>
+                  {data?.teacherInfo?.firstName} {data?.teacherInfo?.lastName}
                 </option>
-              ))}
-            </select>
-            <select
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              defaultValue={data?.level}
-              name="level"
-              id="level"
-            >
-              {levels[data?.major]?.map((el, idx) => (
-                <option key={idx} title={el}>
-                  {el}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="one__group-item">
-            <p>O'qituvchi</p>
-            <select
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              name="teacherInfo"
-              id="teacherInfo"
-              defaultValue={data?.teacherInfo?._id}
-            >
-              <option value={data?.teacherInfo?._id || ""}>
-                {data?.teacherInfo?.firstName} {data?.teacherInfo?.lastName}
-              </option>
-              {teachers?.map((el, idx) => (
-                <option
-                  key={idx}
-                  value={el._id || ""}
-                  title={[el.firstName, el.lastName].join(" ")}
-                >
-                  {el.firstName.capitalLetter()} {el.lastName.capitalLetter()}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="one__group-item">
-            <p>Kun</p>
-            <select
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              defaultValue={data?.day}
-              name="day"
-              id="day"
-            >
-              {days.map((el, idx) => (
-                <option key={idx} value={el} title={el}>
-                  {el === "M/W/F" ? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="one__group-item">
-            <p>Vaqti</p>
-            <select
-              onChange={handleChange}
-              defaultValue={data?.time}
-              name="time"
-              id="time"
-              disabled={areInputsDisabled}
-            >
-              {times.map((el, idx) => (
-                <option key={idx} value={el} title={el}>
-                  {el}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="one__group-item">
-            <p>Boshlangan vaqti</p>
-            <input
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              value={data?.firstLesson || "00.00.0000"}
-              type="text"
-              placeholder="Boshlangan vaqti..."
-              name="firstLesson"
-              id="firstLesson"
-              required
-              autoComplete="off"
-            />
-          </div>
-          <div className="one__group-item">
-            <p>Imtihon vaqti</p>
-            <input
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              value={data?.expectedExamDay || "00.00.0000"}
-              type="text"
-              placeholder="Imtihon vaqti..."
-              name="expectedExamDay"
-              id="expectedExamDay"
-              required
-              autoComplete="off"
-            />
-          </div>
-          <div className="one__group-item">
-            <p>Xona</p>
-            <input
-              onChange={handleChange}
-              disabled={areInputsDisabled}
-              value={data?.room?.number || ""}
-              type="text"
-              placeholder="xona raqami..."
-              name="number"
-              id="number"
-              required
-              autoComplete="off"
-            />
-          </div>
-          <button
-            title={
-              areInputsDisabled
-                ? "Guruhni o'zgartirish"
-                : "Ma'lumotlarni saqlash"
-            }
-            disabled={isLoading}
-            onClick={() => handleChangeDisableAndSaveData()}
-            className="one__group-btnSuccess"
-          >
-            {areInputsDisabled
-              ? "Guruhni o'zgartirish"
-              : isLoading
-              ? "Kuting..."
-              : "Saqlash"}
-          </button>
-          {!group?.enrolledStudents?.length ? (
+                {teachers?.map((el, idx) => (
+                  <option
+                    key={idx}
+                    value={el._id || ""}
+                    title={[el.firstName, el.lastName].join(" ")}
+                  >
+                    {el.firstName.capitalLetter()} {el.lastName.capitalLetter()}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="one__group-item">
+              <p>Kun</p>
+              <select
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                defaultValue={data?.day}
+                name="day"
+                id="day"
+              >
+                {days.map((el, idx) => (
+                  <option key={idx} value={el} title={el}>
+                    {el === "M/W/F" ? "Dush/Chor/Juma" : "Sesh/Pay/Shanba"}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="one__group-item">
+              <p>Vaqti</p>
+              <select
+                onChange={handleChange}
+                defaultValue={data?.time}
+                name="time"
+                id="time"
+                disabled={areInputsDisabled}
+              >
+                {times.map((el, idx) => (
+                  <option key={idx} value={el} title={el}>
+                    {el}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="one__group-item">
+              <p>Boshlangan vaqti</p>
+              <input
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                value={data?.firstLesson}
+                type="text"
+                placeholder="00.00.0000"
+                name="firstLesson"
+                id="firstLesson"
+                required
+                autoComplete="off"
+              />
+            </div>
+            <div className="one__group-item">
+              <p>Imtihon vaqti</p>
+              <input
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                value={data?.expectedExamDay}
+                type="text"
+                placeholder="00.00.0000"
+                name="expectedExamDay"
+                id="expectedExamDay"
+                required
+                autoComplete="off"
+              />
+            </div>
+            <div className="one__group-item">
+              <p>Xona</p>
+              <input
+                onChange={handleChange}
+                disabled={areInputsDisabled}
+                value={data?.room?.number || ""}
+                type="text"
+                placeholder="xona raqami..."
+                name="number"
+                id="number"
+                required
+                autoComplete="off"
+              />
+            </div>
             <button
-              onClick={handleDeleteGroupById}
-              className="one__group-btnDanger"
-            >
-              Guruhni o'chirish
-            </button>
-          ) : !group?.isActive ? (
-            <button
-              onClick={handleChangerOfActiveStatus}
-              disabled={!areInputsDisabled}
               title={
                 areInputsDisabled
-                  ? "Guruhni faollashtirish"
-                  : "Iltimos birinchi ma'lumotlarni saqlang!"
+                  ? "Guruhni o'zgartirish"
+                  : "Ma'lumotlarni saqlash"
               }
-              className="one__group-btnInfo"
+              disabled={isLoading}
+              onClick={() => handleChangeDisableAndSaveData()}
+              className="one__group-btnSuccess"
             >
-              Guruhni faollashtish
+              {areInputsDisabled
+                ? "Guruhni o'zgartirish"
+                : isLoading
+                ? "Kuting..."
+                : "Saqlash"}
             </button>
-          ) : (
-            <></>
-          )}
+            {!group?.enrolledStudents?.length ? (
+              <button
+                onClick={handleDeleteGroupById}
+                className="one__group-btnDanger"
+              >
+                Guruhni o'chirish
+              </button>
+            ) : !group?.isActive ? (
+              <button
+                onClick={handleChangerOfActiveStatus}
+                disabled={!areInputsDisabled}
+                title={
+                  areInputsDisabled
+                    ? "Guruhni faollashtirish"
+                    : "Iltimos birinchi ma'lumotlarni saqlang!"
+                }
+                className="one__group-btnInfo"
+              >
+                Guruhni faollashtish
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="one__group-content">
-            {
-              data?.isActive && !content && <button 
-              onClick={handleCreateContent}
-              disabled={contentLoading}
-              className="btn-py">Ish reja qo'shish</button>
-            }
-            {
-              data?.isActive && content && <Content setContentReload={setContentReload} content={content}/>
-            }
-         
+            {data?.isActive && !content && (
+              <button
+                onClick={handleCreateContent}
+                disabled={contentLoading}
+                className="btn-py"
+              >
+                Ish reja qo'shish
+              </button>
+            )}
+            {data?.isActive && content && (
+              <Content setContentReload={setContentReload} content={content} />
+            )}
           </div>
         </div>
         <br />
-        <h3 className='one__group-title'>Guruh o'quvchilari</h3>
+        <h3 className="one__group-title">Guruh o'quvchilari</h3>
         <div className="one__group-body">
           {!group?.enrolledStudents?.length && (
             <p className="one__group-warning">O'quvchalar hali qo'shilmagan</p>
@@ -427,11 +440,13 @@ function OneGroup() {
                     {firstName} {lastName} {middleName}
                   </Link>
                   <div className="one__group-tel">
-                    <Tel tel={tel.slice(0,1)}/>
+                    <Tel tel={tel.slice(0, 1)} />
                   </div>
                 </div>
-                {
-                  pathname.pathnameFormat().split("/")[2] === "receptionist" && group.isActive ?<></>:
+                {pathname.pathnameFormat().split("/")[2] === "receptionist" &&
+                group.isActive ? (
+                  <></>
+                ) : (
                   <button
                     disabled={isLoading}
                     onClick={() =>
@@ -439,9 +454,9 @@ function OneGroup() {
                     }
                     className="one__group-btnDanger"
                   >
-                    <FiTrash/>
+                    <FiTrash />
                   </button>
-                }
+                )}
               </div>
             );
           })}

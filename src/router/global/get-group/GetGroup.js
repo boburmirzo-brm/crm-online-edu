@@ -12,6 +12,7 @@ import { TEACHER_MAJOR } from "../../../static/index";
 import axios from "../../../api";
 import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
 import { toast } from "react-toastify";
+import { getToken } from "../../../auth/getToken";
 
 // images
 import bugalteriya from "../../../assets/Bug'alteriya.jpg";
@@ -99,7 +100,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
     // console.log(data);
     setIsLoading(true);
     axios
-      .patch(`/api/groups/add-student/${groupId}`, data)
+      .patch(`/api/groups/add-student/${groupId}`, data, getToken())
       .then(({ data }) => {
         // console.log(data);
         toast.success(data?.msg, {
@@ -125,7 +126,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
     if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
       setIsLoading(true);
       axios
-        .delete(`/api/groups/${_id}`)
+        .delete(`/api/groups/${_id}`, getToken())
         .then(({ data }) => {
           console.log(data);
           dispatch(reloadGroupAction());

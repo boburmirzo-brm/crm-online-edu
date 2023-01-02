@@ -11,6 +11,7 @@ import {
   reloadTeacherAction,
   reloadStudentAction,
 } from "../../../../context/action/action";
+import { getToken } from "../../../../auth/getToken";
 import axios from "../../../../api";
 
 const AddStudentsIntoGroup = ({
@@ -48,7 +49,7 @@ const AddStudentsIntoGroup = ({
     if (studentID.length) {
       setIsLoading(true);
       axios
-        .patch(`/api/groups/add-student/${groupID}`, data)
+        .patch(`/api/groups/add-student/${groupID}`, data, getToken())
         .then(({ data }) => {
           setDeletedUserId((e) => [...e, studentID]);
           console.log(data);

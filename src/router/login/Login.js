@@ -24,17 +24,29 @@ function LoginContainer() {
 
   const [tempOs, setTempOs] = useState("");
 
-  const students = useFetchWithOutAuth("/api/students", tempOs);
-  const groups = useFetchWithOutAuth("/api/groups", tempOs);
-  const teachers = useFetchWithOutAuth("/api/teachers", tempOs);
-
   useEffect(() => {
-    if (tempOs.length) {
-      dispatch(getStudentsAction(students?.data));
-      dispatch(getGroupsAction(groups?.data));
-      dispatch(getTeachersAction(teachers?.data));
+    function getData(link, token) {
+      if (token.length) {
+        return axios
+          .get(link, token)
+          .then(({ data }) => data)
+          .catch(({ response: { data } }) => data);
+      }
     }
-  }, [tempOs, students, groups, teachers]);
+    var studentsData = "",
+      groupsData = "",
+      teachersData = "";
+    if (tempOs.length) {
+      studentsData = getData("/api/students", tempOs);
+      groupsData = getData("/api/groups", tempOs);
+      teachersData = getData("/api/teachers", tempOs);
+    }
+    if (studentsData.length && groupsData.length && teachersData.length) {
+      dispatch(getStudentsAction(studentsData?.data));
+      dispatch(getGroupsAction(groupsData?.data));
+      dispatch(getTeachersAction(teachersData?.data));
+    }
+  }, [tempOs]);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -47,6 +59,7 @@ function LoginContainer() {
 
         setLoading(false);
         if (data?.user?.isActive) {
+          setTempOs(data.user.os || "");
           toast.success(data?.msg, {
             autoClose: 5000,
           });
