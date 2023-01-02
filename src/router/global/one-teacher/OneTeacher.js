@@ -14,6 +14,7 @@ import { TEACHER_MAJOR, regions, genders } from "../../../static";
 import ShowingEnteredNumbers from "../../../components/register-student-comp/ShowingEnteredNumbers";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
+import Tel from "../../../components/tel/Tel";
 
 const initializeData = {
   _id: "",
@@ -79,6 +80,9 @@ function OneTeacher({ teacherID,teacherSelf }) {
     let newFormData = structuredClone(data);
     if (newFormData.tel.includes(tempPhoneNumber)) {
       return alert("bu telefon raqamni kiritdingiz");
+    }
+    if(newFormData.tel.length > 2){
+      return alert("3 ta telefon raqam kiritish mumkin");
     }
     newFormData.tel.push(tempPhoneNumber);
     setTempPhoneNumber("");
@@ -196,10 +200,13 @@ function OneTeacher({ teacherID,teacherSelf }) {
   // console.log(data);
   return (
     <div className="one__teacher">
-      <button onClick={() => navigate(-1)} className="backBtn">
-        <b>&#10140;</b>
-        <span>Orqaga</span>
-      </button>
+      {
+        !teacherSelf && <button onClick={() => navigate(-1)} className="backBtn">
+          <b>&#10140;</b>
+          <span>Orqaga</span>
+        </button>
+      }
+      
       <h2 className="one__student-title">
         O'qituvchi haqida batafsil ma'lumot
       </h2>
@@ -367,14 +374,21 @@ function OneTeacher({ teacherID,teacherSelf }) {
               ))}
             </select>
           </p>
-          <div className="one__teacher-special">
-            {
+          <div >
+            <div className="tel__container">
+              <span>Tel:</span>
+              <div>
+              {
+                areInputsDisabled?<Tel tel={data?.tel}/>:
               <ShowingEnteredNumbers
-                data={data}
-                notDelete={areInputsDisabled}
-                setData={setData}
-              />
-            }
+                  data={data}
+                  notDelete={areInputsDisabled}
+                  setData={setData}
+                />
+              }
+              </div>
+            </div>
+           
             {areInputsDisabled ? (
               ""
             ) : (

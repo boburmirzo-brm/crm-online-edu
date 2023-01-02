@@ -16,6 +16,7 @@ import EmptyData from "../../../components/empty-data/EmptyData";
 import loadingGif from "../../../assets/loading-gif.gif";
 import { FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
+import Tel from "../../../components/tel/Tel";
 
 const [NEW_STUDENT, STUDENT_OF_GROUP, ALL_STUDENT] = [
   "NEW_STUDENT",
@@ -239,20 +240,19 @@ function GetStudent({
             <p>
               Tug'ilgan sana: <b>{item.birthYear}</b>
             </p>
-            <p
+            <div
               style={{
                 flex: item.isActive && item.enrolledCourses.length && 1,
               }}
             >
-              Tel:{" "}
-              <b>
-                {item.tel?.map((i, inx) => (
-                  <a key={inx} href={`tel:${i}`}>
-                    {i}
-                  </a>
-                ))}
-              </b>
-            </p>
+              <div className="tel__get-container">
+                  <span>Tel:</span>
+                  {!item?.tel.length && <i>Tel kiritilmagan</i>}
+                  <div>
+                    <Tel tel={item?.tel}/>
+                  </div>
+                </div>
+            </div>
             {!item.isActive && !item.enrolledCourses.length && (
               <p style={{ flex: 1 }}>
                 Sana:{" "}

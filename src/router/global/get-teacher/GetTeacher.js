@@ -8,6 +8,7 @@ import male from "../../../assets/male-icon.png";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import EmptyData from "../../../components/empty-data/EmptyData";
+import Tel from "../../../components/tel/Tel";
 
 function GetTeacher() {
   const teachers = useSelector((s) => s?.getTeachers);
@@ -119,9 +120,12 @@ function GetTeacher() {
                 </div>
               </div>
               <div className="get__teacher-cardBody">
-                <p>
-                  Tel: <b>{tel?.map((i) => i + " ")}</b>
-                </p>
+                <div className="tel__get-container">
+                  <span>Tel:</span>
+                  <div>
+                    <Tel tel={tel}/>
+                  </div>
+                </div>
                 <p>
                   Guruhlar: <b>{groups?.length} ta</b>
                 </p>

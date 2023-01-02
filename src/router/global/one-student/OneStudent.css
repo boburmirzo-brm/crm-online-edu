@@ -31,14 +31,25 @@
   line-height: 1.8;
 }
 
-.one__student-head p span,
-.one__student-head div span {
+.one__student-head p > span,
+.one__student-head > div > span {
   display: inline-block;
   width: 120px;
 }
 .one__student-input::placeholder {
     color: #0044889f;
 }
+.tel__container{
+  display: grid;
+  grid-template-columns: 120px auto;
+}
+.tel__get-container{
+  display: grid;
+  grid-template-columns: 30px auto;
+  color: #555;
+  font-size: 14px;
+}
+
 .one__student-input,
 .one__student-select {
   padding: 4px 8px;

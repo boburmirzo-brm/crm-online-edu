@@ -5,7 +5,6 @@ import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  reloadTeacherAction,
   reloadGroupAction,
   reloadStudentAction,
 } from "../../../context/action/action";
@@ -19,6 +18,7 @@ import ShowingEnteredNumbers from "../../../components/register-student-comp/Sho
 import { useDispatch } from "react-redux";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
+import Tel from "../../../components/tel/Tel";
 
 const initializeData = {
   _id: "63a92a30b141665b89177aeb",
@@ -133,6 +133,9 @@ function OneStudent() {
     let newFormData = structuredClone(one);
     if (newFormData.tel.includes(tempPhoneNumber)) {
       return alert("bu telefon raqamni kiritdingiz");
+    }
+    if(newFormData.tel.length > 2){
+      return alert("3 ta telefon raqam kiritish mumkin");
     }
     newFormData.tel.push(tempPhoneNumber);
     setTempPhoneNumber("");
@@ -280,14 +283,18 @@ function OneStudent() {
               autoComplete="off"
             />
           </p>
-          <div>
+          <div className="tel__container">
+            <span>Tel:</span> 
+            <div>
             {
-              <ShowingEnteredNumbers
-                data={one}
-                notDelete={true}
-                setData={setOne}
-              />
+              areInputsDisabled? <Tel tel={one?.tel}/>:
+                <ShowingEnteredNumbers
+                  data={one}
+                  notDelete={areInputsDisabled}
+                  setData={setOne}
+                />
             }
+            </div>
             {areInputsDisabled ? (
               ""
             ) : (

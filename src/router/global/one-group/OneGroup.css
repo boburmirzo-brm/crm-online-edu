@@ -1,5 +1,6 @@
 .one__group {
   padding: 30px;
+  margin-bottom: 150px;
 }
 .one__group-title {
   font-weight: 400;
@@ -83,15 +84,26 @@
 .one__group-card {
   display: flex;
   align-items: center;
-  height: 36px;
+  min-height: 36px;
   color: var(--bg-td);
   border-bottom: 1px solid #ddd;
 }
-.one__group-card span {
+
+.one__group-cardItem {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+.one__group-cardItem > span {
   width: 20px;
 }
-.one__group-card p {
-  flex: 1;
+.one__group-cardItem > a{
+  width: 320px;
+}
+
+.one__group-tel{
+  display: flex;
+  margin-left: 20px;
 }
 .one__group-warning {
   text-align: center;
@@ -118,5 +130,16 @@
   }
   .one__group-btnDanger{
     margin-top: 5px;
+  }
+  .one__group-cardItem{
+    flex-direction: column;
+  }
+  .one__group-tel{
+    margin-left: 0;
+    margin: 12px 0;
+    flex-direction: column;
+  }
+  .one__group-cardItem > a{
+    width: auto;
   }
 }

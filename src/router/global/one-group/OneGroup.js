@@ -18,6 +18,8 @@ import AddStudentInGroup from "../../../components/add-student-in-group/AddStude
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
 import Content from "../../../components/content/Content";
+import Tel from "../../../components/tel/Tel";
+import { FiTrash } from "react-icons/fi";
 
 function OneGroup() {
   let { id } = useParams();
@@ -167,7 +169,7 @@ function OneGroup() {
         });
     }
   };
-
+  console.log(pathname.pathnameFormat().split("/")[2]);
   const handleChangerOfActiveStatus = () => {
     if (window.confirm("Guruhni chindan faollashtirmoqchimisiz"))
       if (data.enrolledStudents?.length) {
@@ -419,27 +421,27 @@ function OneGroup() {
             const { firstName, lastName, middleName, tel, _id } = item;
             return (
               <div key={_id} className="one__group-card">
-                <p>
+                <div className="one__group-cardItem">
                   <span>{idx + 1}. </span>
                   <Link to={`${pathname.pathnameFormat()}/get-student/${_id}`}>
-                    {firstName} {lastName} {middleName} (
-                    {tel?.map((el, idx) => (
-                      <b key={idx} title={el}>
-                        {el}
-                      </b>
-                    ))}
-                    )
+                    {firstName} {lastName} {middleName}
                   </Link>
-                </p>
-                <button
-                  disabled={isLoading}
-                  onClick={() =>
-                    handleSubmitDeleteStudent(_id, firstName, lastName)
-                  }
-                  className="one__group-btnDanger"
-                >
-                  Guruhdan chiqarib yuborish
-                </button>
+                  <div className="one__group-tel">
+                    <Tel tel={tel.slice(0,1)}/>
+                  </div>
+                </div>
+                {
+                  pathname.pathnameFormat().split("/")[2] === "receptionist" && group.isActive ?<></>:
+                  <button
+                    disabled={isLoading}
+                    onClick={() =>
+                      handleSubmitDeleteStudent(_id, firstName, lastName)
+                    }
+                    className="one__group-btnDanger"
+                  >
+                    <FiTrash/>
+                  </button>
+                }
               </div>
             );
           })}
