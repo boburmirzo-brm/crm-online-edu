@@ -17,11 +17,13 @@ import {
 import AddStudentInGroup from "../../../components/add-student-in-group/AddStudentInGroup";
 import EmptyData from "../../../components/empty-data/EmptyData";
 import { toast } from "react-toastify";
+import Content from "../../../components/content/Content";
 
 function OneGroup() {
   let { id } = useParams();
 
   const [innerReload, setInnerReload] = useState(false);
+  const [contentReload, setContentReload] = useState(false);
   const {
     fetchError,
     data: group,
@@ -38,8 +40,12 @@ function OneGroup() {
   useEffect(() => {
     setData(group);
   }, [group]);
-  // console.log(data);
-  // console.log(teachers);
+
+  const {
+    data: content,
+    loading: contentLoading,
+  } = useFetch(`/api/contents/${id}`, contentReload);
+
   const [StudentsModal, setStudentsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [areInputsDisabled, setAreInputsDisabled] = useState(true);
@@ -183,6 +189,27 @@ function OneGroup() {
         });
     }
   };
+
+
+  const handleCreateContent = ()=>{
+    axios.post(`/api/contents`, {
+      groupId:id,
+      titles: []
+    })
+    .then(({ data }) => {
+      toast.success(data?.msg, {
+        autoClose: 5000,
+      });
+      setInnerReload((e) => !e);
+      dispatch(reloadGroupAction());
+    })
+    .catch(({ response: {data} }) => {
+      toast.error(data?.msg, {
+        autoClose: 5000,
+      });
+    })
+  }
+
   if (!data) {
     if (fetchError.length) {
       return <EmptyData text={`Guruh topilmadi, ${fetchError}`} />;
@@ -198,6 +225,7 @@ function OneGroup() {
         </button>
         <h2 className="one__group-title">Guruh haqida batafsil malumot</h2>
         <div className="one__group-head">
+          <div>
           <div className="one__group-item">
             <p>Yo'nalish</p>
             <select
@@ -364,6 +392,19 @@ function OneGroup() {
           ) : (
             <></>
           )}
+          </div>
+          <div className="one__group-content">
+            {
+              data?.isActive && !content && <button 
+              onClick={handleCreateContent}
+              disabled={contentLoading}
+              className="btn-py">Ish rejani faollashtirish</button>
+            }
+            {
+              data?.isActive && content && <Content setContentReload={setContentReload} content={content}/>
+            }
+         
+          </div>
         </div>
         <div className="one__group-body">
           {!group?.enrolledStudents?.length && (

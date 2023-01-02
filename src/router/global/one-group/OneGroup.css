@@ -9,6 +9,9 @@
 }
 .one__group-head {
   margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 20px;
 }
 .one__group-item {
   display: flex;
@@ -101,6 +104,9 @@
 
 
 @media screen and (max-width:750px) {
+  .one__group-head {
+    grid-template-columns: 1fr;
+  }
   .one__group {
     padding: 10px;
   }
