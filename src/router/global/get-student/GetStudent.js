@@ -27,7 +27,8 @@ function GetStudent({
   groupIdInGroup,
   studentsInGroup,
   setClose,
-  oneGroupReload
+  setStudents,
+  oneGroupReload,
 }) {
   const data = useSelector((s) => s?.getStudents);
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function GetStudent({
   const [filterType, setFilterType] = useState(
     localStorage.getItem("filterStudent") || NEW_STUDENT
   );
+  const [getStudentsInnerReload, setGetStudentsInnerReload] = useState(false);
   useEffect(() => {
     localStorage.setItem("filterStudent", filterType);
     if (!data) {
@@ -58,7 +60,7 @@ function GetStudent({
         data?.filter((i) => i.enrolledCourses.length && i.isActive)
       );
     }
-  }, [data, filterType]);
+  }, [data, filterType, getStudentsInnerReload]);
 
   // console.log(filterStudents);
 
@@ -92,9 +94,11 @@ function GetStudent({
         toast.success(data?.msg, {
           autoClose: 5000,
         });
-        dispatch(reloadGroupAction());
         dispatch(reloadStudentAction());
-        oneGroupReload(e=> !e);
+        dispatch(reloadGroupAction());
+        oneGroupReload((e) => !e);
+        setStudents((e) => [...e, studentId]);
+        setGetStudentsInnerReload((e) => !e);
         // dispatch(reloadTeacherAction());
       })
       .catch(({ response }) => {
@@ -223,7 +227,7 @@ function GetStudent({
         )}
         {filterStudents?.map((item, inx) => (
           <div key={inx} className="get__student-card">
-            <div >
+            <div>
               <img src={item.gender === "male" ? male : female} alt="" />
               <h3>
                 {item.firstName} {item.lastName} {item.middleName}
@@ -235,7 +239,11 @@ function GetStudent({
             <p>
               Tug'ilgan sana: <b>{item.birthYear}</b>
             </p>
-            <p style={{flex: item.isActive && item.enrolledCourses.length && 1}}>
+            <p
+              style={{
+                flex: item.isActive && item.enrolledCourses.length && 1,
+              }}
+            >
               Tel:{" "}
               <b>
                 {item.tel?.map((i, inx) => (
