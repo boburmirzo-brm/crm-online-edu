@@ -6,6 +6,7 @@ const AddStudentInGroup = ({
   id,
   setId,
   students,
+  setStudents,
   oneGroupReload,
 }) => {
   return id ? (
@@ -13,6 +14,7 @@ const AddStudentInGroup = ({
       <div
         onClick={() => {
           setId(null);
+          setStudents && setStudents([]);
         }}
         className="add_studentInGroup-modal"
       ></div>
@@ -22,6 +24,7 @@ const AddStudentInGroup = ({
           groupIdInGroup={id}
           studentsInGroup={students}
           setClose={setId}
+          setStudents={setStudents}
           oneGroupReload={oneGroupReload}
         />
       </div>

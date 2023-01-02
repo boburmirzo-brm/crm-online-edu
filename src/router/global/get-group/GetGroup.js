@@ -42,6 +42,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(null);
   const [students, setStudents] = useState([]);
+  const [getGroupStateReload, setGetGroupStateReload] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
     setFilterData(
       groups?.filter((i) => i.major === type && i.isActive === active)
     );
-  }, [type, groups, active]);
+  }, [type, groups, active, getGroupStateReload]);
   /*
     useEffect(() => {
     if (type === "all") {
@@ -118,6 +119,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
         setIsLoading(false);
       });
   };
+  // console.log(students);
 
   const handleDeleteGroupById = (_id) => {
     if (window.confirm(`Shu guruh ni rostan o'chirmoqchimisiz?`)) {
@@ -217,7 +219,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
             } = item;
             return (
               <div className="get__group-card" key={groupId}>
-                <div >
+                <div>
                   <img src={images[major]} alt={major + " " + level} />
                   <h3>
                     {major.capitalLetter()} {level}
@@ -301,6 +303,7 @@ function GetGroup({ addStudent, studentID, courses, setCourses, setClose }) {
         setId={setId}
         students={students}
         setStudents={setStudents}
+        oneGroupReload={setGetGroupStateReload}
       />
     </div>
   );

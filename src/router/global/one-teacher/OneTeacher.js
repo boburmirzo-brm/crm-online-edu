@@ -5,9 +5,7 @@ import axios from "../../../api";
 import { useFetch } from "../../../hooks/useFetch";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  reloadTeacherAction,
-} from "../../../context/action/action";
+import { reloadTeacherAction } from "../../../context/action/action";
 import male from "../../../assets/male-icon.png";
 import female from "../../../assets/female-icon.webp";
 import Skeleton from "../../../components/skeleton/Skeleton";
@@ -41,7 +39,7 @@ const initializeData = {
   isOwner: false,
 };
 
-function OneTeacher({teacherID}) {
+function OneTeacher({ teacherID }) {
   let { id } = useParams();
   const dispatch = useDispatch();
   const [innerReload, setInnerReload] = useState(false);
@@ -54,7 +52,7 @@ function OneTeacher({teacherID}) {
 
   const navigate = useNavigate();
   const { fetchError, data: teacher } = useFetch(
-    `/api/teachers/${teacherID?teacherID: id}`,
+    `/api/teachers/${teacherID ? teacherID : id}`,
     innerReload
   );
   const [data, setData] = useState(initializeData);
@@ -62,7 +60,7 @@ function OneTeacher({teacherID}) {
 
   useEffect(() => {
     setData(teacher);
-  }, [teacher]);
+  }, [teacher, fetchError]);
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -93,26 +91,29 @@ function OneTeacher({teacherID}) {
       setAreInputsDisabled(false);
       setShowPassword(true);
     } else {
-      console.log("update qilish kerak");
+      // console.log("update qilish kerak");
       setAreInputsDisabled(true);
       setShowPassword(false);
       setIsLoading(true);
       axios
-        .patch(`/api/teachers/${data?._id}`, data)
+        .patch(`/api/teacher/${data?._id}`, data)
         .then(({ data }) => {
           toast.success(data?.msg, {
             autoClose: 5000,
           });
-          setAreInputsDisabled(true);
           setInnerReload((e) => !e);
           dispatch(reloadTeacherAction());
         })
         .catch(({ response: { data } }) => {
+          // console.log(data);
           toast.error(data?.msg, {
             autoClose: 5000,
           });
+          setInnerReload((e) => !e);
+          setShowPassword(true);
         })
         .finally(() => {
+          setAreInputsDisabled(true);
           setIsLoading(false);
         });
     }
@@ -192,7 +193,7 @@ function OneTeacher({teacherID}) {
     region,
     username,
   } = data;
-  console.log(data);
+  // console.log(data);
   return (
     <div className="one__teacher">
       <button onClick={() => navigate(-1)} className="backBtn">
@@ -413,18 +414,19 @@ function OneTeacher({teacherID}) {
                 onClick={handleStatusTeacher}
                 disabled={isLoading || !areInputsDisabled}
                 style={{ marginLeft: "8px" }}
-                className={data?.isActive?"btn-danger":"btn-py" } 
+                className={data?.isActive ? "btn-danger" : "btn-py"}
               >
-                {data?.isActive ? "Tizimdan chiqarish": "Tizimga qaytarish"} 
+                {data?.isActive ? "Tizimdan chiqarish" : "Tizimga qaytarish"}
               </button>
-              {
-                !data?.isActive &&     <button 
-                onClick={handleDeleteTeacher}
-                style={{ marginLeft: "8px" }} 
-                className="btn-danger">O'chirish
+              {!data?.isActive && (
+                <button
+                  onClick={handleDeleteTeacher}
+                  style={{ marginLeft: "8px" }}
+                  className="btn-danger"
+                >
+                  O'chirish
                 </button>
-              }
-          
+              )}
             </>
           )}
         </div>

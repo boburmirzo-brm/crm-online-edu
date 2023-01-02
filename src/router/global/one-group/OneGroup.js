@@ -48,10 +48,15 @@ function OneGroup() {
 
   const [StudentsModal, setStudentsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [students, setStudents] = useState([]);
   const [areInputsDisabled, setAreInputsDisabled] = useState(true);
   document.body.style.overflow = StudentsModal ? "hidden" : "auto";
 
   // console.log(studentsIdArr);
+
+  useEffect(() => {
+    setStudents(data?.enrolledStudents.map((i) => i._id));
+  }, [data?.enrolledStudents]);
 
   const handleChange = ({ target: t }) => {
     let key = t.getAttribute("name");
@@ -84,7 +89,7 @@ function OneGroup() {
           dispatch(reloadGroupAction());
           dispatch(reloadTeacherAction());
         })
-        .catch(({ response: {data} }) => {
+        .catch(({ response: { data } }) => {
           toast.error(data?.msg, {
             autoClose: 5000,
           });
@@ -109,7 +114,7 @@ function OneGroup() {
       axios
         .patch(`/api/groups/remove-student/${groupIDInner}`, dataInner)
         .then(({ data }) => {
-          if(!data.data){
+          if (!data.data) {
             console.log("ok");
             toast.success(data?.msg, {
               autoClose: 5000,
@@ -126,14 +131,13 @@ function OneGroup() {
           dispatch(reloadStudentAction());
           // dispatch(reloadTeacherAction());
         })
-        .catch(({ response: {data} }) => {
+        .catch(({ response: { data } }) => {
           toast.error(data?.msg, {
             autoClose: 5000,
           });
         })
         .finally(() => {
           setIsLoading(false);
-         
         });
     }
   };
@@ -153,7 +157,7 @@ function OneGroup() {
           dispatch(reloadTeacherAction());
           navigate(`${pathname.pathnameFormat()}/get-group`);
         })
-        .catch(({ response: { data} }) => {
+        .catch(({ response: { data } }) => {
           toast.error(data?.msg, {
             autoClose: 5000,
           });
@@ -165,29 +169,28 @@ function OneGroup() {
   };
 
   const handleChangerOfActiveStatus = () => {
-    if(window.confirm("Guruhni chindan faollashtirmoqchimisiz"))
-    if (data.enrolledStudents?.length) {
-      axios
-        .get(`/api/groups/isactiveTrue/${group._id}`)
-        .then(({ data }) => {
-          toast.success(data?.msg, {
-            autoClose: 5000,
+    if (window.confirm("Guruhni chindan faollashtirmoqchimisiz"))
+      if (data.enrolledStudents?.length) {
+        axios
+          .get(`/api/groups/isactiveTrue/${group._id}`)
+          .then(({ data }) => {
+            toast.success(data?.msg, {
+              autoClose: 5000,
+            });
+            setInnerReload((e) => !e);
+            dispatch(reloadGroupAction());
+            dispatch(reloadStudentAction());
+            dispatch(reloadTeacherAction());
+          })
+          .catch(({ response: { data } }) => {
+            toast.error(data?.msg, {
+              autoClose: 5000,
+            });
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
-          setInnerReload((e) => !e);
-          dispatch(reloadGroupAction());
-          dispatch(reloadStudentAction());
-          dispatch(reloadTeacherAction());
-          
-        })
-        .catch(({ response: {data} }) => {
-          toast.error(data?.msg, {
-            autoClose: 5000,
-          });
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+      }
   };
 
 
@@ -457,7 +460,8 @@ function OneGroup() {
           <AddStudentInGroup
             id={group?._id}
             setId={setStudentsModal}
-            students={data?.enrolledStudents.map(i=>i._id)}
+            students={students}
+            setStudent={setStudents}
             oneGroupReload={setInnerReload}
           />
         ) : (
