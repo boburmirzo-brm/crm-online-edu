@@ -5,7 +5,9 @@
     margin: 30px;
     color: var(--bg-td);
 }
-
+.statistics__container h2 {
+    color: crimson;
+}
 .statistics__item{
     width: calc(33% - 30px);
 }

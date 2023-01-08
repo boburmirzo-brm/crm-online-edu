@@ -1,10 +1,8 @@
-import React from 'react'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut , Pie, PolarArea} from 'react-chartjs-2';
+import React from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut, Pie, PolarArea } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-
 
 // const config = {
 //   type: 'doughnut',
@@ -22,11 +20,16 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 //     }
 //   },
 // };
-function ChartCom({data,title,options}) {
-  return <div>
-    <h3>{title}</h3>
-     <Pie options={options} data={data}/>
-  </div>;
+function ChartCom({ data, title, options, warning }) {
+  return (
+    <div>
+      <h3>{title}</h3>
+      {warning && (
+        <b style={{ color: "crimson", fontSize: "14px" }}>{warning}</b>
+      )}
+      <Pie options={options} data={data} />
+    </div>
+  );
 }
 
-export default ChartCom
+export default ChartCom;
