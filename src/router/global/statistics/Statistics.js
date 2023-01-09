@@ -351,10 +351,18 @@ function Statistics() {
         </div>
       </div>
       <div className="statistics__container">
-        <button onClick={() => setShowingYearly((e) => !e)}>
-          {showingYearly ? "Oylik ko'rish" : "Yillik ko'rish"}
-        </button>
-        <Bar options={dataBarOption} data={dataBar} />
+        {filterByDateLoading ? (
+          <h1>Yuklanyapti</h1>
+        ) : filterByDateError ? (
+          <h1>Gender bo'yicha xatolik bor</h1>
+        ) : (
+          <>
+            <button onClick={() => setShowingYearly((e) => !e)}>
+              {showingYearly ? "Oylik ko'rish" : "Yillik ko'rish"}
+            </button>
+            <Bar options={dataBarOption} data={dataBar} />
+          </>
+        )}
       </div>
     </div>
   );

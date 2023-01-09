@@ -102,15 +102,18 @@ function CreateGroup() {
                 required
               >
                 <option value="">tanlang</option>
-                {teachersSomeData?.map(({ _id, firstName, lastName }, idx) => (
-                  <option
-                    key={idx}
-                    value={_id}
-                    title={[firstName, lastName].join(" ")}
-                  >
-                    {firstName.capitalLetter()} {lastName.capitalLetter()}
-                  </option>
-                ))}
+                {teachersSomeData?.map(
+                  ({ _id, firstName, lastName, major }, idx) => (
+                    <option
+                      key={idx}
+                      value={_id}
+                      title={[firstName, lastName, major].join(" ")}
+                    >
+                      {firstName.capitalLetter()} {lastName.capitalLetter()}{" "}
+                      ({major.toUpperCase()})
+                    </option>
+                  )
+                )}
               </select>
             </div>
           </div>
